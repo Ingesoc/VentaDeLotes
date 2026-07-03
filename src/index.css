@@ -1,1 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&display=swap");
 @import "tailwindcss";
+
+/* ─── Tailwind v4 CSS-first Theme ──────────────────────────────── */
+@theme {
+  /* ── Colors: Material 3 palette ── */
+  --color-primary: #012d1d;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1b4332;
+  --color-on-primary-container: #86af99;
+  --color-primary-fixed: #c1ecd4;
+  --color-primary-fixed-dim: #a5d0b9;
+  --color-on-primary-fixed: #002114;
+  --color-on-primary-fixed-variant: #274e3d;
+  --color-inverse-primary: #a5d0b9;
+
+  --color-secondary: #7d562d;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #ffca98;
+  --color-on-secondary-container: #7a532a;
+  --color-secondary-fixed: #ffdcbd;
+  --color-secondary-fixed-dim: #f0bd8b;
+  --color-on-secondary-fixed: #2c1600;
+  --color-on-secondary-fixed-variant: #623f18;
+
+  --color-tertiary: #002d1c;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #00452e;
+  --color-on-tertiary-container: #75b393;
+  --color-tertiary-fixed: #b1f0ce;
+  --color-tertiary-fixed-dim: #95d4b3;
+  --color-on-tertiary-fixed: #002114;
+  --color-on-tertiary-fixed-variant: #0e5138;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-surface: #fbf9f5;
+  --color-on-surface: #1b1c1a;
+  --color-surface-variant: #e4e2de;
+  --color-on-surface-variant: #414844;
+  --color-surface-container: #f0eeea;
+  --color-surface-container-low: #f5f3ef;
+  --color-surface-container-high: #eae8e4;
+  --color-surface-container-highest: #e4e2de;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-dim: #dbdad6;
+  --color-surface-bright: #fbf9f5;
+  --color-surface-tint: #3f6653;
+  --color-inverse-surface: #30312e;
+  --color-inverse-on-surface: #f2f0ec;
+
+  --color-background: #fbf9f5;
+  --color-on-background: #1b1c1a;
+
+  --color-outline: #717973;
+  --color-outline-variant: #c1c8c2;
+
+  /* ── Colores de marca ── */
+  --color-deep-forest: #1B4332;
+  --color-heritage-gold: #D4A373;
+  --color-earth-beige: #F5F3EF;
+  --color-coffee-leaf: #2D6A4F;
+  --color-obsidian: #222222;
+
+  /* ── Familias tipográficas ── */
+  --font-display-lg: "Playfair Display", serif;
+  --font-display-lg-mobile: "Playfair Display", serif;
+  --font-headline-lg: "Playfair Display", serif;
+  --font-headline-md: "Playfair Display", serif;
+  --font-body-lg: "Inter", sans-serif;
+  --font-body-md: "Inter", sans-serif;
+  --font-label-bold: "Inter", sans-serif;
+  --font-caption: "Inter", sans-serif;
+
+  /* ── Tamaños de fuente (con line-height) ── */
+  --text-display-lg: 64px;
+  --text-display-lg--line-height: 72px;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 700;
+
+  --text-display-lg-mobile: 40px;
+  --text-display-lg-mobile--line-height: 48px;
+  --text-display-lg-mobile--letter-spacing: -0.01em;
+  --text-display-lg-mobile--font-weight: 700;
+
+  --text-headline-lg: 32px;
+  --text-headline-lg--line-height: 40px;
+  --text-headline-lg--font-weight: 600;
+
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--font-weight: 600;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-bold: 14px;
+  --text-label-bold--line-height: 20px;
+  --text-label-bold--letter-spacing: 0.05em;
+  --text-label-bold--font-weight: 600;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--font-weight: 400;
+
+  /* ── Espaciado ── */
+  --spacing-container-max: 1280px;
+  --spacing-gutter: 24px;
+  --spacing-margin-mobile: 20px;
+  --spacing-margin-desktop: 64px;
+  --spacing-base: 8px;
+  --spacing-section-gap: 120px;
+
+  /* ── Radio de borde ── */
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+/* ─── Utility Classes ──────────────────────────────────────────── */
+
+.glass-card {
+  background: rgba(245, 243, 239, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-panel {
+  background: rgba(245, 243, 239, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.bg-texture-hero {
+  background-image: linear-gradient(
+      to right,
+      rgba(27, 67, 50, 0.9),
+      rgba(27, 67, 50, 0.4)
+    ),
+    url("https://lh3.googleusercontent.com/aida-public/AB6AXuAm34ExVYXJI6Yew3li1eJTrQmYAlwFN-QHHYorlhN-p35LiKal84WwmzFBTt7g-rs9FGfZHF13nxbWoAxAS-rs6BN1lWjLyiXnHCoNgVVlDcc6ET4E15NZd1md6MYuikG5ZZ4YJQt9znRh7ue8BXp9ZTDZdKpR1D2AbBVZEFKExgucJ5CjzcYCIPzNGTWc7HijOFCKLIDN7Tsq761RHT_E4_PZcFBNymimhL_-1-SogoCntM3RFiobZHFeP6bLhcLhFC-DPWGJoX7f");
+  background-size: cover;
+  background-position: center;
+}
+
+.text-shadow-sm {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── Base Reset ───────────────────────────────────────────────── */
+
+body {
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+/* ─── Smooth scrolling + bottom nav padding on mobile ────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 72px;
+  }
+}

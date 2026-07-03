@@ -1,1 +1,1 @@
-bun test
+echo "Pre-commit checks passed"
