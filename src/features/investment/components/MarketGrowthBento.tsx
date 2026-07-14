@@ -26,7 +26,9 @@ export function MarketGrowthBento() {
           El Renacimiento del Quindío
         </h2>
         <p className="text-body-lg font-body-lg text-on-surface-variant max-w-3xl">
-          Impulsada por un aumento en el eco-turismo y el nomadismo digital, la región está experimentando una demanda sin precedentes de espacios de vida premium integrados en la naturaleza.
+          Impulsada por un aumento en el eco-turismo y el nomadismo digital, la
+          región está experimentando una demanda sin precedentes de espacios de
+          vida premium integrados en la naturaleza.
         </p>
       </div>
 
@@ -35,6 +37,8 @@ export function MarketGrowthBento() {
         {/* Tarjeta de Característica Grande (8 col, 2 filas) */}
         <div className="md:col-span-8 md:row-span-2 rounded-xl overflow-hidden relative group">
           <img
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5X1zd3U8l7BxogrGjnh4sPfrm22AiUUzhthQdKQIKfMedACZgxoopACQc2ZbI6eO2tt4_OcGyEgUF5d5mDnfG9Jm78dktwmkAKdPXUArZLxmP7v7paODm4nY42fLRCzJFX7ANi4G-uV62_vCKwmipQmL2ipHmGz1pBfx1ggiBlYFNx47bT1ak_oltkXOOxOAj_0D4tTYq7lp6IYhgyE6qxmrayn3uqMhLkWsGehBxFjJWvLxMAN9mEWtHqZ1wVuj-mnNnZMm-mF2V"
             alt="Vista aérea de los exuberantes paisajes verdes del Quindío con plantaciones de café y casas modernas integradas en la naturaleza"
@@ -46,7 +50,9 @@ export function MarketGrowthBento() {
                 Auge del Turismo e Infraestructura
               </h3>
               <p className="text-body-md font-body-md text-on-surface-variant mb-4">
-                Con la expansión del Aeropuerto Internacional El Edén y la finalización del túnel de La Línea, la accesibilidad ha revolucionado los valores de los bienes raíces.
+                Con la expansión del Aeropuerto Internacional El Edén y la
+                finalización del túnel de La Línea, la accesibilidad ha
+                revolucionado los valores de los bienes raíces.
               </p>
               <div className="flex items-center gap-6">
                 <div>
@@ -73,10 +79,8 @@ export function MarketGrowthBento() {
 
         {/* Tarjetas de Estadísticas Pequeñas */}
         {marketFeatures.map((feature, index) => {
-          const Icon =
-            featureIcons[feature.id as keyof typeof featureIcons];
-          const BgIcon =
-            bgIcons[feature.id as keyof typeof bgIcons];
+          const Icon = featureIcons[feature.id as keyof typeof featureIcons];
+          const BgIcon = bgIcons[feature.id as keyof typeof bgIcons];
 
           return (
             <div

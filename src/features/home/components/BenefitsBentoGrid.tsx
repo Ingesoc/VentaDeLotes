@@ -11,7 +11,8 @@ export function BenefitsBentoGrid() {
             ¿Por qué Invertir en el Quindío?
           </h2>
           <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">
-            Descubra un estilo de vida que equilibra el confort moderno con la belleza natural intacta.
+            Descubra un estilo de vida que equilibra el confort moderno con la
+            belleza natural intacta.
           </p>
         </div>
 
@@ -20,6 +21,8 @@ export function BenefitsBentoGrid() {
           {/* Elemento Grande — Ingresos Airbnb */}
           <div className="md:col-span-2 relative rounded-xl overflow-hidden group cursor-pointer border border-surface-container-highest">
             <img
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8xoMaDmkw40ziRIbgUsJkrYOZashu9dFzOiYxJY5dqOsNXF2crQQ79nWIF5g_MaWs675JArrE3fV0Og43McRlnKEmGZPSc35MVZBnPByHt1O1Fgj2oBxVjIR39s8GLnGDZ29cz-Exy09dOD4JhDuAcxYLlotqodtCxfGJJxRDnydqgknN7j5Mr5bzJ0CUYSwUPlHrYIbJe557V27rTJ8n49SOKkKZBqH2LvPqyMwu8fQxc5IG9_k10OpNFOs0lvxmwolMEy-mpKsZ"
               alt="Lujosa cabaña moderna con vistas a un valle verde en el Quindío"
@@ -33,7 +36,8 @@ export function BenefitsBentoGrid() {
                 Potencial de Ingresos Airbnb
               </h3>
               <p className="text-body-md font-body-md text-surface-container-low max-w-md">
-                Capitalice el creciente mercado de eco-turismo con rentas a corto plazo de alta demanda.
+                Capitalice el creciente mercado de eco-turismo con rentas a
+                corto plazo de alta demanda.
               </p>
             </div>
           </div>
@@ -47,13 +51,16 @@ export function BenefitsBentoGrid() {
               Retiro de Bienestar
             </h3>
             <p className="text-body-md font-body-md text-on-surface-variant relative z-10">
-              Escape del ruido de la ciudad y reconecte con usted mismo en absoluta tranquilidad.
+              Escape del ruido de la ciudad y reconecte con usted mismo en
+              absoluta tranquilidad.
             </p>
           </div>
 
           {/* Elemento Pequeño 2 — Naturaleza Inmersiva */}
           <div className="relative rounded-xl overflow-hidden group cursor-pointer border border-surface-container-highest">
             <img
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXfU11fu_BkmG3ZF10UOS7hrCV4GVdyBvc-CudSe3MWfpSA9FUNA6LgvP8JrRkwFV2DaL9AdLELC_hKItp5tqxxhkEskZ8czNCmOlNvc-aLkD3IF0c72-Sxzpu3lFxd16GN5rx20RwrxZE6Pi_JI1l9UD9WboqoMvkQJ5XrdZwjXdEhcu-1-E-ZfUG5q9YOAfHs7mq5wtd-U6OO3P0QyXq2b-bw4r9P7HDuB7YlTqOLvgjtaAm-Tx3sWTjgtlOrx6WIR-SSZpyO4i6"
               alt="Exuberantes hojas de monstera tropical y plantas de café con rocío matutino"
@@ -76,7 +83,9 @@ export function BenefitsBentoGrid() {
                 Arquitectura Sostenible
               </h3>
               <p className="text-body-md font-body-md text-on-surface-variant mb-6">
-                Construya la casa de sus sueños utilizando principios de diseño bioclimático que respetan el medio ambiente mientras maximizan el lujo.
+                Construya la casa de sus sueños utilizando principios de diseño
+                bioclimático que respetan el medio ambiente mientras maximizan
+                el lujo.
               </p>
               <Link
                 to="/projects"
@@ -87,6 +96,8 @@ export function BenefitsBentoGrid() {
             </div>
             <div className="w-full md:w-1/2 h-48 md:h-full rounded-lg overflow-hidden">
               <img
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJO0FJzRxj7_VsF0623qAaPns4CeXj6vxq_sVHXKsncpE7BCkiBjnb3xg218FG5OLOMrtGXX4iDmBWspKJpDlNH5TBrw0HPdRuffG65PyopgZJBBxbMVvFdBc96JO0PSyffPk0EjNBUg8Dc5CnX9sfTrWc2E6WarmS2h03U4dW0Xfne1KuIeN-ij4J5wiIvDpRusnt4Slb6K8cnhhrn7w4D68uHl1FBL18aTH1gz94AjlOkhxw7Wq7tS3lib39PxlBibVOsi2Y961s"
                 alt="Diseño arquitectónico ecológico integrado con elementos de la naturaleza"

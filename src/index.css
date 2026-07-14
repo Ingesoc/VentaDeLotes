@@ -111,6 +111,20 @@
   --text-caption--line-height: 16px;
   --text-caption--font-weight: 400;
 
+  /* ── Específicos de las vistas de Lotes ── */
+  --font-lot-number: "Playfair Display", serif;
+  --text-lot-number: 24px;
+  --text-lot-number--line-height: 24px;
+  --text-lot-number--font-weight: 700;
+
+  --font-label-caps: "Inter", sans-serif;
+  --text-label-caps: 12px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.1em;
+  --text-label-caps--font-weight: 600;
+
+  --shadow-ambient: 0px 12px 24px rgba(27, 67, 50, 0.06);
+
   /* ── Espaciado ── */
   --spacing-container-max: 1280px;
   --spacing-gutter: 24px;

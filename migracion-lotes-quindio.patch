@@ -1,0 +1,1326 @@
+diff --git a/src/components/ui/LazyImage.tsx b/src/components/ui/LazyImage.tsx
+new file mode 100644
+index 0000000..e8fbb32
+--- /dev/null
++++ b/src/components/ui/LazyImage.tsx
+@@ -0,0 +1,40 @@
++import { useState } from "react";
++
++interface LazyImageProps {
++  src: string;
++  alt: string;
++  className?: string;
++  /** Ej: "aspect-[4/3]", "aspect-video", "aspect-square" — evita saltos de layout (CLS) */
++  aspectClassName?: string;
++  /** Solo para imágenes visibles sin hacer scroll (Hero, primer elemento destacado) */
++  priority?: boolean;
++}
++
++export function LazyImage({
++  src,
++  alt,
++  className = "",
++  aspectClassName = "aspect-[4/3]",
++  priority = false,
++}: LazyImageProps) {
++  const [loaded, setLoaded] = useState(false);
++
++  return (
++    <div className={`relative overflow-hidden ${aspectClassName} ${className}`}>
++      {!loaded && (
++        <div className="absolute inset-0 animate-pulse bg-surface-container-high" />
++      )}
++      <img
++        src={src}
++        alt={alt}
++        loading={priority ? "eager" : "lazy"}
++        decoding="async"
++        fetchPriority={priority ? "high" : "auto"}
++        onLoad={() => setLoaded(true)}
++        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
++          loaded ? "opacity-100" : "opacity-0"
++        }`}
++      />
++    </div>
++  );
++}
+diff --git a/src/constants/lots.ts b/src/constants/lots.ts
+new file mode 100644
+index 0000000..f846703
+--- /dev/null
++++ b/src/constants/lots.ts
+@@ -0,0 +1,114 @@
++export type LotStatus = "disponible" | "reservado" | "vendido";
++
++export interface Lot {
++  id: string; // "01".."16"
++  areaM2: number | null; // null = pendiente de confirmar con el levantamiento real
++  /** COP. undefined = precio aún no definido por el cliente — no mostrar cifras inventadas */
++  price?: number;
++  status: LotStatus;
++  aerialImage: string;
++  perspectiveImage: string;
++  topography?: string;
++  view?: string;
++  access?: string;
++  /** true si la foto aérea es compartida con un lote vecino (mismo encuadre) */
++  sharedAerialWith?: string;
++}
++
++/**
++ * Datos reales confirmados a partir de las fotos aéreas entregadas (áreas en m²).
++ * Lotes 01 y 10–16 todavía no tienen foto aérea cercana propia ni área confirmada:
++ * quedan con areaM2: null y usan el render del plano general como imagen temporal.
++ * TODO (Juan / cliente): reemplazar precios, estados reales y completar áreas faltantes.
++ */
++export const lots: Lot[] = [
++  {
++    id: "01",
++    areaM2: null,
++    status: "disponible",
++    aerialImage: "/lots/masterplan-render.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++  },
++  {
++    id: "02",
++    areaM2: 2008,
++    status: "disponible",
++    aerialImage: "/lots/lote-02-03-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++    sharedAerialWith: "03",
++  },
++  {
++    id: "03",
++    areaM2: 2013,
++    status: "disponible",
++    aerialImage: "/lots/lote-02-03-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++    sharedAerialWith: "02",
++  },
++  {
++    id: "04",
++    areaM2: 2004,
++    status: "disponible",
++    aerialImage: "/lots/lote-04-05-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++    sharedAerialWith: "05",
++  },
++  {
++    id: "05",
++    areaM2: 2005,
++    status: "disponible",
++    aerialImage: "/lots/lote-04-05-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++    sharedAerialWith: "04",
++  },
++  {
++    id: "06",
++    areaM2: 2005,
++    status: "disponible",
++    aerialImage: "/lots/lote-06-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++  },
++  {
++    id: "07",
++    areaM2: 2010,
++    status: "disponible",
++    aerialImage: "/lots/lote-07-08-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++    sharedAerialWith: "08",
++  },
++  {
++    id: "08",
++    areaM2: 2005,
++    status: "disponible",
++    aerialImage: "/lots/lote-07-08-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++    sharedAerialWith: "07",
++    topography: "Ondulada suave",
++    view: "Panorámica al valle",
++    access: "Directo principal",
++  },
++  {
++    id: "09",
++    areaM2: 2011,
++    status: "disponible",
++    aerialImage: "/lots/lote-09-aerial.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++  },
++  ...["10", "11", "12", "13", "14", "15", "16"].map((id) => ({
++    id,
++    areaM2: null,
++    status: "disponible" as LotStatus,
++    aerialImage: "/lots/masterplan-render.jpg",
++    perspectiveImage: "/lots/perspectiva-general.jpg",
++  })),
++];
++
++export function getLotById(id: string): Lot | undefined {
++  return lots.find((lot) => lot.id === id);
++}
++
++export function getRelatedLots(id: string, count = 2): Lot[] {
++  const index = lots.findIndex((lot) => lot.id === id);
++  if (index === -1) return lots.slice(0, count);
++  return lots.filter((lot) => lot.id !== id).slice(0, count);
++}
+diff --git a/src/features/home/HomePage.tsx b/src/features/home/HomePage.tsx
+index 8775f29..b3e6933 100644
+--- a/src/features/home/HomePage.tsx
++++ b/src/features/home/HomePage.tsx
+@@ -1,7 +1,11 @@
+ import { HeroSection } from "./components/HeroSection";
+ import { TrustIndicators } from "./components/TrustIndicators";
++import { ProcessSteps } from "./components/ProcessSteps";
++import { MasterPlanSection } from "./components/MasterPlanSection";
++import { FeaturedLots } from "./components/FeaturedLots";
+ import { BenefitsBentoGrid } from "./components/BenefitsBentoGrid";
+ import { InvestmentComparison } from "./components/InvestmentComparison";
++import { ContactForm } from "./components/ContactForm";
+ 
+ export function HomePage() {
+   return (
+@@ -9,8 +13,12 @@ export function HomePage() {
+       <HeroSection />
+       {/* Indicadores de confianza justo debajo del hero, solapando ligeramente en pantallas grandes si se desea, o simplemente en bloque */}
+       <TrustIndicators />
++      <ProcessSteps />
++      <MasterPlanSection />
++      <FeaturedLots />
+       <BenefitsBentoGrid />
+       <InvestmentComparison />
++      <ContactForm />
+     </div>
+   );
+ }
+diff --git a/src/features/home/components/BenefitsBentoGrid.tsx b/src/features/home/components/BenefitsBentoGrid.tsx
+index f44aba8..396ae9f 100644
+--- a/src/features/home/components/BenefitsBentoGrid.tsx
++++ b/src/features/home/components/BenefitsBentoGrid.tsx
+@@ -11,7 +11,8 @@ export function BenefitsBentoGrid() {
+             ¿Por qué Invertir en el Quindío?
+           </h2>
+           <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">
+-            Descubra un estilo de vida que equilibra el confort moderno con la belleza natural intacta.
++            Descubra un estilo de vida que equilibra el confort moderno con la
++            belleza natural intacta.
+           </p>
+         </div>
+ 
+@@ -20,6 +21,8 @@ export function BenefitsBentoGrid() {
+           {/* Elemento Grande — Ingresos Airbnb */}
+           <div className="md:col-span-2 relative rounded-xl overflow-hidden group cursor-pointer border border-surface-container-highest">
+             <img
++              loading="lazy"
++              decoding="async"
+               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+               src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8xoMaDmkw40ziRIbgUsJkrYOZashu9dFzOiYxJY5dqOsNXF2crQQ79nWIF5g_MaWs675JArrE3fV0Og43McRlnKEmGZPSc35MVZBnPByHt1O1Fgj2oBxVjIR39s8GLnGDZ29cz-Exy09dOD4JhDuAcxYLlotqodtCxfGJJxRDnydqgknN7j5Mr5bzJ0CUYSwUPlHrYIbJe557V27rTJ8n49SOKkKZBqH2LvPqyMwu8fQxc5IG9_k10OpNFOs0lvxmwolMEy-mpKsZ"
+               alt="Lujosa cabaña moderna con vistas a un valle verde en el Quindío"
+@@ -33,7 +36,8 @@ export function BenefitsBentoGrid() {
+                 Potencial de Ingresos Airbnb
+               </h3>
+               <p className="text-body-md font-body-md text-surface-container-low max-w-md">
+-                Capitalice el creciente mercado de eco-turismo con rentas a corto plazo de alta demanda.
++                Capitalice el creciente mercado de eco-turismo con rentas a
++                corto plazo de alta demanda.
+               </p>
+             </div>
+           </div>
+@@ -47,13 +51,16 @@ export function BenefitsBentoGrid() {
+               Retiro de Bienestar
+             </h3>
+             <p className="text-body-md font-body-md text-on-surface-variant relative z-10">
+-              Escape del ruido de la ciudad y reconecte con usted mismo en absoluta tranquilidad.
++              Escape del ruido de la ciudad y reconecte con usted mismo en
++              absoluta tranquilidad.
+             </p>
+           </div>
+ 
+           {/* Elemento Pequeño 2 — Naturaleza Inmersiva */}
+           <div className="relative rounded-xl overflow-hidden group cursor-pointer border border-surface-container-highest">
+             <img
++              loading="lazy"
++              decoding="async"
+               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXfU11fu_BkmG3ZF10UOS7hrCV4GVdyBvc-CudSe3MWfpSA9FUNA6LgvP8JrRkwFV2DaL9AdLELC_hKItp5tqxxhkEskZ8czNCmOlNvc-aLkD3IF0c72-Sxzpu3lFxd16GN5rx20RwrxZE6Pi_JI1l9UD9WboqoMvkQJ5XrdZwjXdEhcu-1-E-ZfUG5q9YOAfHs7mq5wtd-U6OO3P0QyXq2b-bw4r9P7HDuB7YlTqOLvgjtaAm-Tx3sWTjgtlOrx6WIR-SSZpyO4i6"
+               alt="Exuberantes hojas de monstera tropical y plantas de café con rocío matutino"
+@@ -76,7 +83,9 @@ export function BenefitsBentoGrid() {
+                 Arquitectura Sostenible
+               </h3>
+               <p className="text-body-md font-body-md text-on-surface-variant mb-6">
+-                Construya la casa de sus sueños utilizando principios de diseño bioclimático que respetan el medio ambiente mientras maximizan el lujo.
++                Construya la casa de sus sueños utilizando principios de diseño
++                bioclimático que respetan el medio ambiente mientras maximizan
++                el lujo.
+               </p>
+               <Link
+                 to="/projects"
+@@ -87,6 +96,8 @@ export function BenefitsBentoGrid() {
+             </div>
+             <div className="w-full md:w-1/2 h-48 md:h-full rounded-lg overflow-hidden">
+               <img
++                loading="lazy"
++                decoding="async"
+                 className="w-full h-full object-cover"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJO0FJzRxj7_VsF0623qAaPns4CeXj6vxq_sVHXKsncpE7BCkiBjnb3xg218FG5OLOMrtGXX4iDmBWspKJpDlNH5TBrw0HPdRuffG65PyopgZJBBxbMVvFdBc96JO0PSyffPk0EjNBUg8Dc5CnX9sfTrWc2E6WarmS2h03U4dW0Xfne1KuIeN-ij4J5wiIvDpRusnt4Slb6K8cnhhrn7w4D68uHl1FBL18aTH1gz94AjlOkhxw7Wq7tS3lib39PxlBibVOsi2Y961s"
+                 alt="Diseño arquitectónico ecológico integrado con elementos de la naturaleza"
+diff --git a/src/features/home/components/ContactForm.tsx b/src/features/home/components/ContactForm.tsx
+new file mode 100644
+index 0000000..f003582
+--- /dev/null
++++ b/src/features/home/components/ContactForm.tsx
+@@ -0,0 +1,157 @@
++import { useState } from "react";
++import { useForm } from "react-hook-form";
++import { zodResolver } from "@hookform/resolvers/zod";
++import { z } from "zod";
++import { Send } from "lucide-react";
++
++const contactSchema = z.object({
++  name: z.string().min(2, "Ingresa tu nombre completo"),
++  email: z.email("Correo electrónico inválido"),
++  phone: z.string().min(7, "Ingresa un número de teléfono válido"),
++  message: z.string().optional(),
++});
++
++type ContactFormValues = z.infer<typeof contactSchema>;
++
++export function ContactForm() {
++  const [submitStatus, setSubmitStatus] = useState<
++    "idle" | "success" | "error"
++  >("idle");
++
++  const {
++    register,
++    handleSubmit,
++    reset,
++    formState: { errors, isSubmitting },
++  } = useForm<ContactFormValues>({
++    resolver: zodResolver(contactSchema),
++  });
++
++  const onSubmit = async () => {
++    try {
++      // TODO (Juan): conectar con Supabase (tabla "leads") o el endpoint real del formulario.
++      await new Promise((resolve) => setTimeout(resolve, 600));
++      setSubmitStatus("success");
++      reset();
++      setTimeout(() => setSubmitStatus("idle"), 5000);
++    } catch {
++      setSubmitStatus("error");
++    }
++  };
++
++  return (
++    <section
++      id="contacto"
++      className="py-section-gap px-margin-mobile md:px-margin-desktop bg-deep-forest relative"
++    >
++      <div className="max-w-4xl mx-auto bg-surface-container-lowest rounded-2xl p-8 md:p-12 shadow-2xl">
++        <div className="text-center mb-10">
++          <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
++            Inicia tu Historia
++          </h2>
++          <p className="text-body-md font-body-md text-on-surface-variant">
++            Déjanos tus datos y un asesor especializado te guiará en el proceso.
++          </p>
++        </div>
++
++        {submitStatus === "success" && (
++          <div className="mb-6 p-4 bg-deep-forest/10 text-deep-forest rounded-lg text-center font-medium">
++            ¡Gracias! Tu mensaje ha sido enviado con éxito. Te contactaremos
++            pronto.
++          </div>
++        )}
++        {submitStatus === "error" && (
++          <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg text-center font-medium">
++            Hubo un error al enviar el formulario. Por favor, inténtalo de
++            nuevo.
++          </div>
++        )}
++
++        <form
++          onSubmit={handleSubmit(onSubmit)}
++          className="space-y-6"
++          noValidate
++        >
++          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
++            <div>
++              <label htmlFor="name" className="sr-only">
++                Nombre
++              </label>
++              <input
++                id="name"
++                type="text"
++                placeholder="Nombre completo"
++                {...register("name")}
++                className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
++              />
++              {errors.name && (
++                <p className="text-caption font-caption text-red-600 mt-1">
++                  {errors.name.message}
++                </p>
++              )}
++            </div>
++            <div>
++              <label htmlFor="email" className="sr-only">
++                Email
++              </label>
++              <input
++                id="email"
++                type="email"
++                placeholder="Correo electrónico"
++                {...register("email")}
++                className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
++              />
++              {errors.email && (
++                <p className="text-caption font-caption text-red-600 mt-1">
++                  {errors.email.message}
++                </p>
++              )}
++            </div>
++          </div>
++
++          <div>
++            <label htmlFor="phone" className="sr-only">
++              Teléfono
++            </label>
++            <input
++              id="phone"
++              type="tel"
++              placeholder="Número de teléfono"
++              {...register("phone")}
++              className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
++            />
++            {errors.phone && (
++              <p className="text-caption font-caption text-red-600 mt-1">
++                {errors.phone.message}
++              </p>
++            )}
++          </div>
++
++          <div>
++            <label htmlFor="message" className="sr-only">
++              Mensaje
++            </label>
++            <textarea
++              id="message"
++              rows={4}
++              placeholder="¿En qué lote estás interesado?"
++              {...register("message")}
++              className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50 resize-none"
++            />
++          </div>
++
++          <div className="pt-4 text-center">
++            <button
++              type="submit"
++              disabled={isSubmitting}
++              className="bg-heritage-gold text-primary px-10 py-4 rounded-lg font-label-bold hover:opacity-90 transition-all inline-flex items-center gap-2 shadow-lg disabled:opacity-60"
++            >
++              {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
++              <Send className="w-5 h-5" />
++            </button>
++          </div>
++        </form>
++      </div>
++    </section>
++  );
++}
+diff --git a/src/features/home/components/FeaturedLots.tsx b/src/features/home/components/FeaturedLots.tsx
+new file mode 100644
+index 0000000..0f4c581
+--- /dev/null
++++ b/src/features/home/components/FeaturedLots.tsx
+@@ -0,0 +1,25 @@
++import { lots } from "@/constants/lots";
++import { LotCard } from "@/features/projects/components/LotCard";
++
++export function FeaturedLots() {
++  const featured = lots.filter((lot) => lot.areaM2 !== null).slice(0, 3);
++
++  return (
++    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
++      <div className="mb-16">
++        <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
++          Lotes Disponibles
++        </h2>
++        <p className="text-body-lg font-body-lg text-on-surface-variant">
++          Selecciona el espacio donde comenzará tu nueva vida.
++        </p>
++      </div>
++
++      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
++        {featured.map((lot) => (
++          <LotCard key={lot.id} lot={lot} />
++        ))}
++      </div>
++    </section>
++  );
++}
+diff --git a/src/features/home/components/HeroSection.tsx b/src/features/home/components/HeroSection.tsx
+index d5ad004..9c1c797 100644
+--- a/src/features/home/components/HeroSection.tsx
++++ b/src/features/home/components/HeroSection.tsx
+@@ -6,6 +6,8 @@ export function HeroSection() {
+       {/* Imagen de Fondo */}
+       <div className="absolute inset-0 z-0">
+         <img
++          loading="eager"
++          fetchPriority="high"
+           className="w-full h-full object-cover"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm34ExVYXJI6Yew3li1eJTrQmYAlwFN-QHHYorlhN-p35LiKal84WwmzFBTt7g-rs9FGfZHF13nxbWoAxAS-rs6BN1lWjLyiXnHCoNgVVlDcc6ET4E15NZd1md6MYuikG5ZZ4YJQt9znRh7ue8BXp9ZTDZdKpR1D2AbBVZEFKExgucJ5CjzcYCIPzNGTWc7HijOFCKLIDN7Tsq761RHT_E4_PZcFBNymimhL_-1-SogoCntM3RFiobZHFeP6bLhcLhFC-DPWGJoX7f"
+           alt="Exuberantes paisajes verdes del Quindío, Colombia con colinas onduladas y plantaciones de café"
+@@ -20,7 +22,9 @@ export function HeroSection() {
+             Sea Dueño de su Lote Rural en el Quindío
+           </h1>
+           <p className="text-body-lg font-body-lg text-on-surface-variant mb-8 max-w-2xl">
+-            Invierta en naturaleza, disfrute un estilo de vida más saludable y benefíciese de la apreciación a largo plazo en el paisaje más vibrante de Colombia.
++            Invierta en naturaleza, disfrute un estilo de vida más saludable y
++            benefíciese de la apreciación a largo plazo en el paisaje más
++            vibrante de Colombia.
+           </p>
+           <div className="flex flex-col sm:flex-row gap-4">
+             <Link
+diff --git a/src/features/home/components/MasterPlanSection.tsx b/src/features/home/components/MasterPlanSection.tsx
+new file mode 100644
+index 0000000..3212169
+--- /dev/null
++++ b/src/features/home/components/MasterPlanSection.tsx
+@@ -0,0 +1,54 @@
++import { Link } from "react-router-dom";
++
++/**
++ * Posiciones en % (top/left) sobre la imagen del plano general.
++ * TODO (Juan): estas coordenadas son aproximadas — ajústalas a ojo comparando
++ * contra /public/lots/masterplan-render.jpg una vez esté desplegado, o agrega
++ * el resto de los 16 lotes si quieres mostrarlos todos en vez de solo estos 3.
++ */
++const hotspots = [
++  { lotId: "01", top: "20%", left: "30%" },
++  { lotId: "08", top: "45%", left: "60%" },
++  { lotId: "15", top: "70%", left: "40%" },
++];
++
++export function MasterPlanSection() {
++  return (
++    <section className="py-section-gap px-margin-mobile md:px-margin-desktop bg-deep-forest/5 overflow-hidden">
++      <div className="max-w-container-max mx-auto mb-12 text-center">
++        <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
++          Plano General
++        </h2>
++        <p className="text-body-lg font-body-lg text-on-surface-variant">
++          Explora la distribución de nuestro proyecto y encuentra tu lote ideal.
++        </p>
++      </div>
++
++      <div className="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl group">
++        <img
++          src="/lots/masterplan-render.jpg"
++          alt="Plano general detallado de la parcelación Verdant Horizon"
++          loading="lazy"
++          decoding="async"
++          className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105"
++        />
++
++        {hotspots.map((hotspot) => (
++          <Link
++            key={hotspot.lotId}
++            to={`/projects/${hotspot.lotId}`}
++            style={{ top: hotspot.top, left: hotspot.left }}
++            className="absolute w-8 h-8 bg-deep-forest text-on-primary rounded-full flex items-center justify-center text-lot-number text-xs font-bold shadow-lg hover:bg-heritage-gold hover:text-primary transition-colors -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110"
++          >
++            {hotspot.lotId}
++          </Link>
++        ))}
++
++        <div className="absolute bottom-4 left-4 bg-surface/90 px-4 py-2 rounded-lg text-body-md font-body-md text-primary flex items-center gap-2">
++          <span className="w-3 h-3 bg-deep-forest rounded-full block" />
++          Límite de lote
++        </div>
++      </div>
++    </section>
++  );
++}
+diff --git a/src/features/home/components/ProcessSteps.tsx b/src/features/home/components/ProcessSteps.tsx
+new file mode 100644
+index 0000000..84aac4a
+--- /dev/null
++++ b/src/features/home/components/ProcessSteps.tsx
+@@ -0,0 +1,57 @@
++import { Mountain, Building2, Home } from "lucide-react";
++
++const steps = [
++  {
++    icon: Mountain,
++    title: "1. Compra tu lote",
++    description:
++      "Elige el espacio perfecto dentro de nuestro entorno natural exclusivo.",
++  },
++  {
++    icon: Building2,
++    title: "2. Diseño",
++    description:
++      "Recibe un paquete de diseño arquitectónico armónico con el paisaje.",
++  },
++  {
++    icon: Home,
++    title: "3. Construcción",
++    description:
++      "Construimos tu casa asegurando los más altos estándares de calidad.",
++  },
++];
++
++export function ProcessSteps() {
++  return (
++    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
++      <div className="text-center mb-16">
++        <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
++          Cómo funciona
++        </h2>
++        <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mx-auto">
++          Un proceso simple y transparente para construir tu santuario.
++        </p>
++      </div>
++
++      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
++        <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-outline-variant/30 z-0" />
++        {steps.map((step) => (
++          <div
++            key={step.title}
++            className="relative z-10 flex flex-col items-center text-center bg-surface-container-lowest p-8 rounded-xl shadow-ambient border border-outline-variant/10"
++          >
++            <div className="w-20 h-20 bg-deep-forest text-on-primary rounded-full flex items-center justify-center mb-6 shadow-md">
++              <step.icon className="w-9 h-9" />
++            </div>
++            <h3 className="text-headline-md font-headline-md text-primary mb-3">
++              {step.title}
++            </h3>
++            <p className="text-body-md font-body-md text-on-surface-variant">
++              {step.description}
++            </p>
++          </div>
++        ))}
++      </div>
++    </section>
++  );
++}
+diff --git a/src/features/investment/components/MarketGrowthBento.tsx b/src/features/investment/components/MarketGrowthBento.tsx
+index 86f8392..3ee876c 100644
+--- a/src/features/investment/components/MarketGrowthBento.tsx
++++ b/src/features/investment/components/MarketGrowthBento.tsx
+@@ -26,7 +26,9 @@ export function MarketGrowthBento() {
+           El Renacimiento del Quindío
+         </h2>
+         <p className="text-body-lg font-body-lg text-on-surface-variant max-w-3xl">
+-          Impulsada por un aumento en el eco-turismo y el nomadismo digital, la región está experimentando una demanda sin precedentes de espacios de vida premium integrados en la naturaleza.
++          Impulsada por un aumento en el eco-turismo y el nomadismo digital, la
++          región está experimentando una demanda sin precedentes de espacios de
++          vida premium integrados en la naturaleza.
+         </p>
+       </div>
+ 
+@@ -35,6 +37,8 @@ export function MarketGrowthBento() {
+         {/* Tarjeta de Característica Grande (8 col, 2 filas) */}
+         <div className="md:col-span-8 md:row-span-2 rounded-xl overflow-hidden relative group">
+           <img
++            loading="lazy"
++            decoding="async"
+             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5X1zd3U8l7BxogrGjnh4sPfrm22AiUUzhthQdKQIKfMedACZgxoopACQc2ZbI6eO2tt4_OcGyEgUF5d5mDnfG9Jm78dktwmkAKdPXUArZLxmP7v7paODm4nY42fLRCzJFX7ANi4G-uV62_vCKwmipQmL2ipHmGz1pBfx1ggiBlYFNx47bT1ak_oltkXOOxOAj_0D4tTYq7lp6IYhgyE6qxmrayn3uqMhLkWsGehBxFjJWvLxMAN9mEWtHqZ1wVuj-mnNnZMm-mF2V"
+             alt="Vista aérea de los exuberantes paisajes verdes del Quindío con plantaciones de café y casas modernas integradas en la naturaleza"
+@@ -46,7 +50,9 @@ export function MarketGrowthBento() {
+                 Auge del Turismo e Infraestructura
+               </h3>
+               <p className="text-body-md font-body-md text-on-surface-variant mb-4">
+-                Con la expansión del Aeropuerto Internacional El Edén y la finalización del túnel de La Línea, la accesibilidad ha revolucionado los valores de los bienes raíces.
++                Con la expansión del Aeropuerto Internacional El Edén y la
++                finalización del túnel de La Línea, la accesibilidad ha
++                revolucionado los valores de los bienes raíces.
+               </p>
+               <div className="flex items-center gap-6">
+                 <div>
+@@ -73,10 +79,8 @@ export function MarketGrowthBento() {
+ 
+         {/* Tarjetas de Estadísticas Pequeñas */}
+         {marketFeatures.map((feature, index) => {
+-          const Icon =
+-            featureIcons[feature.id as keyof typeof featureIcons];
+-          const BgIcon =
+-            bgIcons[feature.id as keyof typeof bgIcons];
++          const Icon = featureIcons[feature.id as keyof typeof featureIcons];
++          const BgIcon = bgIcons[feature.id as keyof typeof bgIcons];
+ 
+           return (
+             <div
+diff --git a/src/features/projects/ProjectDetailPage.tsx b/src/features/projects/ProjectDetailPage.tsx
+new file mode 100644
+index 0000000..e436f36
+--- /dev/null
++++ b/src/features/projects/ProjectDetailPage.tsx
+@@ -0,0 +1,90 @@
++import { Link, Navigate, useParams } from "react-router-dom";
++import { ChevronRight } from "lucide-react";
++import { getLotById, getRelatedLots } from "@/constants/lots";
++import { LotGallery } from "./components/LotGallery";
++import { LotSpecs } from "./components/LotSpecs";
++import { LotMiniMap } from "./components/LotMiniMap";
++import { AcquisitionSteps } from "./components/AcquisitionSteps";
++import { LotCard } from "./components/LotCard";
++
++const statusLabel = {
++  disponible: "Disponible",
++  reservado: "Reservado",
++  vendido: "Vendido",
++} as const;
++
++export function ProjectDetailPage() {
++  const { id } = useParams<{ id: string }>();
++  const lot = id ? getLotById(id) : undefined;
++
++  if (!lot) {
++    return <Navigate to="/projects" replace />;
++  }
++
++  const relatedLots = getRelatedLots(lot.id, 2);
++
++  return (
++    <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24">
++      {/* Breadcrumb */}
++      <nav className="flex items-center gap-2 text-on-surface-variant text-label-caps font-label-caps mb-4 uppercase tracking-widest">
++        <Link
++          to="/projects"
++          className="hover:text-deep-forest transition-colors"
++        >
++          Lotes
++        </Link>
++        <ChevronRight className="w-4 h-4" />
++        <span className="text-deep-forest font-semibold">Lote {lot.id}</span>
++      </nav>
++
++      {/* Header */}
++      <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
++        <div>
++          <h1 className="text-headline-lg-mobile md:text-display-lg font-display-lg text-primary mb-2">
++            Lote {lot.id}
++          </h1>
++          <p className="text-body-lg font-body-lg text-on-surface-variant">
++            Santuario Natural en Quindío
++          </p>
++        </div>
++        <div className="flex items-center gap-4">
++          <span className="bg-deep-forest/10 text-deep-forest text-label-caps font-label-caps px-4 py-2 rounded-full uppercase">
++            {statusLabel[lot.status]}
++          </span>
++          {lot.price && (
++            <p className="text-lot-number font-lot-number text-primary">
++              ${(lot.price / 1_000_000).toLocaleString("es-CO")}M COP
++            </p>
++          )}
++        </div>
++      </div>
++
++      {/* Galería + especificaciones */}
++      <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
++        <div className="lg:col-span-8">
++          <LotGallery lot={lot} />
++        </div>
++        <div className="lg:col-span-4 flex flex-col gap-gutter">
++          <LotSpecs lot={lot} />
++          <LotMiniMap lotId={lot.id} />
++        </div>
++      </div>
++
++      <AcquisitionSteps />
++
++      {/* Lotes similares */}
++      {relatedLots.length > 0 && (
++        <div>
++          <h3 className="text-headline-md font-headline-md text-primary mb-8 border-b border-outline-variant/20 pb-4">
++            Lotes Similares
++          </h3>
++          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
++            {relatedLots.map((relatedLot) => (
++              <LotCard key={relatedLot.id} lot={relatedLot} />
++            ))}
++          </div>
++        </div>
++      )}
++    </div>
++  );
++}
+diff --git a/src/features/projects/ProjectsPage.tsx b/src/features/projects/ProjectsPage.tsx
+new file mode 100644
+index 0000000..f78840e
+--- /dev/null
++++ b/src/features/projects/ProjectsPage.tsx
+@@ -0,0 +1,70 @@
++import { useMemo, useState } from "react";
++import { lots, type LotStatus } from "@/constants/lots";
++import { LotCard } from "./components/LotCard";
++import { LotFilters, type AreaRange } from "./components/LotFilters";
++import { EmptyState } from "./components/EmptyState";
++
++function matchesAreaRange(areaM2: number | null, range: AreaRange): boolean {
++  if (range === "all") return true;
++  if (areaM2 === null) return false;
++  if (range === "under-2005") return areaM2 < 2005;
++  if (range === "2005-2010") return areaM2 >= 2005 && areaM2 <= 2010;
++  return areaM2 > 2010;
++}
++
++export function ProjectsPage() {
++  const [status, setStatus] = useState<LotStatus | "all">("all");
++  const [areaRange, setAreaRange] = useState<AreaRange>("all");
++
++  const filteredLots = useMemo(() => {
++    return lots.filter((lot) => {
++      const matchesStatus = status === "all" || lot.status === status;
++      const matchesArea = matchesAreaRange(lot.areaM2, areaRange);
++      return matchesStatus && matchesArea;
++    });
++  }, [status, areaRange]);
++
++  const handleClearFilters = () => {
++    setStatus("all");
++    setAreaRange("all");
++  };
++
++  return (
++    <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
++      <div className="mb-12 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
++        <div>
++          <h1 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
++            Descubre tu santuario
++          </h1>
++          <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">
++            Explora nuestros exclusivos lotes inmersos en la belleza natural del
++            Quindío. Filtra según tus preferencias para encontrar el espacio
++            ideal.
++          </p>
++        </div>
++
++        <div className="w-full lg:w-auto">
++          <LotFilters
++            status={status}
++            onStatusChange={setStatus}
++            areaRange={areaRange}
++            onAreaRangeChange={setAreaRange}
++          />
++          <p className="mt-4 text-label-caps font-label-caps text-on-surface-variant/70">
++            Mostrando {filteredLots.length} de {lots.length} lotes
++          </p>
++        </div>
++      </div>
++
++      {filteredLots.length === 0 ? (
++        <EmptyState onClearFilters={handleClearFilters} />
++      ) : (
++        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
++          {filteredLots.map((lot) => (
++            <LotCard key={lot.id} lot={lot} />
++          ))}
++        </div>
++      )}
++    </div>
++  );
++}
+diff --git a/src/features/projects/components/AcquisitionSteps.tsx b/src/features/projects/components/AcquisitionSteps.tsx
+new file mode 100644
+index 0000000..2ec7c2b
+--- /dev/null
++++ b/src/features/projects/components/AcquisitionSteps.tsx
+@@ -0,0 +1,57 @@
++import { Flag, FileText, KeyRound } from "lucide-react";
++
++const steps = [
++  {
++    icon: Flag,
++    title: "1. Separación",
++    description:
++      "Reserva tu lote con un anticipo inicial para asegurar la ubicación deseada.",
++  },
++  {
++    icon: FileText,
++    title: "2. Promesa",
++    description:
++      "Firma de la promesa de compraventa y establecimiento del plan de pagos.",
++  },
++  {
++    icon: KeyRound,
++    title: "3. Escrituración",
++    description:
++      "Entrega oficial y escrituración del lote para comenzar tu proyecto.",
++    highlighted: true,
++  },
++];
++
++export function AcquisitionSteps() {
++  return (
++    <div className="mb-section-gap">
++      <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary text-center mb-12">
++        Pasos legales de la compra
++      </h2>
++      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
++        {steps.map((step) => (
++          <div
++            key={step.title}
++            className="flex flex-col items-center text-center p-8 bg-surface-container-lowest rounded-xl shadow-ambient border border-outline-variant/10"
++          >
++            <div
++              className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 ${
++                step.highlighted
++                  ? "bg-heritage-gold/20 text-primary"
++                  : "bg-deep-forest/5 text-deep-forest"
++              }`}
++            >
++              <step.icon className="w-8 h-8" />
++            </div>
++            <h4 className="text-lot-number font-lot-number text-primary mb-3">
++              {step.title}
++            </h4>
++            <p className="text-body-md font-body-md text-on-surface-variant">
++              {step.description}
++            </p>
++          </div>
++        ))}
++      </div>
++    </div>
++  );
++}
+diff --git a/src/features/projects/components/EmptyState.tsx b/src/features/projects/components/EmptyState.tsx
+new file mode 100644
+index 0000000..94b3831
+--- /dev/null
++++ b/src/features/projects/components/EmptyState.tsx
+@@ -0,0 +1,28 @@
++import { Mountain } from "lucide-react";
++
++interface EmptyStateProps {
++  onClearFilters: () => void;
++}
++
++export function EmptyState({ onClearFilters }: EmptyStateProps) {
++  return (
++    <div className="flex flex-col items-center justify-center py-24 text-center">
++      <div className="bg-deep-forest/5 p-8 rounded-full mb-6">
++        <Mountain className="w-12 h-12 text-deep-forest" />
++      </div>
++      <h3 className="text-headline-md font-headline-md text-primary mb-2">
++        No encontramos resultados
++      </h3>
++      <p className="text-body-md font-body-md text-on-surface-variant max-w-sm mb-8">
++        No hay lotes que coincidan con los filtros seleccionados. Intenta con
++        otros criterios.
++      </p>
++      <button
++        onClick={onClearFilters}
++        className="bg-deep-forest text-on-primary px-8 py-3 rounded-lg font-label-bold hover:opacity-90 transition-opacity"
++      >
++        Limpiar filtros
++      </button>
++    </div>
++  );
++}
+diff --git a/src/features/projects/components/LotCard.tsx b/src/features/projects/components/LotCard.tsx
+new file mode 100644
+index 0000000..a09c64b
+--- /dev/null
++++ b/src/features/projects/components/LotCard.tsx
+@@ -0,0 +1,80 @@
++import { Link } from "react-router-dom";
++import { Ruler } from "lucide-react";
++import type { Lot } from "@/constants/lots";
++import { LazyImage } from "@/components/ui/LazyImage";
++
++const statusStyles: Record<Lot["status"], { label: string; badge: string }> = {
++  disponible: {
++    label: "Disponible",
++    badge: "bg-deep-forest text-on-primary",
++  },
++  reservado: {
++    label: "Reservado",
++    badge: "bg-heritage-gold text-primary",
++  },
++  vendido: {
++    label: "Vendido",
++    badge: "bg-obsidian/70 text-white",
++  },
++};
++
++interface LotCardProps {
++  lot: Lot;
++}
++
++export function LotCard({ lot }: LotCardProps) {
++  const status = statusStyles[lot.status];
++  const isSold = lot.status === "vendido";
++
++  return (
++    <div
++      className={`bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-ambient hover:shadow-lg transition-all duration-300 flex flex-col group ${
++        isSold ? "opacity-70 grayscale-[30%]" : "hover:-translate-y-1"
++      }`}
++    >
++      <div className="relative">
++        <LazyImage
++          src={lot.aerialImage}
++          alt={`Vista aérea del Lote ${lot.id}${
++            lot.areaM2 ? ` — ${lot.areaM2} m²` : ""
++          }`}
++          aspectClassName="aspect-[4/3]"
++          className="group-hover:scale-105 transition-transform duration-700"
++        />
++        <span
++          className={`absolute top-4 right-4 px-3 py-1 rounded-full text-label-caps font-label-caps uppercase ${status.badge}`}
++        >
++          {status.label}
++        </span>
++      </div>
++
++      <div className="p-6 flex flex-col flex-grow">
++        <h3 className="text-lot-number font-lot-number text-primary mb-2">
++          Lote {lot.id}
++        </h3>
++        <p className="text-body-md font-body-md text-on-surface-variant flex items-center gap-2 mb-6 flex-grow">
++          <Ruler className="w-4 h-4" />
++          {lot.areaM2
++            ? `${lot.areaM2.toLocaleString("es-CO")} m²`
++            : "Área por confirmar"}
++        </p>
++
++        {isSold ? (
++          <button
++            disabled
++            className="w-full border border-outline-variant text-outline-variant font-label-bold py-3 rounded-lg cursor-not-allowed"
++          >
++            No disponible
++          </button>
++        ) : (
++          <Link
++            to={`/projects/${lot.id}`}
++            className="w-full text-center border-2 border-deep-forest text-deep-forest font-label-bold py-3 rounded-lg hover:bg-deep-forest hover:text-on-primary transition-colors"
++          >
++            Ver detalle
++          </Link>
++        )}
++      </div>
++    </div>
++  );
++}
+diff --git a/src/features/projects/components/LotFilters.tsx b/src/features/projects/components/LotFilters.tsx
+new file mode 100644
+index 0000000..6d79975
+--- /dev/null
++++ b/src/features/projects/components/LotFilters.tsx
+@@ -0,0 +1,61 @@
++import type { LotStatus } from "@/constants/lots";
++
++export type AreaRange = "all" | "under-2005" | "2005-2010" | "over-2010";
++
++interface LotFiltersProps {
++  status: LotStatus | "all";
++  onStatusChange: (status: LotStatus | "all") => void;
++  areaRange: AreaRange;
++  onAreaRangeChange: (range: AreaRange) => void;
++}
++
++export function LotFilters({
++  status,
++  onStatusChange,
++  areaRange,
++  onAreaRangeChange,
++}: LotFiltersProps) {
++  return (
++    <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-end w-full lg:w-auto">
++      <div className="flex flex-col w-full sm:w-48">
++        <label
++          htmlFor="filter-status"
++          className="text-label-caps font-label-caps text-on-surface-variant mb-2 uppercase"
++        >
++          Estado
++        </label>
++        <select
++          id="filter-status"
++          value={status}
++          onChange={(e) => onStatusChange(e.target.value as LotStatus | "all")}
++          className="bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-primary pb-2 pl-0"
++        >
++          <option value="all">Todos los estados</option>
++          <option value="disponible">Disponible</option>
++          <option value="reservado">Reservado</option>
++          <option value="vendido">Vendido</option>
++        </select>
++      </div>
++
++      <div className="flex flex-col w-full sm:w-48">
++        <label
++          htmlFor="filter-area"
++          className="text-label-caps font-label-caps text-on-surface-variant mb-2 uppercase"
++        >
++          Área (m²)
++        </label>
++        <select
++          id="filter-area"
++          value={areaRange}
++          onChange={(e) => onAreaRangeChange(e.target.value as AreaRange)}
++          className="bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-primary pb-2 pl-0"
++        >
++          <option value="all">Todos los tamaños</option>
++          <option value="under-2005">Menos de 2005 m²</option>
++          <option value="2005-2010">2005 - 2010 m²</option>
++          <option value="over-2010">Más de 2010 m²</option>
++        </select>
++      </div>
++    </div>
++  );
++}
+diff --git a/src/features/projects/components/LotGallery.tsx b/src/features/projects/components/LotGallery.tsx
+new file mode 100644
+index 0000000..83e6c7a
+--- /dev/null
++++ b/src/features/projects/components/LotGallery.tsx
+@@ -0,0 +1,94 @@
++import { useState } from "react";
++import type { Lot } from "@/constants/lots";
++
++interface LotGalleryProps {
++  lot: Lot;
++}
++
++export function LotGallery({ lot }: LotGalleryProps) {
++  const [activeView, setActiveView] = useState<"aerial" | "perspective">(
++    "aerial",
++  );
++
++  return (
++    <div className="flex flex-col gap-4">
++      <div className="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-high shadow-ambient">
++        <img
++          src={lot.aerialImage}
++          alt={`Vista aérea del Lote ${lot.id}`}
++          loading="eager"
++          fetchPriority="high"
++          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
++            activeView === "aerial" ? "opacity-100" : "opacity-0"
++          }`}
++        />
++        <img
++          src={lot.perspectiveImage}
++          alt={`Vista en perspectiva del Lote ${lot.id}`}
++          loading="lazy"
++          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
++            activeView === "perspective" ? "opacity-100" : "opacity-0"
++          }`}
++        />
++
++        <div className="absolute bottom-6 left-6 flex gap-2 bg-surface/85 backdrop-blur-md border border-outline-variant/20 p-1.5 rounded-lg z-20">
++          <button
++            onClick={() => setActiveView("aerial")}
++            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-all ${
++              activeView === "aerial"
++                ? "bg-deep-forest text-on-primary"
++                : "text-on-surface-variant hover:bg-deep-forest/5"
++            }`}
++          >
++            Vista Aérea
++          </button>
++          <button
++            onClick={() => setActiveView("perspective")}
++            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-all ${
++              activeView === "perspective"
++                ? "bg-deep-forest text-on-primary"
++                : "text-on-surface-variant hover:bg-deep-forest/5"
++            }`}
++          >
++            Vista en Perspectiva
++          </button>
++        </div>
++      </div>
++
++      <div className="flex gap-4">
++        <button
++          onClick={() => setActiveView("aerial")}
++          aria-label="Ver vista aérea"
++          className={`w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
++            activeView === "aerial"
++              ? "border-deep-forest"
++              : "border-transparent hover:border-heritage-gold"
++          }`}
++        >
++          <img
++            src={lot.aerialImage}
++            alt=""
++            className="w-full h-full object-cover"
++            loading="lazy"
++          />
++        </button>
++        <button
++          onClick={() => setActiveView("perspective")}
++          aria-label="Ver vista en perspectiva"
++          className={`w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
++            activeView === "perspective"
++              ? "border-deep-forest"
++              : "border-transparent hover:border-heritage-gold"
++          }`}
++        >
++          <img
++            src={lot.perspectiveImage}
++            alt=""
++            className="w-full h-full object-cover"
++            loading="lazy"
++          />
++        </button>
++      </div>
++    </div>
++  );
++}
+diff --git a/src/features/projects/components/LotMiniMap.tsx b/src/features/projects/components/LotMiniMap.tsx
+new file mode 100644
+index 0000000..30a2d58
+--- /dev/null
++++ b/src/features/projects/components/LotMiniMap.tsx
+@@ -0,0 +1,26 @@
++interface LotMiniMapProps {
++  lotId: string;
++}
++
++export function LotMiniMap({ lotId }: LotMiniMapProps) {
++  return (
++    <div className="relative w-full h-64 rounded-xl overflow-hidden bg-surface-container shadow-ambient border border-outline-variant/10">
++      <div
++        className="absolute inset-0 opacity-40 bg-cover bg-center grayscale"
++        style={{ backgroundImage: "url('/lots/masterplan-render.jpg')" }}
++      />
++      <div className="absolute inset-0 flex items-center justify-center">
++        <div className="w-24 h-24 border-2 border-heritage-gold bg-heritage-gold/20 flex items-center justify-center rounded-sm">
++          <span className="text-label-caps font-label-caps text-primary font-bold bg-surface/80 px-2 py-1 rounded">
++            LOTE {lotId}
++          </span>
++        </div>
++      </div>
++      <div className="absolute bottom-4 left-4">
++        <span className="text-label-caps font-label-caps text-primary bg-surface/90 px-3 py-1 rounded-sm">
++          Plano General
++        </span>
++      </div>
++    </div>
++  );
++}
+diff --git a/src/features/projects/components/LotSpecs.tsx b/src/features/projects/components/LotSpecs.tsx
+new file mode 100644
+index 0000000..df5bfbd
+--- /dev/null
++++ b/src/features/projects/components/LotSpecs.tsx
+@@ -0,0 +1,55 @@
++import { MessageCircle } from "lucide-react";
++import type { Lot } from "@/constants/lots";
++
++interface LotSpecsProps {
++  lot: Lot;
++}
++
++export function LotSpecs({ lot }: LotSpecsProps) {
++  const specs = [
++    {
++      label: "Área Total",
++      value: lot.areaM2
++        ? `${lot.areaM2.toLocaleString("es-CO")} m²`
++        : "Por confirmar",
++    },
++    { label: "Topografía", value: lot.topography ?? "Por confirmar" },
++    { label: "Vista", value: lot.view ?? "Por confirmar" },
++    { label: "Acceso Vía", value: lot.access ?? "Por confirmar" },
++  ];
++
++  return (
++    <div className="bg-surface-container-lowest p-8 rounded-xl shadow-ambient border border-outline-variant/10">
++      <h3 className="text-headline-md font-headline-md text-primary mb-6 border-b border-outline-variant/20 pb-4">
++        Especificaciones
++      </h3>
++      <dl className="flex flex-col gap-4">
++        {specs.map((spec, i) => (
++          <div
++            key={spec.label}
++            className={`flex justify-between items-center py-2 ${
++              i < specs.length - 1 ? "border-b border-outline-variant/20" : ""
++            }`}
++          >
++            <dt className="text-body-md font-body-md text-on-surface-variant">
++              {spec.label}
++            </dt>
++            <dd className="text-body-md font-body-md font-medium text-primary">
++              {spec.value}
++            </dd>
++          </div>
++        ))}
++      </dl>
++
++      <a
++        href="https://wa.me/"
++        target="_blank"
++        rel="noopener noreferrer"
++        className="w-full mt-8 flex items-center justify-center gap-2 bg-heritage-gold text-primary py-4 rounded-lg font-label-bold hover:opacity-90 transition-all shadow-md"
++      >
++        <MessageCircle className="w-5 h-5" />
++        Reservar este lote
++      </a>
++    </div>
++  );
++}
+diff --git a/src/index.css b/src/index.css
+index d8f55b8..3d681e1 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -111,6 +111,20 @@
+   --text-caption--line-height: 16px;
+   --text-caption--font-weight: 400;
+ 
++  /* ── Específicos de las vistas de Lotes ── */
++  --font-lot-number: "Playfair Display", serif;
++  --text-lot-number: 24px;
++  --text-lot-number--line-height: 24px;
++  --text-lot-number--font-weight: 700;
++
++  --font-label-caps: "Inter", sans-serif;
++  --text-label-caps: 12px;
++  --text-label-caps--line-height: 16px;
++  --text-label-caps--letter-spacing: 0.1em;
++  --text-label-caps--font-weight: 600;
++
++  --shadow-ambient: 0px 12px 24px rgba(27, 67, 50, 0.06);
++
+   /* ── Espaciado ── */
+   --spacing-container-max: 1280px;
+   --spacing-gutter: 24px;
+diff --git a/src/router/index.tsx b/src/router/index.tsx
+index b4876b6..21c4856 100644
+--- a/src/router/index.tsx
++++ b/src/router/index.tsx
+@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
+ import { RootLayout } from "@/components/layout/RootLayout";
+ import { HomePage } from "@/features/home/HomePage";
+ import { InvestmentPage } from "@/features/investment/InvestmentPage";
++import { ProjectsPage } from "@/features/projects/ProjectsPage";
++import { ProjectDetailPage } from "@/features/projects/ProjectDetailPage";
+ 
+ export const router = createBrowserRouter([
+   {
+@@ -16,9 +18,15 @@ export const router = createBrowserRouter([
+         path: "investment",
+         element: <InvestmentPage />,
+       },
++      {
++        path: "projects",
++        element: <ProjectsPage />,
++      },
++      {
++        path: "projects/:id",
++        element: <ProjectDetailPage />,
++      },
+       // Rutas futuras:
+-      // { path: "/projects", element: <ProjectsPage /> },
+-      // { path: "/projects/:id", element: <ProjectDetailPage /> },
+       // { path: "/calculator", element: <CalculatorPage /> },
+       // { path: "/how-to-buy", element: <HowToBuyPage /> },
+       // { path: "/contact", element: <ContactPage /> },

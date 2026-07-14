@@ -6,6 +6,8 @@ export function HeroSection() {
       {/* Imagen de Fondo */}
       <div className="absolute inset-0 z-0">
         <img
+          loading="eager"
+          fetchPriority="high"
           className="w-full h-full object-cover"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm34ExVYXJI6Yew3li1eJTrQmYAlwFN-QHHYorlhN-p35LiKal84WwmzFBTt7g-rs9FGfZHF13nxbWoAxAS-rs6BN1lWjLyiXnHCoNgVVlDcc6ET4E15NZd1md6MYuikG5ZZ4YJQt9znRh7ue8BXp9ZTDZdKpR1D2AbBVZEFKExgucJ5CjzcYCIPzNGTWc7HijOFCKLIDN7Tsq761RHT_E4_PZcFBNymimhL_-1-SogoCntM3RFiobZHFeP6bLhcLhFC-DPWGJoX7f"
           alt="Exuberantes paisajes verdes del Quindío, Colombia con colinas onduladas y plantaciones de café"
@@ -20,7 +22,9 @@ export function HeroSection() {
             Sea Dueño de su Lote Rural en el Quindío
           </h1>
           <p className="text-body-lg font-body-lg text-on-surface-variant mb-8 max-w-2xl">
-            Invierta en naturaleza, disfrute un estilo de vida más saludable y benefíciese de la apreciación a largo plazo en el paisaje más vibrante de Colombia.
+            Invierta en naturaleza, disfrute un estilo de vida más saludable y
+            benefíciese de la apreciación a largo plazo en el paisaje más
+            vibrante de Colombia.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
