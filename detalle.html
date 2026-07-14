@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lote 08 - Verdant Horizon</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "forest-green": "#1B4332",
+                        "coffee-green": "#2D6A4F",
+                        "soft-gold": "#D4A373",
+                        "warm-white": "#FAFAF8",
+                        "deep-forest": "#081C15",
+                        "surface": "#FAFAF8",
+                        "primary": "#1B4332",
+                        "secondary": "#2D6A4F",
+                        "background": "#FAFAF8",
+                        "on-background": "#081C15",
+                        "outline": "#717973",
+                        "surface-container": "#eeeeec",
+                        "surface-container-high": "#e8e8e6",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "margin-mobile": "20px",
+                        "gutter": "32px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "lot-number": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "lot-number": ["24px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    },
+                    "boxShadow": {
+                        "ambient": "0px 12px 24px rgba(27, 67, 50, 0.04)"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #FAFAF8; color: #081C15; }
+        .glass-panel { background: rgba(250, 250, 248, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(27, 67, 50, 0.1); }
+        .gallery-fade { transition: opacity 0.5s ease-in-out; }
+        :focus { outline: 2px solid #D4A373; outline-offset: 2px; }
+        .skeleton { background: linear-gradient(90deg, #eeeeec 25%, #e2e3e1 50%, #eeeeec 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite; }
+        @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col pt-24">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 dark:bg-deep-forest/90 backdrop-blur-md transition-all duration-300 border-b border-forest-green/10">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-headline-md text-headline-md text-forest-green dark:text-soft-gold tracking-tight" href="#">Verdant Horizon</a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-deep-forest/80 dark:text-warm-white/80 hover:text-forest-green dark:hover:text-soft-gold transition-colors font-body-md" href="#">Proyectos</a>
+<a class="text-deep-forest/80 dark:text-warm-white/80 hover:text-forest-green dark:hover:text-soft-gold transition-colors font-body-md" href="#">Ubicación</a>
+<a class="text-deep-forest/80 dark:text-warm-white/80 hover:text-forest-green dark:hover:text-soft-gold transition-colors font-body-md" href="#">Proceso</a>
+<a class="text-forest-green dark:text-soft-gold font-bold border-b-2 border-soft-gold pb-1 font-body-md" href="#">Lotes</a>
+<button class="p-2 rounded-full hover:bg-forest-green/5 dark:hover:bg-warm-white/5 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block">light_mode</span>
+</button>
+</div>
+<button class="hidden md:flex items-center gap-2 bg-soft-gold text-deep-forest px-6 py-3 rounded-DEFAULT font-body-md font-medium hover:bg-[#c49363] transition-all">
+            Reservar
+        </button>
+<button class="md:hidden text-forest-green dark:text-soft-gold" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Mobile Menu -->
+<div class="hidden md:hidden bg-white dark:bg-deep-forest border-t border-forest-green/10 p-6 flex flex-col gap-4" id="mobile-menu">
+<a class="text-deep-forest dark:text-warm-white font-body-md" href="#">Proyectos</a>
+<a class="text-deep-forest dark:text-warm-white font-body-md" href="#">Ubicación</a>
+<a class="text-deep-forest dark:text-warm-white font-body-md" href="#">Proceso</a>
+<a class="text-forest-green dark:text-soft-gold font-bold font-body-md" href="#">Lotes</a>
+<button class="w-full bg-soft-gold text-deep-forest py-3 rounded-DEFAULT font-body-md">Reservar</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24">
+<!-- Breadcrumbs & Header -->
+<div class="mb-12">
+<nav class="flex items-center gap-2 text-deep-forest/60 font-label-caps text-label-caps mb-4 uppercase tracking-widest">
+<a class="hover:text-forest-green transition-colors" href="#">Lotes</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-forest-green font-semibold">Lote 08</span>
+</nav>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div>
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-forest-green mb-2">Lote 08</h1>
+<p class="font-body-lg text-body-lg text-deep-forest/70">Santuario Natural en Quindío</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="bg-forest-green/10 text-forest-green font-label-caps text-label-caps px-4 py-2 rounded-full uppercase">Disponible</span>
+<p class="font-lot-number text-lot-number text-forest-green">$450M COP</p>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+<!-- Main Gallery Area -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="relative w-full aspect-[16/9] md:aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-high shadow-ambient">
+<!-- Skeleton -->
+<div class="absolute inset-0 skeleton z-0"></div>
+<!-- Image Layers -->
+<img alt="Vista Principal Lote 08 - Santuario Natural en Quindío" class="absolute inset-0 w-full h-full object-cover gallery-fade z-10" id="main-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8OzT8pd3LR__qKZT7NcZdNgrzYk0es2FONTLtwvVZ_Typ_SGaMf1JbuXGLHN-8O-wSB_c81dKf_vmHnkpqRouzPuof2PDOlS472HwqP6BkPDa5DQWB67EighvTAfVKZihimoSrLn-aKsseDuMhgjmZOI7QcBBRDKnvIsKrOGe2jGJtYAbskm2dk3ktVIBIwwLR0Kv5V239N5eWUoUMIg7c1ziz04SdpqP-iJwqiGv_HzvYeQ9aifSfIXey2Sjap8ltw"/>
+<!-- Gallery Toggles -->
+<div class="absolute bottom-6 left-6 flex gap-2 glass-panel p-1.5 rounded-lg z-20">
+<button class="bg-forest-green text-warm-white px-4 py-2 rounded-md font-label-caps text-label-caps transition-all" id="toggle-aerial" onclick="toggleGallery('aerial')">Vista Aérea</button>
+<button class="text-deep-forest/70 hover:bg-forest-green/5 px-4 py-2 rounded-md font-label-caps text-label-caps transition-all" id="toggle-persp" onclick="toggleGallery('persp')">Vista Perspectiva</button>
+</div>
+</div>
+<!-- Thumbnails -->
+<div class="flex gap-4 overflow-x-auto pb-2">
+<button class="w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 border-forest-green" onclick="toggleGallery('aerial')">
+<img alt="Thumbnail Vista Aérea" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8OzT8pd3LR__qKZT7NcZdNgrzYk0es2FONTLtwvVZ_Typ_SGaMf1JbuXGLHN-8O-wSB_c81dKf_vmHnkpqRouzPuof2PDOlS472HwqP6BkPDa5DQWB67EighvTAfVKZihimoSrLn-aKsseDuMhgjmZOI7QcBBRDKnvIsKrOGe2jGJtYAbskm2dk3ktVIBIwwLR0Kv5V239N5eWUoUMIg7c1ziz04SdpqP-iJwqiGv_HzvYeQ9aifSfIXey2Sjap8ltw"/>
+</button>
+<button class="w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 border-transparent hover:border-soft-gold" onclick="toggleGallery('persp')">
+<img alt="Thumbnail Vista Perspectiva" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ6pqDa-karieqHtRXfIPOiivkIpd0CHx31Q7GWrn_tXZIQGULh85idG13i2csuh3djud5mmWC_3QuBXFI_Wr7pfJ6AGlTKy29YIC0UT4MPnHhsObPSPBXRaTiZ905HZO8DycarqfHNcoRR7vH6oshzw_zzoKtNRANajEh0E9Ti8Fu0voRvMBh-wUTBs_gzr-b0L2m9-LdsFEE--fms-nfe9jzhQ1fHUsD_ZW20RfTHnKkDOlqxwbZPOzLqML5X12XEQ"/>
+</button>
+</div>
+</div>
+<!-- Technical Details & Mini-map -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<div class="bg-white p-8 rounded-xl shadow-ambient border border-forest-green/5">
+<h3 class="font-headline-md text-headline-md text-forest-green mb-6 border-b border-surface-container pb-4">Especificaciones</h3>
+<dl class="flex flex-col gap-4">
+<div class="flex justify-between items-center py-2 border-b border-surface-container">
+<dt class="font-body-md text-deep-forest/70">Área Total</dt>
+<dd class="font-body-md font-medium text-forest-green">2,005 m²</dd>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-container">
+<dt class="font-body-md text-deep-forest/70">Topografía</dt>
+<dd class="font-body-md font-medium text-forest-green">Ondulada suave</dd>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-container">
+<dt class="font-body-md text-deep-forest/70">Vista</dt>
+<dd class="font-body-md font-medium text-forest-green">Panorámica al valle</dd>
+</div>
+<div class="flex justify-between items-center py-2">
+<dt class="font-body-md text-deep-forest/70">Acceso Vía</dt>
+<dd class="font-body-md font-medium text-forest-green">Directo principal</dd>
+</div>
+</dl>
+<button class="w-full mt-8 flex items-center justify-center gap-2 bg-soft-gold text-deep-forest py-4 rounded-DEFAULT font-body-md font-medium hover:bg-[#c49363] transition-all shadow-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                        Reservar este lote
+                    </button>
+</div>
+<!-- Mini-map Context -->
+<div class="relative w-full h-64 rounded-xl overflow-hidden bg-surface-container shadow-ambient border border-forest-green/5">
+<div class="absolute inset-0 opacity-40 bg-[url('https://lh3.googleusercontent.com/aida-public/AB6AXuBJ6pqDa-karieqHtRXfIPOiivkIpd0CHx31Q7GWrn_tXZIQGULh85idG13i2csuh3djud5mmWC_3QuBXFI_Wr7pfJ6AGlTKy29YIC0UT4MPnHhsObPSPBXRaTiZ905HZO8DycarqfHNcoRR7vH6oshzw_zzoKtNRANajEh0E9Ti8Fu0voRvMBh-wUTBs_gzr-b0L2m9-LdsFEE--fms-nfe9jzhQ1fHUsD_ZW20RfTHnKkDOlqxwbZPOzLqML5X12XEQ')] bg-cover bg-center grayscale"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-24 h-24 border-2 border-soft-gold bg-soft-gold/20 flex items-center justify-center rounded-sm">
+<span class="font-label-caps text-forest-green font-bold bg-white/80 px-2 py-1 rounded">LOTE 08</span>
+</div>
+</div>
+<div class="absolute bottom-4 left-4">
+<span class="font-label-caps text-label-caps text-forest-green bg-white/90 px-3 py-1 rounded-sm">Plano General</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3-Step Process Recap -->
+<div class="mb-section-gap">
+<h2 class="font-headline-lg-mobile md:text-headline-lg text-forest-green text-center mb-12">Pasos legales de la compra</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col items-center text-center p-8 bg-white rounded-xl shadow-ambient border border-forest-green/5">
+<div class="w-16 h-16 rounded-full bg-forest-green/5 flex items-center justify-center mb-6 text-forest-green">
+<span class="material-symbols-outlined text-3xl">flag</span>
+</div>
+<h4 class="font-lot-number text-lot-number text-forest-green mb-3">1. Separación</h4>
+<p class="font-body-md text-deep-forest/70">Reserva tu lote con un anticipo inicial para asegurar la ubicación deseada.</p>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-white rounded-xl shadow-ambient border border-forest-green/5 relative">
+<div class="hidden md:block absolute top-16 -left-4 w-8 h-[1px] bg-forest-green/10"></div>
+<div class="w-16 h-16 rounded-full bg-forest-green/5 flex items-center justify-center mb-6 text-forest-green">
+<span class="material-symbols-outlined text-3xl">contract</span>
+</div>
+<h4 class="font-lot-number text-lot-number text-forest-green mb-3">2. Promesa</h4>
+<p class="font-body-md text-deep-forest/70">Firma de la promesa de compraventa y establecimiento del plan de pagos.</p>
+</div>
+<div class="flex flex-col items-center text-center p-8 bg-white rounded-xl shadow-ambient border border-forest-green/5 relative">
+<div class="hidden md:block absolute top-16 -left-4 w-8 h-[1px] bg-forest-green/10"></div>
+<div class="w-16 h-16 rounded-full bg-soft-gold/20 flex items-center justify-center mb-6 text-forest-green">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">key</span>
+</div>
+<h4 class="font-lot-number text-lot-number text-forest-green mb-3">3. Escrituración</h4>
+<p class="font-body-md text-deep-forest/70">Entrega oficial y escrituración del lote para comenzar tu proyecto.</p>
+</div>
+</div>
+</div>
+<!-- Related Lots -->
+<div>
+<h3 class="font-headline-md text-headline-md text-forest-green mb-8 border-b border-surface-container pb-4">Lotes Similares</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Related Lot Card 1 -->
+<article class="bg-white rounded-xl shadow-ambient overflow-hidden group cursor-pointer hover:-translate-y-1 transition-all border border-forest-green/5">
+<div class="h-48 bg-surface-container-high relative overflow-hidden">
+<img alt="Lote 07 - Vista del terreno" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpRJicGteFtDSXpOhM0a0WBXhfK_xYvv238OixIaOgljttAoo-bdSYT6_efYaDa9qntHa7Y0aJz0vyzrQLfz9sElP2ID8uTxT96q6SqwRMy52hUMZ49SIXTxcL-EFNA6fa_QSk0PaCtD_NHIvJif0qDvwMZwMa9Ca1A7xXla8qedHA9f-8JasufwXkq8PmgZpnqlNiVDq5x_R8C_3wiFDCiWCEh5QSjvvD33_uKgtNPsutsFtYNLju"/>
+<div class="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-sm font-label-caps text-label-caps text-forest-green">LOTE 07</div>
+</div>
+<div class="p-6">
+<p class="font-body-md text-deep-forest/60 mb-2">2,010 m²</p>
+<p class="font-lot-number text-lot-number text-forest-green mb-4">$455M COP</p>
+<span class="text-coffee-green font-label-caps text-label-caps uppercase flex items-center gap-1 hover:underline">
+                            Ver Detalles <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</span>
+</div>
+</article>
+<!-- Related Lot Card 2 -->
+<article class="bg-white rounded-xl shadow-ambient overflow-hidden group cursor-pointer hover:-translate-y-1 transition-all border border-forest-green/5">
+<div class="h-48 bg-surface-container-high relative overflow-hidden">
+<img alt="Lote 09 - Vista del terreno" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk8Ryz4R5XmRff0dLawhI5WoQkAsmMvJUtLwr9y011AGeOffYOQ1nH_fRGWtVwPMBKjFTVNGsqta8D1LR966eMxrkJKV2BYhqpA_wDIg4gFnyBHJZCe4iw-Q2GCZAOPl-Lro3twy7it0HoZYn0HJPtSFoZSdgSlRvJ_1AQZXeIp7SefmGQoYlgAcQ5ArMROJoMdQSj4VVblo_bz0dmx5l1EWvvkIM3x_eS4QfT_Btg-p7HnuX5-oup"/>
+<div class="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-sm font-label-caps text-label-caps text-forest-green">LOTE 09</div>
+</div>
+<div class="p-6">
+<p class="font-body-md text-deep-forest/60 mb-2">2,150 m²</p>
+<p class="font-lot-number text-lot-number text-forest-green mb-4">$480M COP</p>
+<span class="text-coffee-green font-label-caps text-label-caps uppercase flex items-center gap-1 hover:underline">
+                            Ver Detalles <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</span>
+</div>
+</article>
+</div>
+</div>
+</div>
+</main>
+<!-- Global WhatsApp -->
+<a aria-label="Chat on WhatsApp" class="fixed bottom-8 right-8 z-[60] bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center" href="#">
+<svg class="w-8 h-8 fill-current" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+</a>
+<!-- Footer -->
+<footer class="w-full bg-forest-green text-warm-white">
+<div class="px-margin-mobile md:px-margin-desktop py-24 max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 border-b border-warm-white/10 pb-16 mb-8">
+<div class="font-headline-lg text-headline-lg">
+                Verdant Horizon
+            </div>
+<div class="flex flex-wrap gap-8">
+<a class="font-body-md hover:text-soft-gold transition-colors" href="#">Privacidad</a>
+<a class="font-body-md hover:text-soft-gold transition-colors" href="#">Términos</a>
+<a class="font-body-md hover:text-soft-gold transition-colors" href="#">Contacto</a>
+<a class="font-body-md hover:text-soft-gold transition-colors" href="#">Brochure</a>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 opacity-60 font-body-md">
+<p>© 2026 Lotes Quindío - Verdant Horizon. Todos los derechos reservados.</p>
+<div class="flex gap-4">
+<a class="hover:text-soft-gold transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="hover:text-soft-gold transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    const images = {
+        aerial: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8OzT8pd3LR__qKZT7NcZdNgrzYk0es2FONTLtwvVZ_Typ_SGaMf1JbuXGLHN-8O-wSB_c81dKf_vmHnkpqRouzPuof2PDOlS472HwqP6BkPDa5DQWB67EighvTAfVKZihimoSrLn-aKsseDuMhgjmZOI7QcBBRDKnvIsKrOGe2jGJtYAbskm2dk3ktVIBIwwLR0Kv5V239N5eWUoUMIg7c1ziz04SdpqP-iJwqiGv_HzvYeQ9aifSfIXey2Sjap8ltw",
+        persp: "https://lh3.googleusercontent.com/aida-public/AB6AXuBJ6pqDa-karieqHtRXfIPOiivkIpd0CHx31Q7GWrn_tXZIQGULh85idG13i2csuh3djud5mmWC_3QuBXFI_Wr7pfJ6AGlTKy29YIC0UT4MPnHhsObPSPBXRaTiZ905HZO8DycarqfHNcoRR7vH6oshzw_zzoKtNRANajEh0E9Ti8Fu0voRvMBh-wUTBs_gzr-b0L2m9-LdsFEE--fms-nfe9jzhQ1fHUsD_ZW20RfTHnKkDOlqxwbZPOzLqML5X12XEQ"
+    };
+
+    function toggleGallery(view) {
+        const img = document.getElementById('main-image');
+        const btnAerial = document.getElementById('toggle-aerial');
+        const btnPersp = document.getElementById('toggle-persp');
+        
+        img.style.opacity = '0';
+        
+        setTimeout(() => {
+            img.src
+<truncated 26752 bytes>
+
+NOTE: The output was truncated because it was too long. Use a more targeted query or a smaller range to get the information you need.

@@ -1,20 +1,18 @@
-import { Mountain, Building2, Home } from "lucide-react";
-
 const steps = [
   {
-    icon: Mountain,
+    icon: "fa-solid fa-mountain",
     title: "1. Compra tu lote",
     description:
       "Elige el espacio perfecto dentro de nuestro entorno natural exclusivo.",
   },
   {
-    icon: Building2,
+    icon: "fa-solid fa-building",
     title: "2. Diseño",
     description:
       "Recibe un paquete de diseño arquitectónico armónico con el paisaje.",
   },
   {
-    icon: Home,
+    icon: "fa-solid fa-house",
     title: "3. Construcción",
     description:
       "Construimos tu casa asegurando los más altos estándares de calidad.",
@@ -41,7 +39,7 @@ export function ProcessSteps() {
             className="relative z-10 flex flex-col items-center text-center bg-surface-container-lowest p-8 rounded-xl shadow-ambient border border-outline-variant/10"
           >
             <div className="w-20 h-20 bg-deep-forest text-on-primary rounded-full flex items-center justify-center mb-6 shadow-md">
-              <step.icon className="w-9 h-9" />
+              <i className={`${step.icon} text-4xl`}></i>
             </div>
             <h3 className="text-headline-md font-headline-md text-primary mb-3">
               {step.title}

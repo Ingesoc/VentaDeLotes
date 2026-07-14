@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { TopNavBar } from "./TopNavBar";
 import { Footer } from "./Footer";
 import { BottomNavBar } from "./BottomNavBar";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 
 export function RootLayout() {
   return (
@@ -13,6 +14,7 @@ export function RootLayout() {
       </main>
       <Footer />
       <BottomNavBar />
+      <WhatsAppButton />
     </div>
   );
 }
