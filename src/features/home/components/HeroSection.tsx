@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export function HeroSection() {
   return (
     <header className="relative h-screen w-full flex items-center justify-center overflow-hidden">
