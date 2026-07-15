@@ -3,7 +3,7 @@ export function HeroSection() {
     <header className="relative h-screen w-full flex items-center justify-center overflow-hidden">
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('../../../public/landscapes/Loteo General.webp')" }}
+        style={{ backgroundImage: "url('/landscapes/Loteo%20General.webp')" }}
       >
         <img
           alt="Vista aérea espectacular del plan maestro de Verdant Horizon en Quindío, Colombia, con paisajes verdes y lotes orgánicos"
