@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
-import { Ruler } from "lucide-react";
+import { Ruler, DollarSign } from "lucide-react";
 import type { Lot } from "@/constants/lots";
 import { LazyImage } from "@/components/ui/LazyImage";
+
+function formatPrice(price: number): string {
+  const millones = price / 1_000_000;
+  if (millones >= 100) {
+    return `$${Math.round(millones).toLocaleString("es-CO")}M`;
+  }
+  return `$${millones.toLocaleString("es-CO", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  })}M`;
+}
 
 const statusStyles: Record<Lot["status"], { label: string; badge: string }> = {
   disponible: {
@@ -28,8 +39,8 @@ export function LotCard({ lot }: LotCardProps) {
 
   return (
     <div
-      className={`bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-ambient hover:shadow-lg transition-all duration-300 flex flex-col group ${
-        isSold ? "opacity-70 grayscale-[30%]" : "hover:-translate-y-1"
+      className={`bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-ambient flex flex-col group hover-lift ${
+        isSold ? "opacity-70 grayscale-[30%]" : ""
       }`}
     >
       <div className="relative">
@@ -39,7 +50,7 @@ export function LotCard({ lot }: LotCardProps) {
             lot.areaM2 ? ` — ${lot.areaM2} m²` : ""
           }`}
           aspectClassName="aspect-[4/3]"
-          className="group-hover:scale-105 transition-transform duration-700"
+          className="img-zoom"
         />
         <span
           className={`absolute top-4 right-4 px-3 py-1 rounded-full text-label-caps font-label-caps uppercase ${status.badge}`}
@@ -52,6 +63,13 @@ export function LotCard({ lot }: LotCardProps) {
         <h3 className="text-lot-number font-lot-number text-primary mb-2">
           Lote {lot.id}
         </h3>
+        {lot.price && (
+          <p className="text-lot-number font-lot-number text-primary mb-2 flex items-center gap-2">
+            <DollarSign className="w-5 h-5 text-heritage-gold" />
+            {formatPrice(lot.price)}
+            <span className="text-caption font-caption text-on-surface-variant font-normal">COP</span>
+          </p>
+        )}
         <p className="text-body-md font-body-md text-on-surface-variant flex items-center gap-2 mb-6 flex-grow">
           <Ruler className="w-4 h-4" />
           {lot.areaM2
@@ -62,6 +80,7 @@ export function LotCard({ lot }: LotCardProps) {
         {isSold ? (
           <button
             disabled
+            type="button"
             className="w-full border border-outline-variant text-outline-variant font-label-bold py-3 rounded-lg cursor-not-allowed"
           >
             No disponible

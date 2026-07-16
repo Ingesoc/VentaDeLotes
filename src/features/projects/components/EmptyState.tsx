@@ -19,6 +19,7 @@ export function EmptyState({ onClearFilters }: EmptyStateProps) {
       </p>
       <button
         onClick={onClearFilters}
+        type="button"
         className="bg-deep-forest text-on-primary px-8 py-3 rounded-lg font-label-bold hover:opacity-90 transition-opacity"
       >
         Limpiar filtros

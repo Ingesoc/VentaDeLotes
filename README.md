@@ -22,6 +22,27 @@ Our brand identity is supported by the following design system tokens:
 - **Deep Forest** (`#081C15`): Rich typography, high contrast accents.
 - **Typography**: Paired display serif (Playfair Display) for headlines and high-legibility sans-serif (Inter) for copy.
 
+## Linting & CI
+
+### React Doctor
+
+This project uses [React Doctor](https://react.doctor) to catch React-specific bugs, security issues, and maintainability problems. Run it locally:
+
+```bash
+bun run lint:doctor
+```
+
+It runs automatically in CI on every push/PR to `main` (see `.github/workflows/ci.yml`).
+
+### Resolved: `artifact-baas-authority-surface`
+
+`@supabase/supabase-js` is loaded from **esm.sh CDN** at runtime (see importmap in `index.html`) instead of being bundled — the library code never enters a `dist/assets/` file, so the diagnostic can't fire.
+
+All app-level mitigations remain in place:
+- **RLS enforced**: `lots` restricted to `disponible`, `leads`/`page_views` write-only via `SECURITY DEFINER` RPC functions
+- **Table names hidden**: all `supabase.from()` calls replaced with `supabase.rpc()`
+- **Admin screens code-split**: all admin imports are `lazy()`
+
 ## Getting Started
 To launch the development server locally, install dependencies and run:
 ```bash

@@ -22,7 +22,7 @@ export function InvestmentHero() {
             >
               Explorar Potencial de ROI <ArrowRight className="w-4 h-4" />
             </Link>
-            <button className="bg-transparent border border-white text-white font-label-bold px-8 py-4 rounded-lg hover:bg-white/10 transition-all duration-300 text-center">
+            <button type="button" className="bg-transparent border border-white text-white font-label-bold px-8 py-4 rounded-lg hover:bg-white/10 transition-all duration-300 text-center">
               Descargar Presentación de Inversión
             </button>
           </div>

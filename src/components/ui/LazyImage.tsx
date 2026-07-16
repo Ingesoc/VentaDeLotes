@@ -4,9 +4,9 @@ interface LazyImageProps {
   src: string;
   alt: string;
   className?: string;
-  /** Ej: "aspect-[4/3]", "aspect-video", "aspect-square" — evita saltos de layout (CLS) */
+  /** Ej: "aspect-[4/3]", "aspect-video" — evita saltos de layout */
   aspectClassName?: string;
-  /** Solo para imágenes visibles sin hacer scroll (Hero, primer elemento destacado) */
+  /** Para imágenes visibles sin scroll (Hero, primera) */
   priority?: boolean;
 }
 

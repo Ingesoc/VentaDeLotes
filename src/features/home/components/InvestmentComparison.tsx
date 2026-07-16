@@ -16,7 +16,7 @@ export function InvestmentComparison() {
 
         {/* Tarjetas */}
         <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch max-w-4xl mx-auto">
-          {/* Apartamento en la Ciudad */}
+          {/* Ciudad */}
           <div className="flex-1 bg-surface p-8 rounded-xl border border-outline-variant/30 flex flex-col">
             <h3 className="text-headline-md font-headline-md text-on-surface-variant mb-6 text-center">
               Apartamento en la Ciudad
@@ -58,9 +58,9 @@ export function InvestmentComparison() {
             </ul>
           </div>
 
-          {/* Lote Rural (Destacado) */}
+          {/* Rural (destacado) */}
           <div className="flex-1 bg-primary text-on-primary p-8 rounded-xl border border-heritage-gold/30 shadow-[0_12px_40px_rgba(27,67,50,0.2)] transform md:-translate-y-4 flex flex-col relative overflow-hidden">
-            {/* Etiqueta de Recomendado */}
+            {/* Recomendado */}
             <div className="absolute top-0 right-0 bg-heritage-gold text-primary text-caption font-label-bold px-4 py-1 rounded-bl-lg">
               Recomendado
             </div>

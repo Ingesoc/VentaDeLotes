@@ -3,17 +3,10 @@ export interface NavLink {
   to: string;
 }
 
-export const desktopNavLinks: NavLink[] = [
-  { label: "Proyectos", to: "/projects" },
-  { label: "Inversión", to: "/investment" },
-  { label: "Cómo Comprar", to: "/how-to-buy" },
-  { label: "Contacto", to: "/contact" },
-];
-
 export interface BottomNavItem {
   label: string;
   to: string;
-  /** Nombre del icono de Lucide — importado dinámicamente en el componente */
+  /** Nombre del icono Lucide */
   icon: "Compass" | "TrendingUp" | "Heart" | "MessageCircle";
 }
 

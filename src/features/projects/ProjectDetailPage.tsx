@@ -6,6 +6,8 @@ import { LotSpecs } from "./components/LotSpecs";
 import { LotMiniMap } from "./components/LotMiniMap";
 import { AcquisitionSteps } from "./components/AcquisitionSteps";
 import { LotCard } from "./components/LotCard";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useTrackPageView } from "@/hooks/useTrackPageView";
 
 const statusLabel = {
   disponible: "Disponible",
@@ -17,6 +19,17 @@ export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
   const lot = id ? getLotById(id) : undefined;
 
+  // Registrar vista para analytics
+  useTrackPageView(id);
+
+  // Los hooks deben ir antes de cualquier return condicional
+  const scrollRevealRef = useScrollReveal({
+    childSelector: "section, .grid > *",
+    variant: "fade-up",
+    staggerDelay: 80,
+    rootMargin: "0px 0px -60px 0px",
+  });
+
   if (!lot) {
     return <Navigate to="/projects" replace />;
   }
@@ -24,8 +37,8 @@ export function ProjectDetailPage() {
   const relatedLots = getRelatedLots(lot.id, 2);
 
   return (
-    <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24">
-      {/* Breadcrumb */}
+    <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24 page-enter">
+      {/* Migas de pan */}
       <nav className="flex items-center gap-2 text-on-surface-variant text-label-caps font-label-caps mb-4 uppercase tracking-widest">
         <Link
           to="/projects"
@@ -37,7 +50,7 @@ export function ProjectDetailPage() {
         <span className="text-deep-forest font-semibold">Lote {lot.id}</span>
       </nav>
 
-      {/* Header */}
+      {/* Encabezado */}
       <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
           <h1 className="text-headline-lg-mobile md:text-display-lg font-display-lg text-primary mb-2">
@@ -59,7 +72,7 @@ export function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Galería + especificaciones */}
+      {/* Galería + specs */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
         <div className="lg:col-span-8">
           <LotGallery lot={lot} />
@@ -72,7 +85,7 @@ export function ProjectDetailPage() {
 
       <AcquisitionSteps />
 
-      {/* Lotes similares */}
+      {/* Similares */}
       {relatedLots.length > 0 && (
         <div>
           <h3 className="text-headline-md font-headline-md text-primary mb-8 border-b border-outline-variant/20 pb-4">

@@ -4,7 +4,7 @@ export function InvestmentCTA() {
   return (
     <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
       <div className="bg-deep-forest rounded-2xl overflow-hidden relative">
-        {/* Capa de textura abstracta */}
+        {/* Textura de fondo */}
         <div
           className="absolute inset-0 opacity-20"
           style={{

@@ -5,13 +5,13 @@ import {
   marketFeatures,
 } from "@/constants/marketStats";
 
-/** Mapa de id de característica → iconos */
+/** Mapa de id → iconos */
 const featureIcons = {
   "land-scarcity": Mountain,
   "airbnb-yields": KeyRound,
 } as const;
 
-/** Iconos decorativos de fondo por característica */
+/** Iconos decorativos de fondo */
 const bgIcons = {
   "land-scarcity": TrendingUp,
   "airbnb-yields": Building,
@@ -20,7 +20,7 @@ const bgIcons = {
 export function MarketGrowthBento() {
   return (
     <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-      {/* Encabezado de Sección */}
+      {/* Encabezado */}
       <div className="mb-16 text-center md:text-left">
         <h2 className="text-headline-lg font-headline-lg text-primary mb-4">
           El Renacimiento del Quindío
@@ -32,14 +32,14 @@ export function MarketGrowthBento() {
         </p>
       </div>
 
-      {/* Cuadrícula Bento */}
+      {/* Cuadrícula */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter auto-rows-[300px]">
-        {/* Tarjeta de Característica Grande (8 col, 2 filas) */}
+        {/* Tarjeta grande (8 col, 2 filas) */}
         <div className="md:col-span-8 md:row-span-2 rounded-xl overflow-hidden relative group">
           <img
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover img-zoom"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5X1zd3U8l7BxogrGjnh4sPfrm22AiUUzhthQdKQIKfMedACZgxoopACQc2ZbI6eO2tt4_OcGyEgUF5d5mDnfG9Jm78dktwmkAKdPXUArZLxmP7v7paODm4nY42fLRCzJFX7ANi4G-uV62_vCKwmipQmL2ipHmGz1pBfx1ggiBlYFNx47bT1ak_oltkXOOxOAj_0D4tTYq7lp6IYhgyE6qxmrayn3uqMhLkWsGehBxFjJWvLxMAN9mEWtHqZ1wVuj-mnNnZMm-mF2V"
             alt="Vista aérea de los exuberantes paisajes verdes del Quindío con plantaciones de café y casas modernas integradas en la naturaleza"
           />
@@ -77,7 +77,7 @@ export function MarketGrowthBento() {
           </div>
         </div>
 
-        {/* Tarjetas de Estadísticas Pequeñas */}
+        {/* Tarjetas pequeñas */}
         {marketFeatures.map((feature, index) => {
           const Icon = featureIcons[feature.id as keyof typeof featureIcons];
           const BgIcon = bgIcons[feature.id as keyof typeof bgIcons];
@@ -89,7 +89,7 @@ export function MarketGrowthBento() {
                 index === 0 ? "bg-earth-beige" : "bg-surface-container"
               } p-8 border border-surface-dim flex flex-col justify-center relative overflow-hidden group hover:shadow-[0_4px_20px_rgba(27,67,50,0.08)] transition-all duration-300`}
             >
-              {/* Icono decorativo de fondo */}
+              {/* Icono decorativo */}
               <div
                 className={`absolute opacity-5 ${
                   index === 0 ? "-right-10 -top-10" : "-right-10 -bottom-10"

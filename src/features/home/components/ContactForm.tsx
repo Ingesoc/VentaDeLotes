@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Send } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Ingresa tu nombre completo"),
@@ -27,14 +28,22 @@ export function ContactForm() {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: ContactFormValues) => {
     try {
-      // TODO (Juan): conectar con Supabase (tabla "leads") o el endpoint real del formulario.
-      await new Promise((resolve) => setTimeout(resolve, 600));
+      const { error } = await supabase.rpc("submit_lead", {
+        p_name: data.name,
+        p_email: data.email,
+        p_phone: data.phone,
+        p_message: data.message || null,
+      });
+
+      if (error) throw error;
+
       setSubmitStatus("success");
       reset();
       setTimeout(() => setSubmitStatus("idle"), 5000);
-    } catch {
+    } catch (err) {
+      console.error("Error al enviar lead a Supabase:", err);
       setSubmitStatus("error");
     }
   };

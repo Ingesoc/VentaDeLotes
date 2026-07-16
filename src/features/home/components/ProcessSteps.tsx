@@ -36,7 +36,7 @@ export function ProcessSteps() {
         {steps.map((step) => (
           <div
             key={step.title}
-            className="relative z-10 flex flex-col items-center text-center bg-surface-container-lowest p-8 rounded-xl shadow-ambient border border-outline-variant/10"
+            className="relative z-10 flex flex-col items-center text-center bg-surface-container-lowest p-8 rounded-xl shadow-ambient border border-outline-variant/10 hover-lift"
           >
             <div className="w-20 h-20 bg-deep-forest text-on-primary rounded-full flex items-center justify-center mb-6 shadow-md">
               <i className={`${step.icon} text-4xl`}></i>

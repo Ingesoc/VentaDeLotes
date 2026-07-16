@@ -3,6 +3,7 @@ import { lots, type LotStatus } from "@/constants/lots";
 import { LotCard } from "./components/LotCard";
 import { LotFilters, type AreaRange } from "./components/LotFilters";
 import { EmptyState } from "./components/EmptyState";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 function matchesAreaRange(areaM2: number | null, range: AreaRange): boolean {
   if (range === "all") return true;
@@ -29,8 +30,15 @@ export function ProjectsPage() {
     setAreaRange("all");
   };
 
+  const scrollRevealRef = useScrollReveal({
+    childSelector: ".grid > *",
+    variant: "fade-up",
+    staggerDelay: 80,
+    rootMargin: "0px 0px -60px 0px",
+  });
+
   return (
-    <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24">
+    <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24 page-enter">
       <div className="mb-12 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
         <div>
           <h1 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">

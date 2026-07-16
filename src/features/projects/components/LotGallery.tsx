@@ -34,6 +34,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
         <div className="absolute bottom-6 left-6 flex gap-2 bg-surface/85 backdrop-blur-md border border-outline-variant/20 p-1.5 rounded-lg z-20">
           <button
             onClick={() => setActiveView("aerial")}
+            type="button"
             className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-all ${
               activeView === "aerial"
                 ? "bg-deep-forest text-on-primary"
@@ -44,6 +45,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
           </button>
           <button
             onClick={() => setActiveView("perspective")}
+            type="button"
             className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-all ${
               activeView === "perspective"
                 ? "bg-deep-forest text-on-primary"
@@ -58,6 +60,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
       <div className="flex gap-4">
         <button
           onClick={() => setActiveView("aerial")}
+          type="button"
           aria-label="Ver vista aérea"
           className={`w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
             activeView === "aerial"
@@ -74,6 +77,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
         </button>
         <button
           onClick={() => setActiveView("perspective")}
+          type="button"
           aria-label="Ver vista en perspectiva"
           className={`w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
             activeView === "perspective"

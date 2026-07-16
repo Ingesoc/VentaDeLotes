@@ -3,7 +3,7 @@ export interface MarketStat {
   label: string;
 }
 
-/** Métricas principales mostradas en el componente MarketGrowthBento */
+/** Métricas principales para MarketGrowthBento */
 export const tourismGrowthStat: MarketStat = {
   value: "35%",
   label: "Crecimiento Anual de Turismo",
@@ -14,7 +14,7 @@ export const infraInvestmentStat: MarketStat = {
   label: "Inversión en Infraestructura",
 };
 
-/** Tarjetas de características mostradas junto a la tarjeta principal de estadísticas */
+/** Tarjetas de características del mercado */
 export const marketFeatures = [
   {
     id: "land-scarcity",
@@ -30,7 +30,7 @@ export const marketFeatures = [
   },
 ] as const;
 
-/** Tarjetas de características de ROI mostradas en la sección "Por qué la Tierra es el Mejor Activo" */
+/** Tarjetas de características de ROI */
 export const roiFeatures = [
   {
     id: "inflation-hedge",
@@ -55,26 +55,3 @@ export const roiFeatures = [
   },
 ] as const;
 
-/** Indicadores de confianza en la página de inicio */
-export const trustIndicators = [
-  {
-    id: "direct-financing",
-    icon: "Landmark" as const,
-    title: "Financiamiento Directo",
-  },
-  {
-    id: "property-titles",
-    icon: "FileText" as const,
-    title: "Títulos de Propiedad Individuales",
-  },
-  {
-    id: "appreciation",
-    icon: "TrendingUp" as const,
-    title: "Alta Apreciación",
-  },
-  {
-    id: "utilities",
-    icon: "Droplet" as const,
-    title: "Servicios Públicos Completos",
-  },
-] as const;

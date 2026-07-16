@@ -3,10 +3,10 @@
 
 /* ─── Tailwind v4 CSS-first Theme ──────────────────────────────── */
 @theme {
-  /* ── Colors: Verdant Horizon design system ── */
-  --color-primary: #1B4332; /* forest-green */
-  --color-on-primary: #FAFAF8; /* warm-white */
-  --color-primary-container: #081C15; /* deep-forest */
+  /* Colores */
+  --color-primary: #1B4332; /* verde-bosque */
+  --color-on-primary: #FAFAF8; /* blanco-cálido */
+  --color-primary-container: #081C15; /* bosque-profundo */
   --color-on-primary-container: #a5d0b9;
   --color-primary-fixed: #c1ecd4;
   --color-primary-fixed-dim: #a5d0b9;
@@ -14,7 +14,7 @@
   --color-on-primary-fixed-variant: #274e3d;
   --color-inverse-primary: #a5d0b9;
 
-  --color-secondary: #D4A373; /* soft-gold */
+  --color-secondary: #D4A373; /* oro-suave */
   --color-on-secondary: #081C15;
   --color-secondary-container: #ffca98;
   --color-on-secondary-container: #7a532a;
@@ -23,7 +23,7 @@
   --color-on-secondary-fixed: #2c1600;
   --color-on-secondary-fixed-variant: #623f18;
 
-  --color-tertiary: #2D6A4F; /* coffee-green */
+  --color-tertiary: #2D6A4F; /* verde-café */
   --color-on-tertiary: #ffffff;
   --color-tertiary-container: #00452e;
   --color-on-tertiary-container: #75b393;
@@ -37,8 +37,8 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
-  --color-surface: #FAFAF8; /* warm-white */
-  --color-on-surface: #081C15; /* deep-forest */
+  --color-surface: #FAFAF8; /* blanco-cálido */
+  --color-on-surface: #081C15; /* bosque-profundo */
   --color-surface-variant: #eae8e4;
   --color-on-surface-variant: #414844;
   --color-surface-container: #f0eeea;
@@ -52,13 +52,13 @@
   --color-inverse-surface: #30312e;
   --color-inverse-on-surface: #f2f0ec;
 
-  --color-background: #FAFAF8; /* warm-white */
-  --color-on-background: #081C15; /* deep-forest */
+  --color-background: #FAFAF8; /* blanco-cálido */
+  --color-on-background: #081C15; /* bosque-profundo */
 
   --color-outline: #717973;
   --color-outline-variant: #c1c8c2;
 
-  /* ── Brand Colors ── */
+  /* Colores de marca */
   --color-forest-green: #1B4332;
   --color-coffee-green: #2D6A4F;
   --color-soft-gold: #D4A373;
@@ -69,7 +69,7 @@
   --color-coffee-leaf: #2D6A4F;
   --color-obsidian: #081C15;
 
-  /* ── Familias tipográficas ── */
+  /* Tipografía */
   --font-display-lg: "Playfair Display", serif;
   --font-display-lg-mobile: "Playfair Display", serif;
   --font-headline-lg: "Playfair Display", serif;
@@ -79,7 +79,7 @@
   --font-label-bold: "Inter", sans-serif;
   --font-caption: "Inter", sans-serif;
 
-  /* ── Tamaños de fuente (con line-height) ── */
+  /* Tamaños de fuente */
   --text-display-lg: 64px;
   --text-display-lg--line-height: 72px;
   --text-display-lg--letter-spacing: -0.02em;
@@ -115,7 +115,7 @@
   --text-caption--line-height: 16px;
   --text-caption--font-weight: 400;
 
-  /* ── Específicos de las vistas de Lotes ── */
+  /* Vistas de lotes */
   --font-lot-number: "Playfair Display", serif;
   --text-lot-number: 24px;
   --text-lot-number--line-height: 24px;
@@ -129,7 +129,7 @@
 
   --shadow-ambient: 0px 12px 24px rgba(27, 67, 50, 0.06);
 
-  /* ── Espaciado ── */
+  /* Espaciado */
   --spacing-container-max: 1280px;
   --spacing-gutter: 24px;
   --spacing-margin-mobile: 20px;
@@ -137,12 +137,12 @@
   --spacing-base: 8px;
   --spacing-section-gap: 120px;
 
-  /* ── Radio de borde ── */
+  /* Bordes */
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
 }
 
-/* ─── Utility Classes ──────────────────────────────────────────── */
+/* Clases utilitarias */
 
 .glass-card {
   background: rgba(245, 243, 239, 0.7);
@@ -172,7 +172,7 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* ─── Base Reset ───────────────────────────────────────────────── */
+/* Reset base */
 
 body {
   font-family: "Inter", sans-serif;
@@ -185,7 +185,7 @@ body {
   color: var(--color-on-primary-container);
 }
 
-/* ─── Smooth scrolling + bottom nav padding on mobile ────────── */
+/* Scroll suave + padding en móvil */
 html {
   scroll-behavior: smooth;
 }
@@ -195,3 +195,150 @@ html {
     padding-bottom: 72px;
   }
 }
+
+/* Material Symbols */
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Scroll Reveal */
+
+.reveal {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+/* Variants */
+.reveal-fade-up {
+  transform: translateY(30px);
+}
+
+.reveal-fade-down {
+  transform: translateY(-30px);
+}
+
+.reveal-fade-left {
+  transform: translateX(-30px);
+}
+
+.reveal-fade-right {
+  transform: translateX(30px);
+}
+
+.reveal-scale {
+  transform: scale(0.9);
+}
+
+/* Stagger (legado) */
+
+.stagger-reveal {
+  animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animación de entrada */
+
+.page-enter {
+  animation: pageEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover Lift */
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(27, 67, 50, 0.12);
+}
+
+/* Image Zoom */
+
+.img-zoom {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .img-zoom {
+  transform: scale(1.05);
+}
+
+.img-zoom-lg {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .img-zoom-lg {
+  transform: scale(1.08);
+}
+
+/* Link Arrow */
+
+.link-arrow {
+  transition: gap 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 0.5rem;
+}
+
+.group:hover .link-arrow {
+  gap: 0.75rem;
+}
+
+/* Card Border Glow */
+
+.card-border-glow {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-border-glow:hover {
+  border-color: rgba(212, 163, 115, 0.3);
+  box-shadow: 0 0 0 1px rgba(212, 163, 115, 0.3);
+}
+
+/* Pulse Glow */
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(212, 163, 115, 0); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Counter */
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.count-up {
+  animation: countUp 0.5s ease-out forwards;
+  opacity: 0;
+}
