@@ -5,12 +5,12 @@ export function HeroSection() {
     <header className="relative h-screen w-full flex items-center justify-center overflow-hidden">
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/landscapes/Loteo%20General.webp')" }}
+        style={{ backgroundImage: "url('https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304519/laholanda/landscapes/Loteo%20General.webp')" }}
       >
         <img
           alt={`Vista aérea espectacular del plan maestro de ${project.name} en ${project.location.municipality}, ${project.location.department}, con paisajes verdes y lotes orgánicos`}
           className="sr-only"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2A-MLEIZ47eoGgPwpSHu6mpup3ATK3q_4QGVxmqWaMCUPQ60P7UMErmk7z4IMO9jrU7HKZ-zi733JDsxdSd163XACzdsOKQeESvRZfFQAuk6yE9dkoRynKWFRAlhVKXkSwI4o3qfPNuMgVSEV1GAFegm4QlnY-sCiIV-1ApyraW7_BkIWeTLLN9kByk2Cj5IXbGPQR4f_P9kNKpPQtqD2tVQiPr8ut91nNkgp67HdO4NZYLlnxvM6L0GhKECWw6EkcA"
+          src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304519/laholanda/landscapes/Loteo%20General.webp"
         />
       </div>
       <div className="absolute inset-0 z-10 bg-deep-forest/40"></div>

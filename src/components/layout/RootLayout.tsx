@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { TopNavBar } from "./TopNavBar";
 import { Footer } from "./Footer";
 import { BottomNavBar } from "./BottomNavBar";
@@ -7,6 +8,7 @@ import { ScrollToTop } from "./ScrollToTop";
 
 export function RootLayout() {
   return (
+    <HelmetProvider>
     <div className="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
       <ScrollToTop />
       <TopNavBar />
@@ -18,5 +20,6 @@ export function RootLayout() {
       <BottomNavBar />
       <WhatsAppButton />
     </div>
+    </HelmetProvider>
   );
 }

@@ -1,5 +1,3 @@
-import poolImage from "@/assets/Events/piscinas.jpg";
-
 export default function WellnessSection() {
   return (
     <section className="relative py-section-gap bg-deep-forest text-white overflow-hidden">
@@ -37,7 +35,7 @@ export default function WellnessSection() {
               <img
                 alt="Luxury pool area"
                 className="w-full h-full object-cover"
-                src={poolImage}
+                src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304319/laholanda/events/piscinas.jpg"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 glass-panel p-8 rounded-2xl text-primary max-w-xs shadow-xl border border-white/20">

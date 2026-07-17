@@ -1,6 +1,3 @@
-import farolesImage from "@/assets/Events/festival de Faroles Quimbaya 1.jpg";
-import arrierosImage from "@/assets/Events/arrieros.jpg";
-
 export default function CulturalHeritage() {
   return (
     <section className="py-section-gap px-margin-desktop max-w-container-max mx-auto" id="explore">
@@ -22,7 +19,7 @@ export default function CulturalHeritage() {
             <img
               alt="Festival de Faroles"
               className="w-full h-[400px] object-cover img-zoom"
-              src={farolesImage}
+              src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304267/laholanda/events/festival%20de%20Faroles%20Quimbaya%201.jpg"
             />
             <div className="p-4 bg-white">
               <p className="font-label-bold text-primary">Festival de Velas y Faroles</p>
@@ -33,7 +30,7 @@ export default function CulturalHeritage() {
             <img
               alt="Arrieros traditions"
               className="w-full h-[400px] object-cover img-zoom"
-              src={arrierosImage}
+              src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304215/laholanda/events/arrieros.jpg"
             />
             <div className="p-4 bg-white">
               <p className="font-label-bold text-primary">Legado Arriero</p>

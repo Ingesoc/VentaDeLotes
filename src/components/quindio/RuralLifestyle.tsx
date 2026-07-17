@@ -1,6 +1,3 @@
-import haciendaImage from "@/assets/Events/haciendaCafetera.jpg";
-import roadsImage from "@/assets/Events/viasRurales.jpg";
-
 export default function RuralLifestyle() {
   return (
     <section className="py-section-gap">
@@ -11,7 +8,7 @@ export default function RuralLifestyle() {
               <img
                 alt="Hacienda aerial view"
                 className="rounded-2xl shadow-2xl relative z-10 w-full object-cover h-[350px]"
-                src={haciendaImage}
+                src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304281/laholanda/events/haciendaCafetera.jpg"
               />
               <div className="absolute -top-6 -left-6 w-32 h-32 bg-heritage-gold/20 rounded-full z-0"></div>
             </div>
@@ -34,7 +31,7 @@ export default function RuralLifestyle() {
             <img
               alt="Rural roads"
               className="rounded-xl h-48 w-full object-cover shadow-md"
-              src={roadsImage}
+              src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304335/laholanda/events/viasRurales.jpg"
             />
           </div>
         </div>
