@@ -1,57 +1,120 @@
-# Verdant Horizon - Luxury Rural Estates
+# La Holanda — Parcelación Campestre
 
-Welcome to **Verdant Horizon**, the premium digital investment portal and showcase for high-end luxury rural estates in the coffee region of Colombia.
+**Portal digital de inversión y vitrina inmobiliaria** para la parcelación campestre **La Holanda**, ubicada en Quimbaya, Quindío. Desarrollado por **INGESOCC SAS**.
 
-This frontend application is built to convey growth, serenity, and stability through nature-centric visuals, spacious modernism, and tactile design elements.
+Este proyecto es una aplicación web moderna construida con React que permite a los usuarios explorar lotes disponibles, conocer el proyecto, calcular valorización potencial y contactar al equipo comercial.
 
-## Tech Stack
-- **Framework**: React 19
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS v4 (configured CSS-first in `src/index.css`)
-- **State Management**: TanStack React Query v5
-- **Routing**: React Router Dom v7
-- **Icons**: Lucide React
-- **Animations**: Framer Motion
+---
 
-## Design Tokens & Palette
-Our brand identity is supported by the following design system tokens:
-- **Forest Green** (`#1B4332`): Core brand, primary CTAs, stability.
-- **Coffee Green** (`#2D6A4F`): Hover states, financing indicators.
-- **Soft Gold** (`#D4A373`): Appreciation tags, premium accents.
-- **Warm White** (`#FAFAF8`): Surfaces, clean luxury background.
-- **Deep Forest** (`#081C15`): Rich typography, high contrast accents.
-- **Typography**: Paired display serif (Playfair Display) for headlines and high-legibility sans-serif (Inter) for copy.
+## 🏗️ Tech Stack
 
-## Linting & CI
+| Capa          | Tecnología                                                   |
+| ------------- | ------------------------------------------------------------ |
+| **Framework** | React 19                                                     |
+| **Build**     | Vite 8                                                       |
+| **Estilos**   | Tailwind CSS v4                                              |
+| **Ruteo**     | React Router DOM v7                                          |
+| **Estado**    | TanStack React Query v5                                      |
+| **Formularios** | React Hook Form + Zod                                      |
+| **Iconos**    | Lucide React                                                 |
+| **Backend**   | Supabase (Auth + RLS + RPC functions)                        |
+| **Imágenes**  | Cloudinary (upload widget + optimización)                    |
 
-### React Doctor
+---
 
-This project uses [React Doctor](https://react.doctor) to catch React-specific bugs, security issues, and maintainability problems. Run it locally:
+## 🎨 Sistema de Diseño
+
+La identidad visual se apoya en los siguientes tokens:
+
+| Token            | Hex       | Uso                                      |
+| ---------------- | --------- | ---------------------------------------- |
+| Forest Green     | `#1B4332` | Color corporativo principal, CTAs        |
+| Coffee Green     | `#2D6A4F` | Hovers, indicadores de financiación      |
+| Soft Gold        | `#D4A373` | Etiquetas de apreciación, acentos premium |
+| Warm White       | `#FAFAF8` | Superficies, fondo clean                 |
+| Deep Forest      | `#081C15` | Tipografía de alto contraste             |
+
+**Tipografía**: Playfair Display para títulos e Inter para cuerpo de texto.
+
+---
+
+## 🚀 Desarrollo local
 
 ```bash
-bun run lint:doctor
-```
-
-It runs automatically in CI on every push/PR to `main` (see `.github/workflows/ci.yml`).
-
-### Resolved: `artifact-baas-authority-surface`
-
-`@supabase/supabase-js` is loaded from **esm.sh CDN** at runtime (see importmap in `index.html`) instead of being bundled — the library code never enters a `dist/assets/` file, so the diagnostic can't fire.
-
-All app-level mitigations remain in place:
-- **RLS enforced**: `lots` restricted to `disponible`, `leads`/`page_views` write-only via `SECURITY DEFINER` RPC functions
-- **Table names hidden**: all `supabase.from()` calls replaced with `supabase.rpc()`
-- **Admin screens code-split**: all admin imports are `lazy()`
-
-## Getting Started
-To launch the development server locally, install dependencies and run:
-```bash
+# Instalar dependencias
 bun install
-bun run dev
-```
-
-Or using npm:
-```bash
+# o
 npm install
+
+# Iniciar servidor de desarrollo
+bun run dev
+# o
 npm run dev
 ```
+
+### Build de producción
+
+```bash
+bun run build
+npm run build   # o con npm
+```
+
+### Preview del build
+
+```bash
+bun run preview
+```
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+src/
+├── components/          # Componentes compartidos (layout, UI)
+│   ├── home/            # Secciones del landing (carousel, hero estático)
+│   ├── layout/          # TopNavBar, Footer, BottomNavBar, RootLayout
+│   ├── quindio/         # Secciones de la página "Descubre Quindío"
+│   └── ui/              # Componentes atómicos (LazyImage, WhatsAppButton)
+├── constants/           # Datos estáticos (lotes, stats, navLinks, project)
+├── features/
+│   ├── admin/           # Panel administrativo (login, dashboard, CRUD lotes)
+│   ├── home/            # Página principal (hero, formulario, lotes destacados)
+│   ├── investment/      # Página de inversión (ROI, análisis de mercado)
+│   └── projects/        # Listado y detalle de lotes
+├── hooks/               # Custom hooks (useAuth, useScrollReveal, etc.)
+├── lib/                 # Utilidades (supabase client, cloudinary, checkAdmin)
+├── pages/               # Páginas independientes (DescubreQuindio)
+└── router/              # Configuración de rutas (React Router)
+```
+
+---
+
+## 🔐 Administración
+
+El panel admin está disponible en `/admin/login`. Permite gestionar:
+
+- **Dashboard** — estadísticas de visitas y leads
+- **Lotes** — CRUD completo con subida de imágenes a Cloudinary
+
+El acceso está protegido por autenticación de Supabase y RLS a nivel de base de datos.
+
+---
+
+## 🧹 Linting y CI
+
+```bash
+# ESLint
+npm run lint
+
+# React Doctor — análisis estático de componentes
+npm run lint:doctor
+```
+
+El proyecto incluye un pipeline de CI (GitHub Actions) que ejecuta lint y build en cada push a `main`.
+
+---
+
+## 📄 Licencia
+
+Desarrollado por **INGESOCC SAS** — Todos los derechos reservados.

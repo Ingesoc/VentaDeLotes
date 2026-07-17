@@ -17,6 +17,14 @@ dist-ssr
 .env.*
 !.env.example
 
+# AI prompts, traces y archivos de migración / diseño de referencia
+prompt.txt
+htmls_request.txt
+migracion-lotes-quindio.patch
+home.html
+detalle.html
+galeria.html
+
 # AI Agent files & directories
 .agents/
 .agent/
