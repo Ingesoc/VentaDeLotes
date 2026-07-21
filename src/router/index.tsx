@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "@/components/layout/RootLayout";
+import ErrorPage from "@/components/ui/ErrorPage";
 
 // Páginas principales — se cargan eager para First Paint rápido
 import { HomePage } from "@/features/home/HomePage";
@@ -11,18 +12,14 @@ const InvestmentPage = lazy(() => import("@/features/investment/InvestmentPage")
 const ProjectDetailPage = lazy(() => import("@/features/projects/ProjectDetailPage").then(m => ({ default: m.ProjectDetailPage })));
 const DescubreQuindio = lazy(() => import("../pages/DescubreQuindio"));
 
-// Admin pages cargadas bajo demanda (code-split) para no exponer
-// nombres de tablas administrativas en el bundle público
-const AdminLayout = lazy(() => import("@/features/admin/components/AdminLayout").then(m => ({ default: m.AdminLayout })));
-const AdminGuard = lazy(() => import("@/features/admin/components/AdminGuard").then(m => ({ default: m.AdminGuard })));
-const LoginPage = lazy(() => import("@/features/admin/LoginPage").then(m => ({ default: m.LoginPage })));
-const DashboardPage = lazy(() => import("@/features/admin/DashboardPage").then(m => ({ default: m.DashboardPage })));
-const LotsPage = lazy(() => import("@/features/admin/LotsPage").then(m => ({ default: m.LotsPage })));
+// Admin pages se cargan via route lazy property (React Router v7)
+// para cargar el modulo completo en paralelo, no solo el componente.
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -31,7 +28,7 @@ export const router = createBrowserRouter([
       {
         path: "investment",
         element: (
-          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
+          <Suspense fallback={<div className="min-h-[60dvh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
             <InvestmentPage />
           </Suspense>
         ),
@@ -43,7 +40,7 @@ export const router = createBrowserRouter([
       {
         path: "projects/:id",
         element: (
-          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
+          <Suspense fallback={<div className="min-h-[60dvh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
             <ProjectDetailPage />
           </Suspense>
         ),
@@ -51,7 +48,7 @@ export const router = createBrowserRouter([
       {
         path: "descubre-quindio",
         element: (
-          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
+          <Suspense fallback={<div className="min-h-[60dvh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
             <DescubreQuindio />
           </Suspense>
         ),
@@ -61,19 +58,17 @@ export const router = createBrowserRouter([
   // Login admin (público)
   {
     path: "/admin/login",
-    element: <Suspense fallback={<div className="min-h-screen bg-deep-forest" />}><LoginPage /></Suspense>,
+    errorElement: <ErrorPage />,
+    lazy: () => import("@/features/admin/LoginPage"),
   },
-  // Rutas admin (protegidas) — un solo Suspense cubre todos los componentes lazy
+  // Rutas admin (protegidas) — route-level lazy property en vez de React.lazy
   {
     path: "/admin",
-    element: (
-      <Suspense fallback={<div className="min-h-screen bg-deep-forest" />}>
-        <AdminGuard />
-      </Suspense>
-    ),
+    errorElement: <ErrorPage />,
+    lazy: () => import("@/features/admin/components/AdminGuard"),
     children: [
       {
-        element: <AdminLayout />,
+        lazy: () => import("@/features/admin/components/AdminLayout"),
         children: [
           {
             index: true,
@@ -81,11 +76,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "dashboard",
-            element: <DashboardPage />,
+            lazy: () => import("@/features/admin/DashboardPage"),
           },
           {
             path: "lots",
-            element: <LotsPage />,
+            lazy: () => import("@/features/admin/LotsPage"),
           },
         ],
       },

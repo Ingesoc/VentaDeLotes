@@ -43,7 +43,7 @@ export function MarketGrowthBento() {
             src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784652550/laholanda/landscapes/aida-market-growth.png"
             alt="Vista aérea de los exuberantes paisajes verdes del Quindío con plantaciones de café y casas modernas integradas en la naturaleza"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-primary/90 via-primary/30 to-transparent" />
           <div className="absolute bottom-0 left-0 p-8 w-full">
             <div className="glass-card p-6 rounded-xl">
               <h3 className="text-headline-md font-headline-md text-primary mb-2">
@@ -87,7 +87,7 @@ export function MarketGrowthBento() {
               key={feature.id}
               className={`md:col-span-4 rounded-xl ${
                 index === 0 ? "bg-earth-beige" : "bg-surface-container"
-              } p-8 border border-surface-dim flex flex-col justify-center relative overflow-hidden group hover:shadow-[0_4px_20px_rgba(27,67,50,0.08)] transition-all duration-300`}
+              } p-8 border border-surface-dim flex flex-col justify-center relative overflow-hidden group hover:shadow-[0_4px_20px_rgba(27,67,50,0.08)] transition-shadow duration-300`}
             >
               {/* Icono decorativo */}
               <div

@@ -21,7 +21,7 @@ export function TopNavBar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 bg-warm-white/90 dark:bg-deep-forest/90 backdrop-blur-md transition-all duration-300 border-b border-forest-green/10 dark:border-warm-white/10" id="navbar">
+      <nav className="fixed top-0 w-full z-50 bg-warm-white/90 dark:bg-deep-forest/90 backdrop-blur-md transition-colors duration-300 border-b border-forest-green/10 dark:border-warm-white/10" id="navbar">
         <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
           <Link to="/" className="flex items-center gap-3">
             <img
@@ -41,7 +41,7 @@ export function TopNavBar() {
               <button onClick={toggleDarkMode} type="button" className="p-2 rounded-full hover:bg-forest-green/10 dark:hover:bg-warm-white/10 transition-colors text-forest-green dark:text-warm-white" aria-label="Toggle Dark Mode">
                 {isDark ? <i className="fa-solid fa-sun text-xl"></i> : <i className="fa-solid fa-moon text-xl"></i>}
               </button>
-              <a className="bg-soft-gold text-deep-forest px-6 py-2 rounded-lg font-medium hover:brightness-110 transition-all" href="/#contacto">
+              <a className="bg-soft-gold text-deep-forest px-6 py-2 rounded-lg font-medium hover:brightness-110 transition-[filter]" href="/#contacto">
                 Reservar
               </a>
             </div>

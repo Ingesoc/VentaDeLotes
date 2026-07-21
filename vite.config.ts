@@ -31,6 +31,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      external: ["@supabase/supabase-js"],
       output: {
         manualChunks(id: string) {
           // React y router — estables, se cachean entre builds
@@ -39,10 +40,6 @@ export default defineConfig({
               id.includes("node_modules/react-router") ||
               id.includes("node_modules/react-helmet")) {
             return "vendor-react";
-          }
-          // Supabase
-          if (id.includes("node_modules/@supabase/")) {
-            return "vendor-supabase";
           }
           // UI libraries (iconos, carrusel)
           if (id.includes("node_modules/lucide-react") ||
@@ -58,5 +55,8 @@ export default defineConfig({
         },
       },
     },
+  },
+  optimizeDeps: {
+    exclude: ["@supabase/supabase-js"],
   },
 });

@@ -45,7 +45,7 @@ export function LotSpecs({ lot }: LotSpecsProps) {
         href="https://wa.me/"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full mt-8 flex items-center justify-center gap-2 bg-heritage-gold text-primary py-4 rounded-lg font-label-bold hover:opacity-90 transition-all shadow-md"
+        className="w-full mt-8 flex items-center justify-center gap-2 bg-heritage-gold text-primary py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity shadow-md"
       >
         <MessageCircle className="w-5 h-5" />
         Reservar este lote

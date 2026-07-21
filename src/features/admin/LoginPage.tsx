@@ -5,6 +5,10 @@ import { useAuth } from "@/hooks/useAuthContext";
 import { supabase } from "@/lib/supabase";
 import { checkAdminStatus } from "@/lib/checkAdmin";
 
+export function Component() {
+  return <LoginPage />;
+}
+
 export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,22 +22,27 @@ export function LoginPage() {
     setError(null);
     setSubmitting(true);
 
-    const { user, error: loginError } = await login(email, password);
-    if (loginError || !user) {
-      setError(loginError || "Error al iniciar sesión");
-      setSubmitting(false);
-      return;
-    }
+    try {
+      const { user, error: loginError } = await login(email, password);
+      if (loginError || !user) {
+        setError(loginError || "Error al iniciar sesión");
+        return;
+      }
 
-    // Verificar si es administrador
-    const isAdmin = await checkAdminStatus(supabase, user.email);
-    if (!isAdmin) {
-      setError("Acceso denegado: tu email no está registrado como administrador");
-      setSubmitting(false);
-      return;
-    }
+      // Verificar si es administrador
+      const isAdmin = await checkAdminStatus(supabase, user.email);
+      if (!isAdmin) {
+        setError("Acceso denegado: tu email no está registrado como administrador");
+        return;
+      }
 
-    navigate("/admin/dashboard", { replace: true });
+      navigate("/admin/dashboard", { replace: true });
+    } catch (err) {
+      setError("Error inesperado al iniciar sesión");
+      console.error("Login error:", err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -43,7 +52,7 @@ export function LoginPage() {
         description="Panel de administración de La Holanda"
         noindex
       />
-      <div className="min-h-screen bg-deep-forest flex items-center justify-center px-4">
+      <div className="min-h-dvh bg-deep-forest flex items-center justify-center px-4">
         <div className="w-full max-w-md bg-surface-container-lowest rounded-2xl p-8 md:p-12 shadow-2xl">
           <div className="text-center mb-10">
             <h1 className="text-headline-lg font-headline-lg text-primary mb-2">
@@ -77,7 +86,7 @@ export function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@ejemplo.com"
                 required
-                className="w-full bg-transparent border border-outline-variant rounded-lg px-4 py-3 text-body-md font-body-md text-on-background focus:ring-2 focus:ring-heritage-gold focus:border-transparent transition-all placeholder:text-on-surface-variant/50"
+                className="w-full bg-transparent border border-outline-variant rounded-lg px-4 py-3 text-body-md font-body-md text-on-background focus:ring-2 focus:ring-heritage-gold focus:border-transparent transition-colors placeholder:text-on-surface-variant/50"
               />
             </div>
 
@@ -95,14 +104,14 @@ export function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-transparent border border-outline-variant rounded-lg px-4 py-3 text-body-md font-body-md text-on-background focus:ring-2 focus:ring-heritage-gold focus:border-transparent transition-all placeholder:text-on-surface-variant/50"
+                className="w-full bg-transparent border border-outline-variant rounded-lg px-4 py-3 text-body-md font-body-md text-on-background focus:ring-2 focus:ring-heritage-gold focus:border-transparent transition-colors placeholder:text-on-surface-variant/50"
               />
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-heritage-gold text-primary font-label-bold py-3 rounded-lg hover:opacity-90 transition-all disabled:opacity-60 text-lg"
+              className="w-full bg-heritage-gold text-primary font-label-bold py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-60 text-lg"
             >
               {submitting ? "Ingresando..." : "Ingresar"}
             </button>

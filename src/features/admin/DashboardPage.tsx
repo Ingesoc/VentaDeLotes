@@ -15,6 +15,10 @@ interface DashboardStats {
   recentLeads: { name: string; email: string; created_at: string }[];
 }
 
+export function Component() {
+  return <DashboardPage />;
+}
+
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);

@@ -18,7 +18,7 @@ export default function NaturalWonders() {
               className="w-full h-full object-cover img-zoom-lg"
               src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304306/laholanda/events/miradorQuindio.png"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">
               <h3 className="text-white font-headline-md mb-2">Vistas Icónicas</h3>
               <p className="text-white/80 font-body-md">
@@ -33,7 +33,7 @@ export default function NaturalWonders() {
               className="w-full h-full object-cover img-zoom-lg"
               src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304292/laholanda/events/lovequimbaya.jpg"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">
               <h3 className="text-white font-headline-md mb-2">Vida Local</h3>
               <p className="text-white/80 font-body-md">

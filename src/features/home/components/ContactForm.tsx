@@ -153,7 +153,7 @@ export function ContactForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-heritage-gold text-primary px-10 py-4 rounded-lg font-label-bold hover:opacity-90 transition-all inline-flex items-center gap-2 shadow-lg disabled:opacity-60"
+              className="bg-heritage-gold text-primary px-10 py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity inline-flex items-center gap-2 shadow-lg disabled:opacity-60"
             >
               {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
               <Send className="w-5 h-5" />

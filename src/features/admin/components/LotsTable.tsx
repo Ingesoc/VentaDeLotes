@@ -65,18 +65,25 @@ function LotRow({
       </td>
       <td className="px-6 py-4">
         {editing ? (
-          <input
-            type="number"
-            value={editForm.price ?? ""}
-            onChange={(e) =>
-              setEditForm((prev) => ({
-                ...prev,
-                price: e.target.value ? Number(e.target.value) : null,
-              }))
-            }
-            placeholder="COP"
-            className="w-32 px-3 py-1 border border-outline-variant/50 rounded text-body-md font-body-md focus:ring-2 focus:ring-heritage-gold focus:border-transparent"
-          />
+          <div className="flex items-center gap-2">
+            <label htmlFor={`price-${lot.id}`} className="sr-only">
+              Precio del lote {lot.id} en COP
+            </label>
+            <span className="text-caption text-on-surface-variant">$</span>
+            <input
+              id={`price-${lot.id}`}
+              type="number"
+              value={editForm.price ?? ""}
+              onChange={(e) =>
+                setEditForm((prev) => ({
+                  ...prev,
+                  price: e.target.value ? Number(e.target.value) : null,
+                }))
+              }
+              placeholder="COP"
+              className="w-32 px-3 py-1 border border-outline-variant/50 rounded text-body-md font-body-md focus:ring-2 focus:ring-heritage-gold focus:border-transparent"
+            />
+          </div>
         ) : (
           <span className="text-body-md text-on-surface-variant">
             {lot.price
@@ -137,7 +144,7 @@ function LotRow({
               type="button"
               disabled={saving}
               aria-label="Guardar cambios"
-              className="p-2 rounded-lg bg-deep-forest text-on-primary hover:opacity-90 transition-all disabled:opacity-60"
+              className="p-2 rounded-lg bg-deep-forest text-on-primary hover:opacity-90 transition-opacity disabled:opacity-60"
             >
               {saving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

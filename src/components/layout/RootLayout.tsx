@@ -9,7 +9,7 @@ import { ScrollToTop } from "./ScrollToTop";
 export function RootLayout() {
   return (
     <HelmetProvider>
-    <div className="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+    <div className="bg-background text-on-background font-body-md antialiased min-h-dvh flex flex-col">
       <ScrollToTop />
       <TopNavBar />
       <main className="flex-1">

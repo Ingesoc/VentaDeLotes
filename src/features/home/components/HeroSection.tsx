@@ -2,7 +2,7 @@ import { project } from "@/constants/project";
 
 export function HeroSection() {
   return (
-    <header className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+    <header className="relative h-dvh w-full flex items-center justify-center overflow-hidden">
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
         style={{ backgroundImage: "url('https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304519/laholanda/landscapes/Loteo%20General.webp')" }}
@@ -28,7 +28,7 @@ export function HeroSection() {
           {project.location.address} · {project.location.municipality}, {project.location.department}
         </p>
         <a
-          className="bg-soft-gold text-deep-forest px-8 py-4 rounded-lg font-body-lg font-medium hover:brightness-110 transition-all shadow-xl mt-2 inline-block"
+          className="bg-soft-gold text-deep-forest px-8 py-4 rounded-lg font-body-lg font-medium hover:brightness-110 transition-[filter] shadow-xl mt-2 inline-block"
           href="#lotes"
         >
           Conoce los lotes disponibles

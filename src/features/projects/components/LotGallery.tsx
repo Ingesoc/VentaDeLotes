@@ -35,7 +35,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
           <button
             onClick={() => setActiveView("aerial")}
             type="button"
-            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-all ${
+            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-colors ${
               activeView === "aerial"
                 ? "bg-deep-forest text-on-primary"
                 : "text-on-surface-variant hover:bg-deep-forest/5"
@@ -46,7 +46,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
           <button
             onClick={() => setActiveView("perspective")}
             type="button"
-            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-all ${
+            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-colors ${
               activeView === "perspective"
                 ? "bg-deep-forest text-on-primary"
                 : "text-on-surface-variant hover:bg-deep-forest/5"
@@ -62,7 +62,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
           onClick={() => setActiveView("aerial")}
           type="button"
           aria-label="Ver vista aérea"
-          className={`w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
+          className={`w-24 h-24 shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
             activeView === "aerial"
               ? "border-deep-forest"
               : "border-transparent hover:border-heritage-gold"
@@ -79,7 +79,7 @@ export function LotGallery({ lot }: LotGalleryProps) {
           onClick={() => setActiveView("perspective")}
           type="button"
           aria-label="Ver vista en perspectiva"
-          className={`w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
+          className={`w-24 h-24 shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
             activeView === "perspective"
               ? "border-deep-forest"
               : "border-transparent hover:border-heritage-gold"

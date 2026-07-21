@@ -59,7 +59,7 @@ export function LotCard({ lot }: LotCardProps) {
         </span>
       </div>
 
-      <div className="p-6 flex flex-col flex-grow">
+      <div className="p-6 flex flex-col grow">
         <h3 className="text-lot-number font-lot-number text-primary mb-2">
           Lote {lot.id}
         </h3>
@@ -70,7 +70,7 @@ export function LotCard({ lot }: LotCardProps) {
             <span className="text-caption font-caption text-on-surface-variant font-normal">COP</span>
           </p>
         )}
-        <p className="text-body-md font-body-md text-on-surface-variant flex items-center gap-2 mb-6 flex-grow">
+        <p className="text-body-md font-body-md text-on-surface-variant flex items-center gap-2 mb-6 grow">
           <Ruler className="w-4 h-4" />
           {lot.areaM2
             ? `${lot.areaM2.toLocaleString("es-CO")} m²`

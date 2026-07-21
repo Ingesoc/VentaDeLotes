@@ -4,6 +4,10 @@ import { useLots } from "./components/useLots";
 import { LotsHeader } from "./components/LotsHeader";
 import { LotsTable } from "./components/LotsTable";
 
+export function Component() {
+  return <LotsPage />;
+}
+
 export function LotsPage() {
   const { lots, loading, saving, uploading, saveLot, handleUploadImage } =
     useLots();

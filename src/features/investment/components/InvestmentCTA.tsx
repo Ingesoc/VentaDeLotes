@@ -22,7 +22,7 @@ export function InvestmentCTA() {
           </p>
           <Link
             to="/projects"
-            className="bg-heritage-gold text-white font-label-bold px-10 py-4 rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg text-lg"
+            className="bg-heritage-gold text-white font-label-bold px-10 py-4 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg text-lg"
           >
             Ver Proyectos Disponibles
           </Link>

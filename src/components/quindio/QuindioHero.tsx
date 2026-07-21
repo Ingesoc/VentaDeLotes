@@ -1,12 +1,12 @@
 export default function QuindioHero() {
   return (
-    <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden">
+    <section className="relative h-[90dvh] min-h-[600px] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div
           className="w-full h-full bg-cover bg-center"
           style={{ backgroundImage: "url('https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg')" }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-primary/80 via-primary/40 to-transparent"></div>
       </div>
       <div className="relative z-10 w-full px-margin-desktop max-w-container-max mx-auto">
         <div className="max-w-2xl text-white stagger-reveal" style={{ animationDelay: "0.2s" }}>
@@ -22,7 +22,7 @@ export default function QuindioHero() {
           </p>
           <div className="flex flex-wrap gap-4">
             <a
-              className="bg-heritage-gold text-primary px-8 py-4 rounded-lg font-label-bold hover:bg-white transition-all duration-300 flex items-center gap-2"
+              className="bg-heritage-gold text-primary px-8 py-4 rounded-lg font-label-bold hover:bg-white transition-colors duration-300 flex items-center gap-2"
               href="#explore"
             >
               Explorar Regiones

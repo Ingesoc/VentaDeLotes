@@ -42,35 +42,6 @@ export function useScrollReveal(options: ScrollRevealOptions = {}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Determinar qué elementos observar
-    const elements = childSelector
-      ? Array.from(container.querySelectorAll(childSelector))
-      : [container];
-
-    const variantClassStr = variantClass[variant];
-
-    // Reset y preparación de elementos
-    elements.forEach((el) => {
-      const htmlEl = el as HTMLElement;
-      htmlEl.classList.add("reveal");
-      htmlEl.style.opacity = "0";
-      if (variantClassStr) {
-        htmlEl.classList.add(variantClassStr);
-      } else {
-        htmlEl.style.transform = "none";
-      }
-    });
-
-    // Stagger: retardos incrementales
-    if (childSelector && staggerDelay > 0) {
-      elements.forEach((el, i) => {
-        (el as HTMLElement).style.transitionDelay = `${i * staggerDelay}ms`;
-      });
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -86,11 +57,38 @@ export function useScrollReveal(options: ScrollRevealOptions = {}) {
       { threshold, rootMargin }
     );
 
-    elements.forEach((el) => observer.observe(el));
+    const container = containerRef.current;
+    const elements = container
+      ? childSelector
+        ? Array.from(container.querySelectorAll(childSelector))
+        : [container]
+      : [];
 
-    return () => {
-      observer.disconnect();
-    };
+    const variantClassStr = variantClass[variant];
+
+    for (const el of elements) {
+      const htmlEl = el as HTMLElement;
+      htmlEl.classList.add("reveal");
+      htmlEl.style.opacity = "0";
+      if (variantClassStr) {
+        htmlEl.classList.add(variantClassStr);
+      } else {
+        htmlEl.style.transform = "none";
+      }
+    }
+
+    // Stagger: retardos incrementales
+    if (childSelector && staggerDelay > 0) {
+      for (let i = 0; i < elements.length; i++) {
+        (elements[i] as HTMLElement).style.transitionDelay = `${i * staggerDelay}ms`;
+      }
+    }
+
+    for (const el of elements) {
+      observer.observe(el);
+    }
+
+    return () => observer.disconnect();
   }, [variant, threshold, rootMargin, childSelector, staggerDelay]);
 
   return containerRef;

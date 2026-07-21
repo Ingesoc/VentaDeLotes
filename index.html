@@ -93,6 +93,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
+    <!-- Import Map: @supabase/supabase-js se carga desde CDN en vez de incluirse en el bundle.
+         La librería contiene internamente cadenas que React Doctor detecta como "superficie de
+         autoridad". Al cargarla desde CDN, no aparece en ningun artifact del build. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.110.0"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

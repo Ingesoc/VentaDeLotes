@@ -37,7 +37,7 @@ export function MasterPlanSection() {
               key={lot.id}
               to={`/projects/${lot.id}`}
               style={{ top: marker.top, left: marker.left }}
-              className={`absolute w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-lot-number text-xs md:text-sm font-bold shadow-lg transition-all duration-300 -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 hover:shadow-xl ${
+              className={`absolute w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-lot-number text-xs md:text-sm font-bold shadow-lg transition-transform duration-300 -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 hover:shadow-xl ${
                 statusColors[lot.status]
               }`}
             >

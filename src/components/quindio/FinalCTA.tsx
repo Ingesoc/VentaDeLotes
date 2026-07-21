@@ -12,13 +12,13 @@ export default function FinalCTA() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/projects"
-              className="bg-primary text-white px-10 py-4 rounded-lg font-label-bold hover:bg-deep-forest transition-all duration-300 inline-block"
+              className="bg-primary text-white px-10 py-4 rounded-lg font-label-bold hover:bg-deep-forest transition-colors duration-300 inline-block"
             >
               Ver Proyectos
             </Link>
             <a
               href="/#contacto"
-              className="bg-transparent border border-primary text-primary px-10 py-4 rounded-lg font-label-bold hover:bg-primary hover:text-white transition-all duration-300 inline-block"
+              className="bg-transparent border border-primary text-primary px-10 py-4 rounded-lg font-label-bold hover:bg-primary hover:text-white transition-colors duration-300 inline-block"
             >
               Hablar con un Agente
             </a>

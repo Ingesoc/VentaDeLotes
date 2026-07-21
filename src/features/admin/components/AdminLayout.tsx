@@ -14,6 +14,10 @@ const navItems = [
   { to: "/", label: "Ver sitio", icon: Home, exact: true },
 ];
 
+export function Component() {
+  return <AdminLayout />;
+}
+
 export function AdminLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -24,7 +28,7 @@ export function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-surface flex">
+    <div className="min-h-dvh bg-surface flex">
       {/* Barra lateral */}
       <aside className="w-64 bg-deep-forest text-warm-white flex flex-col shrink-0">
         <div className="p-6 border-b border-white/10">
@@ -43,7 +47,7 @@ export function AdminLayout() {
               to={item.to}
               end={item.exact}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-lg text-body-md font-body-md transition-all ${
+                `flex items-center gap-3 px-4 py-3 rounded-lg text-body-md font-body-md transition-colors ${
                   isActive
                     ? "bg-heritage-gold/20 text-soft-gold font-semibold"
                     : "text-warm-white/70 hover:bg-white/5 hover:text-warm-white"
@@ -60,7 +64,7 @@ export function AdminLayout() {
           <button
             onClick={handleLogout}
             type="button"
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-warm-white/70 hover:bg-white/5 hover:text-warm-white transition-all text-body-md font-body-md"
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-warm-white/70 hover:bg-white/5 hover:text-warm-white transition-colors text-body-md font-body-md"
           >
             <LogOut className="w-5 h-5" />
             Cerrar sesión
