@@ -8,7 +8,7 @@ export function InvestmentCTA() {
         <div
           className="absolute inset-0 opacity-20"
           style={{
-            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAM-wQh3ZE6o3MO7mXzaHartzz2oGfk_kl3Y2Wu4x_r6IJmnyxn5lZdn7wqyAZ7RcoTH3BVqp7HOOeGhG3SLoU6Q3aTpvGdMaQL_O26EF14pgLXFSiBrzvgmKoLvaG6dKP40qt80ybxl9DOfu97DeBb5M1SnLdw-etM6I94e4b36BpMIiBztXM2lpCBHGyRCR4-KXkhSvT43-BInQq0rTRXnpUulcFEHTJTcA73hG3DYRGWBtBgOK5IF3XhQo-Y3Rwn9o7P6UhWxzq')`,
+            backgroundImage: `url('https://res.cloudinary.com/j5a9xyaq/image/upload/v1784652550/laholanda/landscapes/aida-investment-cta.png')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

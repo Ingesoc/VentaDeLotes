@@ -40,7 +40,7 @@ export function MarketGrowthBento() {
             loading="lazy"
             decoding="async"
             className="w-full h-full object-cover img-zoom"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5X1zd3U8l7BxogrGjnh4sPfrm22AiUUzhthQdKQIKfMedACZgxoopACQc2ZbI6eO2tt4_OcGyEgUF5d5mDnfG9Jm78dktwmkAKdPXUArZLxmP7v7paODm4nY42fLRCzJFX7ANi4G-uV62_vCKwmipQmL2ipHmGz1pBfx1ggiBlYFNx47bT1ak_oltkXOOxOAj_0D4tTYq7lp6IYhgyE6qxmrayn3uqMhLkWsGehBxFjJWvLxMAN9mEWtHqZ1wVuj-mnNnZMm-mF2V"
+            src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784652550/laholanda/landscapes/aida-market-growth.png"
             alt="Vista aérea de los exuberantes paisajes verdes del Quindío con plantaciones de café y casas modernas integradas en la naturaleza"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />

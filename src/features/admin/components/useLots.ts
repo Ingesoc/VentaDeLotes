@@ -33,8 +33,8 @@ export function useLots() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadLots();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const saveLot = useCallback(async (id: string, updates: { status: Lot["status"]; price: number | null }) => {

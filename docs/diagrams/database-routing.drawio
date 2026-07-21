@@ -1,0 +1,184 @@
+<mxfile host="La Holanda Documentation" agent="Draw.io Programmatic" version="24.0.0">
+  <diagram id="database-routing" name="Base de Datos y Routing">
+    <mxGraphModel dx="1422" dy="894" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Título -->
+        <mxCell id="title" value="Esquema de Base de Datos y Árbol de Rutas" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=24;fontFamily=Playfair Display;fontColor=#1B4332;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="100" y="10" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN: BASE DE DATOS                       -->
+        <!-- ============================================ -->
+        <mxCell id="section-db" value="🗄️ Base de Datos — Supabase (PostgreSQL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B4332;fontColor=#FAFAF8;fontFamily=Inter;fontSize=14;fontStyle=1;strokeColor=#081C15;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="1080" height="350" as="geometry" />
+        </mxCell>
+
+        <!-- Tabla: lots -->
+        <mxCell id="table-lots" value="📋 lots" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4A373;fontColor=#081C15;fontFamily=Inter;fontSize=11;fontStyle=1;strokeColor=#7A532A;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="320" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lots-pk" value="🔑 id (text) PK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="320" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lots-area" value="📐 area_m2 (numeric)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="164" width="320" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lots-price" value="💰 price (numeric)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="188" width="320" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lots-status" value="🏷️ status (text) — disponible | reservado | vendido" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="212" width="320" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lots-image" value="🖼️ aerial_image (text)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="236" width="320" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lots-created" value="📅 created_at (timestamp)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="260" width="320" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lots-updated" value="📅 updated_at (timestamp)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="284" width="320" height="24" as="geometry" />
+        </mxCell>
+
+        <!-- Tabla: admin_users -->
+        <mxCell id="table-admin" value="👤 admin_users" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4A373;fontColor=#081C15;fontFamily=Inter;fontSize=11;fontStyle=1;strokeColor=#7A532A;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="480" y="110" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin-pk" value="🔑 id (uuid) PK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="480" y="140" width="280" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-email" value="📧 email (text)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="480" y="164" width="280" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-created" value="📅 created_at (timestamp)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="480" y="188" width="280" height="24" as="geometry" />
+        </mxCell>
+
+        <!-- RPC Functions -->
+        <mxCell id="section-rpc" value="⚡ Funciones RPC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;fontStyle=1;strokeColor=#1B4332;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="110" width="280" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rpc-has" value="🔐 has_backstage_access(email)
+→ boolean" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#A5D0B9;" vertex="1" parent="1">
+          <mxGeometry x="840" y="140" width="240" height="36" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rpc-track" value="📊 track_page_view(lot_id, page_path)
+→ void" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=monospace;fontSize=9;strokeColor=#A5D0B9;" vertex="1" parent="1">
+          <mxGeometry x="840" y="182" width="240" height="36" as="geometry" />
+        </mxCell>
+
+        <!-- RLS -->
+        <mxCell id="rls-box" value="🛡️ Row Level Security (RLS)
+──────────────────────────
+📋 lots: SELECT público, UPDATE solo admin
+👤 admin_users: Solo acceso vía RPC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#081C15;fontColor=#D4A373;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="820" y="250" width="280" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Archivos de migración -->
+        <mxCell id="migration-files" value="📁 Archivos de Migración
+─────────────────
+supabase/migration.sql
+supabase/fix-rls.sql
+supabase/seed-real-data.sql" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F3EF;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#C1C8C2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="1020" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN: ÁRBOL DE RUTAS                      -->
+        <!-- ============================================ -->
+        <mxCell id="section-routes" value="🗺️ Árbol de Rutas — React Router v7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B4332;fontColor=#FAFAF8;fontFamily=Inter;fontSize=14;fontStyle=1;strokeColor=#081C15;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="450" width="1080" height="350" as="geometry" />
+        </mxCell>
+
+        <!-- Root (/) -->
+        <mxCell id="route-root" value="🗂️ / — RootLayout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4A373;fontColor=#081C15;fontFamily=Inter;fontSize=11;fontStyle=1;strokeColor=#7A532A;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="440" y="485" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Rutas Públicas -->
+        <mxCell id="route-home" value="🏠 / → HomePage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=10;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="550" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="route-invest" value="📈 /investment → InvestmentPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=10;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="590" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="route-projects" value="🏗️ /projects → ProjectsPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=10;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="630" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="route-project-detail" value="🔍 /projects/:id → ProjectDetailPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=10;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="670" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="route-quindio" value="🌿 /descubre-quindio → DescubreQuindio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=10;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="710" width="240" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Admin Routes -->
+        <mxCell id="route-admin-login" value="🔑 /admin/login → LoginPage (lazy)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F3EF;fontColor=#1B4332;fontFamily=Inter;fontSize=10;strokeColor=#D4A373;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="550" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="route-admin-guard" value="🛡️ /admin → AdminGuard (lazy)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#081C15;fontColor=#D4A373;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#1B4332;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="590" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="route-admin-dash" value="📊 /admin/dashboard → DashboardPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#081C15;fontColor=#FAFAF8;fontFamily=Inter;fontSize=10;strokeColor=#2D6A4F;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="630" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="route-admin-lots" value="🏗️ /admin/lots → LotsPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#081C15;fontColor=#FAFAF8;fontFamily=Inter;fontSize=10;strokeColor=#2D6A4F;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="670" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Redirección -->
+        <mxCell id="route-redirect" value="↪️ /admin → Redirect a /dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F3EF;fontColor=#717973;fontFamily=Inter;fontSize=9;fontStyle=2;strokeColor=#C1C8C2;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="710" width="220" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Conexiones de rutas -->
+        <mxCell id="e-root-home" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="route-root" target="route-home">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-root-invest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="route-root" target="route-invest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-root-projects" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="route-root" target="route-projects">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-root-detail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="route-root" target="route-project-detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-root-quindio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="route-root" target="route-quindio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Admin connections -->
+        <mxCell id="e-admin-login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="route-root" target="route-admin-login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-admin-guard" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="route-root" target="route-admin-guard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-guard-dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="route-admin-guard" target="route-admin-dash">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-guard-lots" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="route-admin-guard" target="route-admin-lots">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-guard-redirect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;dashed=1;" edge="1" parent="1" source="route-admin-guard" target="route-redirect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Etiqueta: lazy code split -->
+        <mxCell id="label-lazy" value="⚡ React.lazy() + Suspense" style="text;html=1;strokeColor=none;fillColor=#081C15;align=center;fontSize=9;fontFamily=Inter;fontColor=#D4A373;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="700" y="530" width="200" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

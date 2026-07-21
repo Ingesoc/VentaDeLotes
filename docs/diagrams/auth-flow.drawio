@@ -1,0 +1,151 @@
+<mxfile host="La Holanda Documentation" agent="Draw.io Programmatic" version="24.0.0">
+  <diagram id="flujo-auth" name="Flujo de Autenticación">
+    <mxGraphModel dx="1422" dy="894" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Título -->
+        <mxCell id="title" value="Flujo de Autenticación — Panel de Administración" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=24;fontFamily=Playfair Display;fontColor=#1B4332;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="200" y="10" width="700" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- ACTORES                                       -->
+        <!-- ============================================ -->
+        <mxCell id="actor-usuario" value="👤 Administrador" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1B4332;fontColor=#FAFAF8;fontFamily=Inter;fontSize=12;fontStyle=1;strokeColor=#081C15;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="100" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- COMPONENTES DEL SISTEMA                      -->
+        <!-- ============================================ -->
+
+        <!-- LoginPage -->
+        <mxCell id="login-page" value="🖥️ LoginPage
+(Formulario email+pass)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4A373;fontColor=#081C15;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#7A532A;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="300" y="90" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- AuthProvider -->
+        <mxCell id="auth-provider" value="🔐 AuthProvider
+(React Context)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#1B4332;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="590" y="90" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Supabase Auth -->
+        <mxCell id="supabase-auth" value="🟢 Supabase Auth
+(signInWithPassword)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3ECF8E;fontColor=#081C15;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#2BA06E;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="870" y="90" width="230" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- AdminGuard -->
+        <mxCell id="admin-guard" value="🛡️ AdminGuard
+(Verifica auth + rol)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#081C15;fontColor=#D4A373;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#1B4332;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="300" y="270" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- checkAdmin.ts -->
+        <mxCell id="check-admin" value="📝 checkAdmin.ts
+(RPC has_backstage_access)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#1B4332;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="590" y="270" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Supabase DB (RPC) -->
+        <mxCell id="supabase-rpc" value="🗄️ Supabase DB
+(RPC: has_backstage_access)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3ECF8E;fontColor=#081C15;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#2BA06E;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="870" y="270" width="230" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Resultado: Dashboard -->
+        <mxCell id="result-dashboard" value="✅ DashboardPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B4332;fontColor=#FAFAF8;fontFamily=Inter;fontSize=11;fontStyle=1;strokeColor=#081C15;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="300" y="440" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Resultado: Redirect -->
+        <mxCell id="result-redirect" value="❌ Redirect a /admin/login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA1A1A;fontColor=#FFFFFF;fontFamily=Inter;fontSize=11;fontStyle=1;strokeColor=#93000A;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="650" y="440" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- FLECHAS (CONEXIONES)                        -->
+        <!-- ============================================ -->
+
+        <!-- 1. Usuario → LoginPage -->
+        <mxCell id="step1" value="1. Ingresa email + password" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#1B4332;" edge="1" parent="1" source="actor-usuario" target="login-page">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 2. LoginPage → AuthProvider.login() -->
+        <mxCell id="step2" value="2. login(email, password)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#7A532A;" edge="1" parent="1" source="login-page" target="auth-provider">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 3. AuthProvider → Supabase Auth -->
+        <mxCell id="step3" value="3. signInWithPassword()" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3ECF8E;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#2BA06E;" edge="1" parent="1" source="auth-provider" target="supabase-auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 4. Supabase → AuthProvider → LoginPage (session) -->
+        <mxCell id="step4" value="4. { user, session }" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3ECF8E;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#2BA06E;dashed=1;" edge="1" parent="1" source="supabase-auth" target="auth-provider">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 5. Navegación a admin/dashboard -->
+        <mxCell id="step5" value="5. Navega a /admin/dashboard" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#1B4332;" edge="1" parent="1" source="login-page" target="admin-guard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 6. AdminGuard → checkAdmin -->
+        <mxCell id="step6" value="6. user.email" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#7A532A;" edge="1" parent="1" source="admin-guard" target="check-admin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 7. checkAdmin → RPC -->
+        <mxCell id="step7" value="7. RPC has_backstage_access()" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3ECF8E;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#2BA06E;" edge="1" parent="1" source="check-admin" target="supabase-rpc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 8. RPC → checkAdmin (true/false) -->
+        <mxCell id="step8" value="8. true / false" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3ECF8E;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#2BA06E;dashed=1;" edge="1" parent="1" source="supabase-rpc" target="check-admin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 9. Guard → AdminLayout -->
+        <mxCell id="step9" value="9a. ✅ Es admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#1B4332;" edge="1" parent="1" source="admin-guard" target="result-dashboard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 9b. Guard → Redirect -->
+        <mxCell id="step9b" value="9b. ❌ No es admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#BA1A1A;strokeWidth=2;fontSize=10;fontFamily=Inter;fontColor=#BA1A1A;" edge="1" parent="1" source="admin-guard" target="result-redirect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- LEYENDA / INFO                               -->
+        <!-- ============================================ -->
+        <mxCell id="info-box" value="ℹ️ Notas" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontFamily=Inter;fontColor=#1B4332;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="550" width="400" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="info1" value="• Las flechas verdes indican comunicación con Supabase" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#2BA06E;" vertex="1" parent="1">
+          <mxGeometry x="50" y="570" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="info2" value="• Las flechas doradas indican flujo dentro de React" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#7A532A;" vertex="1" parent="1">
+          <mxGeometry x="50" y="590" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="info3" value="• Líneas sólidas = llamada | Líneas punteadas = respuesta" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="50" y="610" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="info4" value="• El AdminGuard espera la promesa de RPC antes de renderizar" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="50" y="630" width="500" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="footer" value="Versión: julio 2026 | La Holanda — INGESOCC SAS" style="text;html=1;strokeColor=none;fillColor=none;align=right;fontSize=8;fontFamily=Inter;fontColor=#717973;" vertex="1" parent="1">
+          <mxGeometry x="700" y="760" width="400" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

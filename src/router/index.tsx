@@ -1,11 +1,15 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "@/components/layout/RootLayout";
+
+// Páginas principales — se cargan eager para First Paint rápido
 import { HomePage } from "@/features/home/HomePage";
-import { InvestmentPage } from "@/features/investment/InvestmentPage";
 import { ProjectsPage } from "@/features/projects/ProjectsPage";
-import { ProjectDetailPage } from "@/features/projects/ProjectDetailPage";
-import DescubreQuindio from "../pages/DescubreQuindio";
+
+// Páginas secundarias — lazy loading para reducir bundle inicial
+const InvestmentPage = lazy(() => import("@/features/investment/InvestmentPage").then(m => ({ default: m.InvestmentPage })));
+const ProjectDetailPage = lazy(() => import("@/features/projects/ProjectDetailPage").then(m => ({ default: m.ProjectDetailPage })));
+const DescubreQuindio = lazy(() => import("../pages/DescubreQuindio"));
 
 // Admin pages cargadas bajo demanda (code-split) para no exponer
 // nombres de tablas administrativas en el bundle público
@@ -26,7 +30,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "investment",
-        element: <InvestmentPage />,
+        element: (
+          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
+            <InvestmentPage />
+          </Suspense>
+        ),
       },
       {
         path: "projects",
@@ -34,11 +42,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "projects/:id",
-        element: <ProjectDetailPage />,
+        element: (
+          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
+            <ProjectDetailPage />
+          </Suspense>
+        ),
       },
       {
         path: "descubre-quindio",
-        element: <DescubreQuindio />,
+        element: (
+          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
+            <DescubreQuindio />
+          </Suspense>
+        ),
       },
     ],
   },

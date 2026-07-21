@@ -1,0 +1,300 @@
+<mxfile host="La Holanda Documentation" agent="Draw.io Programmatic" version="24.0.0">
+  <diagram id="arquitectura-general" name="Arquitectura General">
+    <mxGraphModel dx="1422" dy="894" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ============================================ -->
+        <!-- TÍTULO DEL DIAGRAMA                           -->
+        <!-- ============================================ -->
+        <mxCell id="title" value="La Holanda — Arquitectura del Sistema" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=24;fontFamily=Playfair Display;fontColor=#1B4332;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="200" y="10" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- CAPA: NAVEGADOR / CLIENTE                    -->
+        <!-- ============================================ -->
+        <mxCell id="capa-navegador" value="🌐 NAVEGADOR (SPA — React 19)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B4332;fontColor=#FAFAF8;fontFamily=Inter;fontSize=14;fontStyle=1;strokeColor=#081C15;strokeWidth=2;arcSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="1080" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- Sub-capa: React App -->
+        <mxCell id="capa-react" value="⚛️ React 19 App" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4A373;fontColor=#081C15;fontFamily=Inter;fontSize=12;fontStyle=1;strokeColor=#7A532A;strokeWidth=1;arcSize=8;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="60" y="110" width="440" height="320" as="geometry" />
+        </mxCell>
+
+        <!-- Component: RootLayout -->
+        <mxCell id="root-layout" value="RootLayout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=10;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="80" y="150" width="130" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Component: TopNavBar -->
+        <mxCell id="top-nav" value="TopNavBar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Component: Footer -->
+        <mxCell id="footer" value="Footer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="80" y="240" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Component: BottomNavBar -->
+        <mxCell id="bottom-nav" value="BottomNavBar (móvil)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Component: WhatsAppButton -->
+        <mxCell id="whatsapp" value="WhatsAppButton" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Páginas Públicas -->
+        <mxCell id="pages-box" value="📄 Páginas Públicas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F3EF;fontColor=#1B4332;fontFamily=Inter;fontSize=10;fontStyle=1;strokeColor=#C1C8C2;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="150" width="240" height="270" as="geometry" />
+        </mxCell>
+
+        <!-- HomePage -->
+        <mxCell id="home-page" value="🏠 HomePage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="175" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- InvestmentPage -->
+        <mxCell id="investment-page" value="📈 InvestmentPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="215" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ProjectsPage -->
+        <mxCell id="projects-page" value="🏗️ ProjectsPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="255" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- DescubreQuindio -->
+        <mxCell id="quindio-page" value="🌿 DescubreQuindio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="295" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Pages with components -->
+        <mxCell id="home-components" value="HeroSection, FeaturedLots, ContactForm, InvestmentComparison, ProcessSteps, MasterPlanSection, ProjectBenefits" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontFamily=Inter;fontColor=#717973;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="260" y="328" width="200" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="project-components" value="LotCard, LotFilters, LotGallery, LotSpecs, EmptyState, LotMiniMap, AcquisitionSteps" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontFamily=Inter;fontColor=#717973;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="260" y="368" width="200" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Panel Admin -->
+        <mxCell id="admin-box" value="🛡️ Panel Admin (Code Splitting)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#081C15;fontColor=#D4A373;fontFamily=Inter;fontSize=11;fontStyle=1;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="540" y="110" width="320" height="320" as="geometry" />
+        </mxCell>
+
+        <!-- AdminLayout -->
+        <mxCell id="admin-layout" value="AdminLayout (Sidebar + Header)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="560" y="140" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- AdminGuard -->
+        <mxCell id="admin-guard" value="🔐 AdminGuard (auth check)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4A373;fontColor=#081C15;fontFamily=Inter;fontSize=9;strokeColor=#7A532A;" vertex="1" parent="1">
+          <mxGeometry x="560" y="180" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Login Page -->
+        <mxCell id="login-page" value="🔑 LoginPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#D4A373;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="220" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- DashboardPage -->
+        <mxCell id="dashboard-page" value="📊 DashboardPage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#D4A373;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="260" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- LotsPage -->
+        <mxCell id="lots-page" value="🏗️ LotsPage (CRUD Lotes)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#D4A373;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="300" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Admin components -->
+        <mxCell id="admin-components" value="LotsTable, LotsHeader, useLots (hook)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontFamily=Inter;fontColor=#A5D0B9;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="560" y="340" width="280" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- CAPA: LÓGICA COMPARTIDA                      -->
+        <!-- ============================================ -->
+        <mxCell id="capa-logica" value="⚙️ Lógica Compartida" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F3EF;fontColor=#1B4332;fontFamily=Inter;fontSize=12;fontStyle=1;strokeColor=#C1C8C2;strokeWidth=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="900" y="110" width="200" height="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="react-router" value="🗺️ React Router v7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="920" y="140" width="160" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="query" value="📦 TanStack React Query" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2D6A4F;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="920" y="180" width="160" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="hooks" value="🎣 Custom Hooks
+useAuth · useScrollReveal
+useTrackPageView" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="220" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lib" value="🔌 Clientes
+supabase.ts · cloudinary.ts
+checkAdmin.ts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="295" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="seo" value="🔍 SEO (react-helmet-async)
+PageSEO + vite-plugin-sitemap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#A5D0B9;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="368" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- CAPA: SERVICIOS EXTERNOS                     -->
+        <!-- ============================================ -->
+        <mxCell id="capa-servicios" value="☁️ SERVICIOS CLOUD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B4332;fontColor=#FAFAF8;fontFamily=Inter;fontSize=14;fontStyle=1;strokeColor=#081C15;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="1080" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- Supabase -->
+        <mxCell id="supabase" value="🟢 Supabase
+─────────────────
+• Auth (magic link, password)
+• PostgreSQL (lots, admin_users)
+• RLS (Row Level Security)
+• RPC (has_backstage_access)
+• Realtime subscriptions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3ECF8E;fontColor=#081C15;fontFamily=Inter;fontSize=9;strokeColor=#2BA06E;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="515" width="300" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- Cloudinary -->
+        <mxCell id="cloudinary" value="☁️ Cloudinary
+─────────────────
+• CDN de imágenes
+• Upload Widget
+• Transformaciones on-the-fly
+• Formatos: webp, avif
+• Almacenamiento de lotes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3448C5;fontColor=#FFFFFF;fontFamily=Inter;fontSize=9;strokeColor=#2738A0;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="440" y="515" width="300" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- Google Fonts -->
+        <mxCell id="fonts" value="🔤 Google Fonts
+─────────────────
+• Inter (cuerpo)
+• Playfair Display (títulos)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#C1C8C2;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="515" width="280" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Font Awesome -->
+        <mxCell id="fontawesome" value="🎨 Font Awesome 6
+(iconos adicionales)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF8;fontColor=#1B4332;fontFamily=Inter;fontSize=9;strokeColor=#C1C8C2;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="600" width="280" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ============================================ -->
+        <!-- CONEXIONES (EDGES)                           -->
+        <!-- ============================================ -->
+
+        <!-- RootLayout → Nav/Footer/Bottom/WhatsApp -->
+        <mxCell id="edge-root-nav" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="root-layout" target="top-nav">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-root-footer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="root-layout" target="footer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-root-bottom" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="root-layout" target="bottom-nav">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-root-whatsapp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="root-layout" target="whatsapp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- React Router → Pages & Admin -->
+        <mxCell id="edge-router-home" value="crea rutas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;fontSize=8;fontFamily=Inter;" edge="1" parent="1" source="react-router" target="pages-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="125" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="edge-router-admin" value="lazy() code split" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=2;fontSize=8;fontFamily=Inter;fontColor=#D4A373;dashed=1;" edge="1" parent="1" source="react-router" target="admin-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Flow: AdminGuard → AdminLayout → Pages -->
+        <mxCell id="edge-guard-layout" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="admin-guard" target="admin-layout">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge-layout-login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="admin-layout" target="login-page">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge-layout-dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="admin-layout" target="dashboard-page">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge-layout-lots" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D4A373;strokeWidth=1;" edge="1" parent="1" source="admin-layout" target="lots-page">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- App → Shared libs -->
+        <mxCell id="edge-react-hooks" value="usa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;fontSize=8;fontFamily=Inter;" edge="1" parent="1" source="capa-react" target="hooks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge-react-lib" value="usa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;fontSize=8;fontFamily=Inter;" edge="1" parent="1" source="capa-react" target="lib">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Navegador → Supabase -->
+        <mxCell id="edge-app-supabase" value="Auth · SQL queries · RPC" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3ECF8E;strokeWidth=2;fontSize=9;fontFamily=Inter;fontColor=#3ECF8E;" edge="1" parent="1" source="capa-navegador" target="supabase">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Navegador → Cloudinary -->
+        <mxCell id="edge-app-cloudinary" value="Subir imágenes · Cargar URLs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3448C5;strokeWidth=2;fontSize=9;fontFamily=Inter;fontColor=#3448C5;" edge="1" parent="1" source="capa-navegador" target="cloudinary">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Navegador → Fonts -->
+        <mxCell id="edge-app-fonts" value="Carga fuentes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#C1C8C2;strokeWidth=1;fontSize=8;fontFamily=Inter;" edge="1" parent="1" source="capa-navegador" target="fonts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Leyenda -->
+        <mxCell id="leyenda" value="Leyenda" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontFamily=Inter;fontColor=#1B4332;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="710" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leyenda-solid" value="────  Flujo de datos" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#1B4332;" vertex="1" parent="1">
+          <mxGeometry x="60" y="730" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leyenda-dashed" value="─ ─  Code Splitting / lazy()" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#D4A373;" vertex="1" parent="1">
+          <mxGeometry x="60" y="750" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leyenda-green" value="🟢 Supabase servicios" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#3ECF8E;" vertex="1" parent="1">
+          <mxGeometry x="300" y="730" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leyenda-blue" value="🔵 Cloudinary servicios" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontFamily=Inter;fontColor=#3448C5;" vertex="1" parent="1">
+          <mxGeometry x="300" y="750" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leyenda-meta" value="Versión: julio 2026 | Proyecto: La Holanda — Desarrollado por INGESOCC SAS" style="text;html=1;strokeColor=none;fillColor=none;align=right;fontSize=8;fontFamily=Inter;fontColor=#717973;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="700" y="760" width="400" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Flechas de relación entre App y ReactApp -->
+        <mxCell id="edge-router-router" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="capa-react" target="react-router">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="200" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="edge-query-router" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1B4332;strokeWidth=1;" edge="1" parent="1" source="capa-react" target="query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

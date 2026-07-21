@@ -31,10 +31,32 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ["@supabase/supabase-js"],
+      output: {
+        manualChunks(id: string) {
+          // React y router — estables, se cachean entre builds
+          if (id.includes("node_modules/react/") ||
+              id.includes("node_modules/react-dom/") ||
+              id.includes("node_modules/react-router") ||
+              id.includes("node_modules/react-helmet")) {
+            return "vendor-react";
+          }
+          // Supabase
+          if (id.includes("node_modules/@supabase/")) {
+            return "vendor-supabase";
+          }
+          // UI libraries (iconos, carrusel)
+          if (id.includes("node_modules/lucide-react") ||
+              id.includes("node_modules/embla-carousel")) {
+            return "vendor-ui";
+          }
+          // Formularios
+          if (id.includes("node_modules/react-hook-form") ||
+              id.includes("node_modules/zod") ||
+              id.includes("node_modules/@hookform")) {
+            return "vendor-forms";
+          }
+        },
+      },
     },
-  },
-  optimizeDeps: {
-    exclude: ["@supabase/supabase-js"],
   },
 });
