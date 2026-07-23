@@ -287,7 +287,7 @@ Husky ejecuta `lint-staged` automáticamente antes de cada commit:
 Error: Missing Supabase environment variables: 
 VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set in .env
 ```
-**Solución:** Crea el archivo `.env` con las variables requeridas (ver [[#3. Configurar variables de entorno]]).
+**Solución:** Crea el archivo `.env` con las variables requeridas (ver [#3. Configurar variables de entorno](#3-configurar-variables-de-entorno)).
 
 ### Error: Bun command not found
 ```bash
@@ -302,7 +302,7 @@ curl -fsSL https://bun.sh/install | bash
 ```bash
 artifact-baas-authority-surface found issues
 ```
-**Solución:** Asegúrate de que el Import Map para `@supabase/supabase-js` esté configurado en `index.html`. Revisa [[docs/decisions/adr-004-import-map-supabase|ADR-004]].
+**Solución:** Asegúrate de que el Import Map para `@supabase/supabase-js` esté configurado en `index.html`. Revisa [ADR-004](../decisions/adr-004-import-map-supabase.md).
 
 ### El build falla con errores de TypeScript
 **Solución:** Corrige los errores señalados. El proyecto usa `strict: true` con `noUnusedLocals` y `noUnusedParameters` activados.
@@ -319,11 +319,11 @@ artifact-baas-authority-surface found issues
 
 ## 📚 Documentación Relacionada
 
-- [[docs/index|Índice de Documentación]]
-- [[docs/architecture/overview|Arquitectura del Proyecto]]
-- [[docs/stack/tech-stack|Stack Tecnológico]]
-- [[docs/decisions/README|Decisiones Técnicas (ADR)]]
-- [[docs/diagrams/architecture|Diagramas de Arquitectura]]
+- [Índice de Documentación](../index.md)
+- [Arquitectura del Proyecto](../architecture/overview.md)
+- [Stack Tecnológico](../stack/tech-stack.md)
+- [Decisiones Técnicas (ADR)](../decisions/README.md)
+- [Diagramas de Arquitectura](../diagrams/architecture.md)
 
 ---
 
@@ -338,4 +338,4 @@ artifact-baas-authority-surface found issues
 - [ ] Ejecuté `bun run build` exitosamente
 - [ ] Revisé la estructura del proyecto
 - [ ] Exploré el panel admin en `/admin/login`
-- [ ] Revisé los ADRs en [[docs/decisions/README]]
+- [ ] Revisé los ADRs en [docs/decisions/README](../decisions/README.md)

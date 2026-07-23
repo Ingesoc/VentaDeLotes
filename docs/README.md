@@ -1,16 +1,8 @@
----
-tags:
-  - index
-  - home
-created: 2026-07-21
-updated: 2026-07-21
----
-
 # 📋 La Holanda — Documentación Técnica
 
-> **Proyecto:** La Holanda — Parcelación Campestre  
-> **Desarrollador:** INGESOCC SAS  
-> **Ubicación:** Quimbaya, Quindío, Colombia  
+> **Proyecto:** La Holanda — Parcelación Campestre
+> **Desarrollador:** INGESOCC SAS
+> **Ubicación:** Quimbaya, Quindío, Colombia
 > **URL:** [laholanda.com](https://www.laholanda.com/)
 
 Bienvenido a la documentación técnica del proyecto. Este repositorio contiene las decisiones arquitectónicas, configuración del stack, features implementadas y guías de despliegue.
@@ -18,8 +10,6 @@ Bienvenido a la documentación técnica del proyecto. Este repositorio contiene 
 ---
 
 ## 👋 ¿Nuevo en el Proyecto?
-
-Si eres nuevo, empieza aquí:
 
 ➡️ [🚀 Guía de Onboarding](./guides/onboarding.md) — Configura tu entorno, instala dependencias y empieza a contribuir.
 

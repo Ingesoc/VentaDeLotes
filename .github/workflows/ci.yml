@@ -31,5 +31,8 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
+      - name: Tests
+        run: bun run test:run
+
       - name: React Doctor
         run: npx react-doctor@latest --verbose

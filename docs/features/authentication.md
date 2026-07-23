@@ -113,4 +113,4 @@ interface AuthState {
 1. **RLS en Supabase:** Las tablas tienen políticas de Row Level Security que restringen acceso
 2. **Variables de entorno:** `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` nunca se hardcodean
 3. **Admin verification server-side:** La función RPC se ejecuta en PostgreSQL, no en el cliente
-4. **Import Map:** El SDK de Supabase se carga vía CDN (ver [[docs/decisions/adr-004-import-map-supabase|ADR-004]])
+4. **Import Map:** El SDK de Supabase se carga vía CDN (ver [ADR-004](../decisions/adr-004-import-map-supabase.md))

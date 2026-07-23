@@ -7,7 +7,7 @@ created: 2026-07-21
 
 # 🏗️ Arquitectura del Proyecto
 
-> 📊 **Diagramas interactivos disponibles en:** [[docs/diagrams/architecture|Diagramas de Arquitectura]]
+> 📊 **Diagramas interactivos disponibles en:** [Diagramas de Arquitectura](../diagrams/architecture.md)
 >
 > Los diagramas usan sintaxis **Mermaid**, compatible nativamente con Obsidian.  
 > En Obsidian: usa `Ctrl/Cmd + Click` para navegar o vista `Preview` para renderizar.
@@ -197,13 +197,13 @@ Supabase Auth maneja todo el ciclo de vida de sesiones (login, refresh, logout).
 
 ## 📐 Decisiones Técnicas Relacionadas
 
-- [[docs/decisions/adr-001-react-router-code-splitting|ADR-001: Code Splitting]]
-- [[docs/decisions/adr-002-tailwind-css-v4-theme|ADR-002: Tailwind v4 CSS-first]]
-- [[docs/decisions/adr-003-supabase-auth|ADR-003: Auth con Supabase]]
-- [[docs/decisions/adr-004-import-map-supabase|ADR-004: Import Map Supabase]]
+- [ADR-001: Code Splitting](../decisions/adr-001-react-router-code-splitting.md)
+- [ADR-002: Tailwind v4 CSS-first](../decisions/adr-002-tailwind-css-v4-theme.md)
+- [ADR-003: Auth con Supabase](../decisions/adr-003-supabase-auth.md)
+- [ADR-004: Import Map Supabase](../decisions/adr-004-import-map-supabase.md)
 
 ## 🔗 Enlaces Relacionados
 
-- [[docs/diagrams/architecture|📊 Diagramas de Arquitectura (Mermaid)]]
-- [[docs/guides/onboarding|🚀 Guía de Onboarding]]
-- [[docs/stack/tech-stack|⚙️ Stack Tecnológico]]
+- [📊 Diagramas de Arquitectura (Mermaid)](../diagrams/architecture.md)
+- [🚀 Guía de Onboarding](../guides/onboarding.md)
+- [⚙️ Stack Tecnológico](../stack/tech-stack.md)

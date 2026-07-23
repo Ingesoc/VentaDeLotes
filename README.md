@@ -4,6 +4,8 @@
 
 Este proyecto es una aplicación web moderna construida con React que permite a los usuarios explorar lotes disponibles, conocer el proyecto, calcular valorización potencial y contactar al equipo comercial.
 
+> 📖 **Documentación completa disponible en [`docs/README.md`](./docs/README.md)** — arquitectura, stack, features, decisiones técnicas y guías.
+
 ---
 
 ## 🏗️ Tech Stack

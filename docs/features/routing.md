@@ -64,7 +64,7 @@ const AdminGuard = lazy(() =>
 );
 ```
 
-Ver [[docs/decisions/adr-001-react-router-code-splitting|ADR-001]] para más detalles.
+Ver [ADR-001](../decisions/adr-001-react-router-code-splitting.md) para más detalles.
 
 ## Componentes de Navegación
 

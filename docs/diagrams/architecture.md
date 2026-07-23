@@ -20,9 +20,9 @@ Este directorio contiene todos los diagramas de arquitectura del proyecto en dos
 
 | Archivo | Contenido | Vista Previa |
 |---------|-----------|--------------|
-| [[docs/diagrams/arquitectura.drawio\|arquitectura.drawio]] | 🏗️ Arquitectura general del sistema: 3 capas (navegador → lógica → servicios cloud) con todos los componentes React, rutas admin protegidas, y conexiones a Supabase/Cloudinary | Diagrama completo del sistema |
-| [[docs/diagrams/auth-flow.drawio\|auth-flow.drawio]] | 🔐 Flujo de autenticación paso a paso: Usuario → LoginPage → AuthProvider → Supabase Auth → AdminGuard → RPC → Dashboard o Redirect | Secuencia de auth con 9 pasos numerados |
-| [[docs/diagrams/database-routing.drawio\|database-routing.drawio]] | 🗄️ Esquema de base de datos (tablas `lots`, `admin_users`, funciones RPC, RLS) + 🌳 Árbol completo de rutas de React Router | Dos diagramas en uno: BD + Routing |
+| [arquitectura.drawio](./arquitectura.drawio) | 🏗️ Arquitectura general del sistema: 3 capas (navegador → lógica → servicios cloud) con todos los componentes React, rutas admin protegidas, y conexiones a Supabase/Cloudinary | Diagrama completo del sistema |
+| [auth-flow.drawio](./auth-flow.drawio) | 🔐 Flujo de autenticación paso a paso: Usuario → LoginPage → AuthProvider → Supabase Auth → AdminGuard → RPC → Dashboard o Redirect | Secuencia de auth con 9 pasos numerados |
+| [database-routing.drawio](./database-routing.drawio) | 🗄️ Esquema de base de datos (tablas `lots`, `admin_users`, funciones RPC, RLS) + 🌳 Árbol completo de rutas de React Router | Dos diagramas en uno: BD + Routing |
 
 ### Cómo abrir los archivos .drawio
 
@@ -310,9 +310,9 @@ sequenceDiagram
 
 ## 🔗 Enlaces Relacionados
 
-- [[docs/index|📋 Índice de Documentación]]
-- [[docs/architecture/overview|🏗️ Arquitectura del Proyecto]]
-- [[docs/guides/onboarding|🚀 Guía de Onboarding]]
-- [[docs/features/authentication|🔐 Sistema de Autenticación]]
-- [[docs/features/database|🗄️ Base de Datos]]
-- [[docs/features/routing|🗺️ Sistema de Enrutamiento]]
+- [📋 Índice de Documentación](../index.md)
+- [🏗️ Arquitectura del Proyecto](../architecture/overview.md)
+- [🚀 Guía de Onboarding](../guides/onboarding.md)
+- [🔐 Sistema de Autenticación](../features/authentication.md)
+- [🗄️ Base de Datos](../features/database.md)
+- [🗺️ Sistema de Enrutamiento](../features/routing.md)

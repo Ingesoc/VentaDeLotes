@@ -67,7 +67,7 @@ Encabezado de la página con:
 - Filtros de búsqueda
 
 ## Protección de Rutas
-Todas las rutas `/admin/*` están protegidas por [[docs/features/authentication#Admin Guard|AdminGuard]] que verifica:
+Todas las rutas `/admin/*` están protegidas por [AdminGuard](./authentication.md#admin-guard) que verifica:
 1. Sesión activa en Supabase
 2. Rol de administrador vía RPC `has_backstage_access`
 

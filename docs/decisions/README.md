@@ -14,10 +14,10 @@ Este directorio contiene los **Architecture Decision Records** del proyecto. Cad
 
 | # | Título | Estado | Fecha |
 |---|--------|--------|-------|
-| [[docs/decisions/adr-001-react-router-code-splitting\|ADR-001]] | Code Splitting con React Router y Lazy Loading | ✅ Aprobado | 2026-07-21 |
-| [[docs/decisions/adr-002-tailwind-css-v4-theme\|ADR-002]] | Tema CSS-first con Tailwind CSS v4 | ✅ Aprobado | 2026-07-21 |
-| [[docs/decisions/adr-003-supabase-auth\|ADR-003]] | Autenticación con Supabase Auth | ✅ Aprobado | 2026-07-21 |
-| [[docs/decisions/adr-004-import-map-supabase\|ADR-004]] | Import Map para Supabase SDK vía CDN | ✅ Aprobado | 2026-07-21 |
+| [ADR-001](./adr-001-react-router-code-splitting.md) | Code Splitting con React Router y Lazy Loading | ✅ Aprobado | 2026-07-21 |
+| [ADR-002](./adr-002-tailwind-css-v4-theme.md) | Tema CSS-first con Tailwind CSS v4 | ✅ Aprobado | 2026-07-21 |
+| [ADR-003](./adr-003-supabase-auth.md) | Autenticación con Supabase Auth | ✅ Aprobado | 2026-07-21 |
+| [ADR-004](./adr-004-import-map-supabase.md) | Import Map para Supabase SDK vía CDN | ✅ Aprobado | 2026-07-21 |
 
 ## Formato de ADR
 
