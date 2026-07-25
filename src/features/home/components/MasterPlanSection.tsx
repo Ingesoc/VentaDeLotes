@@ -22,8 +22,8 @@ export function MasterPlanSection() {
 
       <div className="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl group">
         <img
-          src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303341/laholanda/lots/masterplan-render.jpg"
-          alt="Plano general detallado de la parcelación La Holanda en Quimbaya, Quindío"
+          src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"
+          alt="Vista aérea del plano general de la parcelación La Holanda en Quimbaya, Quindío"
           loading="lazy"
           decoding="async"
           className="w-full h-auto object-cover img-zoom"

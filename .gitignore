@@ -51,3 +51,10 @@ agent-scripts/
 *.njsproj
 *.sln
 *.sw?
+Imagenes drone*/
+*.JPG
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.MP4
