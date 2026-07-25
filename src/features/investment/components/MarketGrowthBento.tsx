@@ -4,6 +4,7 @@ import {
   infraInvestmentStat,
   marketFeatures,
 } from "@/constants/marketStats";
+import { cldUrl } from "@/lib/cloudinary";
 
 /** Mapa de id → iconos */
 const featureIcons = {
@@ -40,7 +41,7 @@ export function MarketGrowthBento() {
             loading="lazy"
             decoding="async"
             className="w-full h-full object-cover img-zoom"
-            src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784652550/laholanda/landscapes/aida-market-growth.png"
+            src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784652550/laholanda/landscapes/aida-market-growth.png")}
             alt="Vista aérea de los exuberantes paisajes verdes del Quindío con plantaciones de café y casas modernas integradas en la naturaleza"
           />
           <div className="absolute inset-0 bg-linear-to-t from-primary/90 via-primary/30 to-transparent" />

@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin } from "lucide-react";
 import { project } from "@/constants/project";
+import { cldUrl } from "@/lib/cloudinary";
 
 export function Footer() {
   return (
@@ -10,7 +11,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784226214/laHolandaIsotipo_dme9sp.png"
+                src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784226214/laHolandaIsotipo_dme9sp.png")}
                 alt="La Holanda"
                 className="h-10 w-auto brightness-0 invert opacity-80"
               />

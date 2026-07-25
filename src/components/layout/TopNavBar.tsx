@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { cldUrl } from "@/lib/cloudinary";
 
 export function TopNavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,7 +26,7 @@ export function TopNavBar() {
         <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
           <Link to="/" className="flex items-center gap-3">
             <img
-              src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784226214/laHolandaIsotipo_dme9sp.png"
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784226214/laHolandaIsotipo_dme9sp.png")}
               alt="La Holanda"
               className="h-8 md:h-10 w-auto"
             />

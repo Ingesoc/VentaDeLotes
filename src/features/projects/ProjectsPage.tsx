@@ -4,6 +4,7 @@ import { lots, type LotStatus } from "@/constants/lots";
 import { LotCard } from "./components/LotCard";
 import { LotFilters, type AreaRange } from "./components/LotFilters";
 import { EmptyState } from "./components/EmptyState";
+import { cldUrl } from "@/lib/cloudinary";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 function matchesAreaRange(areaM2: number | null, range: AreaRange): boolean {
@@ -44,7 +45,7 @@ export function ProjectsPage() {
         title="Lotes Disponibles en Quimbaya | La Holanda"
         description="Explora nuestra selección de lotes campestres en Quimbaya, Quindío. Filtra por área, estado y encuentra el lote perfecto para tu hogar o inversión."
         ogUrl="https://www.laholanda.com/projects"
-        ogImage="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303341/laholanda/lots/masterplan-render.jpg"
+        ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303341/laholanda/lots/masterplan-render.jpg")}
       />
       <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24 page-enter">
         <div className="mb-12 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">

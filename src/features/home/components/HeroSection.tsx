@@ -1,15 +1,16 @@
 import { project } from "@/constants/project";
+import { cldUrl } from "@/lib/cloudinary";
 
 export function HeroSection() {
   return (
     <header className="relative h-dvh w-full flex items-center justify-center overflow-hidden">
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center"style={{ backgroundImage: "url('https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg')" }}
+        className="absolute inset-0 z-0 bg-cover bg-center"style={{ backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304519/laholanda/landscapes/Loteo%20General.webp")}')` }}
         >
           <img
             alt={`Vista aérea espectacular del plan maestro de ${project.name} en ${project.location.municipality}, ${project.location.department}, con paisajes verdes y lotes orgánicos`}
             className="sr-only"
-            src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"
+            src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304519/laholanda/landscapes/Loteo%20General.webp")}
         />
       </div>
       <div className="absolute inset-0 z-10 bg-deep-forest/40"></div>

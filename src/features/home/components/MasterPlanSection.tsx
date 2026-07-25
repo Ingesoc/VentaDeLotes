@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { lots } from "@/constants/lots";
 import { lotMarkers } from "./lotMarkers";
+import { cldUrl } from "@/lib/cloudinary";
 
 const statusColors: Record<string, string> = {
   disponible: "bg-deep-forest text-on-primary hover:bg-heritage-gold hover:text-primary",
@@ -22,7 +23,7 @@ export function MasterPlanSection() {
 
       <div className="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl group">
         <img
-          src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"
+          src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg")}
           alt="Vista aérea del plano general de la parcelación La Holanda en Quimbaya, Quindío"
           loading="lazy"
           decoding="async"

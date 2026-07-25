@@ -20,6 +20,17 @@ interface CloudinaryAPI {
   ) => CloudinaryWidget;
 }
 
+/**
+ * Añade transformaciones de optimización (f_auto,q_auto) a una URL de Cloudinary.
+ * El navegador recibe automáticamente el formato más eficiente (WebP, AVIF, etc.)
+ * con la mejor relación calidad/peso.
+ */
+export function cldUrl(url: string): string {
+  if (!url.includes("res.cloudinary.com")) return url;
+  // Inserta f_auto,q_auto después de /image/upload/
+  return url.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
+}
+
 /** Abre el widget de Cloudinary y devuelve la URL de la imagen subida. */
 export function uploadImage(): Promise<string | null> {
   return new Promise((resolve, reject) => {

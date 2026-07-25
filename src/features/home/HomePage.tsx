@@ -7,6 +7,7 @@ import { FeaturedLots } from "./components/FeaturedLots";
 import { ProjectBenefits } from "./components/ProjectBenefits";
 import { InvestmentComparison } from "./components/InvestmentComparison";
 import { ContactForm } from "./components/ContactForm";
+import { cldUrl } from "@/lib/cloudinary";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export function HomePage() {
@@ -23,7 +24,7 @@ export function HomePage() {
         title="La Holanda — Parcelación Campestre | Quimbaya, Quindío"
         description="La Holanda — Parcelación Campestre en Quimbaya, Quindío. Lotes campestres desde 500 m² con escritura pública, vías de acceso y diseño arquitectónico incluido. Desarrollado por INGESOCC SAS."
         ogUrl="https://www.laholanda.com/"
-        ogImage="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303937/laholanda/landscapes/DJI_0131.webp"
+        ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303937/laholanda/landscapes/DJI_0131.webp")}
       />
       <div ref={scrollRevealRef} className="w-full page-enter">
         <HeroSection />

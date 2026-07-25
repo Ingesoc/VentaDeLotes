@@ -3,6 +3,7 @@ import { InvestmentHero } from "./components/InvestmentHero";
 import { MarketGrowthBento } from "./components/MarketGrowthBento";
 import { RoiAnalysis } from "./components/RoiAnalysis";
 import { InvestmentCTA } from "./components/InvestmentCTA";
+import { cldUrl } from "@/lib/cloudinary";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export function InvestmentPage() {
@@ -19,7 +20,7 @@ export function InvestmentPage() {
         title="Invertir en La Holanda | Quimbaya, Quindío"
         description="Descubre por qué invertir en La Holanda es la mejor decisión. Alta valorización, plusvalía garantizada y el crecimiento turístico del Eje Cafetero."
         ogUrl="https://www.laholanda.com/investment"
-        ogImage="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303937/laholanda/landscapes/DJI_0131.webp"
+        ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303937/laholanda/landscapes/DJI_0131.webp")}
       />
       <div ref={scrollRevealRef} className="w-full page-enter">
         <InvestmentHero />

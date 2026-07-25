@@ -1,3 +1,5 @@
+import { cldUrl } from "@/lib/cloudinary";
+
 export type LotStatus = "disponible" | "reservado" | "vendido";
 
 export interface PriceSchedule {
@@ -31,8 +33,8 @@ export const lots: Lot[] = [
       "2028-10-15": 298804500,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg"),
   },
   {
     id: "02",
@@ -44,8 +46,8 @@ export const lots: Lot[] = [
       "2028-10-15": 298804500,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
     sharedAerialWith: "03",
   },
   {
@@ -58,8 +60,8 @@ export const lots: Lot[] = [
       "2028-10-15": 293083500,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
     sharedAerialWith: "02",
   },
   {
@@ -72,8 +74,8 @@ export const lots: Lot[] = [
       "2028-10-15": 261427500,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
     sharedAerialWith: "05",
   },
   {
@@ -86,8 +88,8 @@ export const lots: Lot[] = [
       "2028-10-15": 267493500,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
     sharedAerialWith: "04",
   },
   {
@@ -100,8 +102,8 @@ export const lots: Lot[] = [
       "2028-10-15": 250773000,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946328/laholanda/lots/lote-06-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946328/laholanda/lots/lote-06-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
   },
   {
     id: "07",
@@ -113,8 +115,8 @@ export const lots: Lot[] = [
       "2028-10-15": 251182500,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
     sharedAerialWith: "08",
   },
   {
@@ -127,8 +129,8 @@ export const lots: Lot[] = [
       "2028-10-15": 291267000,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
     sharedAerialWith: "07",
     topography: "Ondulada suave",
     view: "Panorámica al valle",
@@ -144,16 +146,16 @@ export const lots: Lot[] = [
       "2028-10-15": 299815500,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946336/laholanda/lots/lote-09-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946336/laholanda/lots/lote-09-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
   },
   {
     id: "10",
     areaM2: 2966,
     price: undefined,
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg"),
   },
   {
     id: "11",
@@ -165,8 +167,8 @@ export const lots: Lot[] = [
       "2028-10-15": 375300000,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg"),
   },
   {
     id: "12",
@@ -178,8 +180,8 @@ export const lots: Lot[] = [
       "2028-10-15": 368400000,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg"),
   },
   {
     id: "13",
@@ -191,8 +193,8 @@ export const lots: Lot[] = [
       "2028-10-15": 482400000,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg"),
   },
   {
     id: "14",
@@ -204,24 +206,24 @@ export const lots: Lot[] = [
       "2028-10-15": 377700000,
     },
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg"),
   },
   {
     id: "15",
     areaM2: 2908,
     price: undefined,
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
   },
   {
     id: "16",
     areaM2: 6689,
     price: undefined,
     status: "disponible",
-    aerialImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg",
-    perspectiveImage: "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg",
+    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg"),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg"),
   },
 ];
 

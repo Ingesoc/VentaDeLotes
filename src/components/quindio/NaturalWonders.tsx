@@ -1,3 +1,5 @@
+import { cldUrl } from "@/lib/cloudinary";
+
 export default function NaturalWonders() {
   return (
     <section className="bg-surface-container-low py-section-gap">
@@ -16,7 +18,7 @@ export default function NaturalWonders() {
             <img
               alt="Local viewpoint"
               className="w-full h-full object-cover img-zoom-lg"
-              src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304306/laholanda/events/miradorQuindio.png"
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304306/laholanda/events/miradorQuindio.png")}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">
@@ -31,7 +33,7 @@ export default function NaturalWonders() {
             <img
               alt="I Love Quimbaya square"
               className="w-full h-full object-cover img-zoom-lg"
-              src="https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304292/laholanda/events/lovequimbaya.jpg"
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304292/laholanda/events/lovequimbaya.jpg")}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">

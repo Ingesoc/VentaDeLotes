@@ -1,10 +1,12 @@
+import { cldUrl } from "@/lib/cloudinary";
+
 export default function QuindioHero() {
   return (
     <section className="relative h-[90dvh] min-h-[600px] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div
           className="w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: "url('https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg')" }}
+          style={{ backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg")}')` }}
         ></div>
         <div className="absolute inset-0 bg-linear-to-r from-primary/80 via-primary/40 to-transparent"></div>
       </div>
