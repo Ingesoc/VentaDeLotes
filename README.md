@@ -1,5 +1,10 @@
 # La Holanda — Parcelación Campestre
 
+[![CI](https://github.com/Ingesoc/VentaDeLotes/actions/workflows/ci.yml/badge.svg)](https://github.com/Ingesoc/VentaDeLotes/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/github/package-json/v/Ingesoc/VentaDeLotes?label=versi%C3%B3n&color=%232D6A4F)](https://github.com/Ingesoc/VentaDeLotes)
+[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-%231B4332)](#licencia)
+[![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen?label=cobertura&color=%23D4A373)](https://github.com/Ingesoc/VentaDeLotes/actions/workflows/ci.yml)
+
 **Portal digital de inversión y vitrina inmobiliaria** para la parcelación campestre **La Holanda**, ubicada en Quimbaya, Quindío. Desarrollado por **INGESOCC SAS**.
 
 Este proyecto es una aplicación web moderna construida con React que permite a los usuarios explorar lotes disponibles, conocer el proyecto, calcular valorización potencial y contactar al equipo comercial.
@@ -113,7 +118,12 @@ npm run lint
 npm run lint:doctor
 ```
 
-El proyecto incluye un pipeline de CI (GitHub Actions) que ejecuta lint y build en cada push a `main`.
+El proyecto incluye un pipeline de [CI (GitHub Actions)](https://github.com/Ingesoc/VentaDeLotes/actions/workflows/ci.yml) que ejecuta:
+
+- **Build** + **Unit Tests** (Vitest) + **React Doctor** — job `quality`
+- **E2E Tests** (Playwright, chromium-mobile + chromium-desktop) — job `e2e`
+
+El pipeline se ejecuta automáticamente en cada push o PR a `main`.
 
 ---
 

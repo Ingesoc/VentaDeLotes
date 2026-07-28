@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "vite-plugin-sitemap";
+import { VitePWA } from "vite-plugin-pwa";
 
 const DYNAMIC_ROUTES = ["/", "/investment", "/projects", "/descubre-quindio"];
 
@@ -10,6 +11,88 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    VitePWA({
+      registerType: "autoUpdate",
+      includeAssets: ["favicon/**/*", "robots.txt"],
+      manifest: {
+        name: "La Holanda — Parcelación Campestre",
+        short_name: "La Holanda",
+        description:
+          "Lotes campestres en Quimbaya, Quindío. Inversión y vida en el Eje Cafetero de Colombia.",
+        theme_color: "#1B4332",
+        background_color: "#FAFAF8",
+        display: "standalone",
+        start_url: "/",
+        icons: [
+          {
+            src: "/favicon/android-icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "/favicon/android-icon-144x144.png",
+            sizes: "144x144",
+            type: "image/png",
+          },
+        ],
+      },
+      workbox: {
+        // Solo precargamos JS, CSS, HTML e iconos pequeños.
+        // Las imágenes grandes (jpg, webp, png de contenido) se manejan
+        // con runtime caching (StaleWhileRevalidate).
+        globPatterns: ["**/*.{js,css,html,ico}", "favicon/**/*.png"],
+        // Estrategia: precarga todo el app shell, luego actualiza en background
+        runtimeCaching: [
+          {
+            // Cloudinary images: stale-while-revalidate
+            // Muestra rápido desde caché, actualiza en segundo plano
+            urlPattern: /^https:\/\/res\.cloudinary\.com\/.*/,
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "cloudinary-images",
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 días
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // Google Fonts: cache-first (rara vez cambian)
+            urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "google-fonts",
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 año
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // Supabase API: network first, fallback a caché
+            urlPattern: /^https:\/\/[a-z0-9-]+\.supabase\.co\/.*/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "supabase-api",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60, // 1 hora
+              },
+              networkTimeoutSeconds: 10,
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
+      },
+    }),
     sitemap({
       hostname: "https://www.laholanda.com",
       dynamicRoutes: DYNAMIC_ROUTES,
@@ -47,11 +130,22 @@ export default defineConfig({
               id.includes("node_modules/embla-carousel")) {
             return "vendor-ui";
           }
-          // Formularios
+          // Formularios (solo carga en páginas con formularios)
           if (id.includes("node_modules/react-hook-form") ||
-              id.includes("node_modules/zod") ||
               id.includes("node_modules/@hookform")) {
             return "vendor-forms";
+          }
+          // Zod — separado porque zod v4+ es grande y solo se necesita en forms
+          if (id.includes("node_modules/zod")) {
+            return "vendor-zod";
+          }
+          // Supabase — carga bajo demanda
+          if (id.includes("node_modules/@supabase")) {
+            return "vendor-supabase";
+          }
+          // Páginas pesadas (DescubreQuindio)
+          if (id.includes("DescubreQuindio")) {
+            return "page-quindio";
           }
         },
       },
@@ -67,5 +161,6 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
     css: true,
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
   },
 });

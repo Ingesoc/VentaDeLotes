@@ -41,6 +41,15 @@ agent-scripts/
 *.agent.md
 *.ai.md
 
+# Lighthouse audit reports
+reports/
+
+# Playwright E2E test reports
+reports/e2e-report/
+
+# Playwright browser cache
+ms-playwright/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

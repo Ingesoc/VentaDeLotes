@@ -16,25 +16,27 @@ export function useLots() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState<string | null>(null);
 
-  const loadLots = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("lots")
-        .select("*")
-        .order("id");
-
-      if (error) throw error;
-      setLots(data ?? []);
-    } catch (err) {
-      console.error("Error loading lots:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    let cancelled = false;
+
+    const loadLots = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("lots")
+          .select("*")
+          .order("id");
+
+        if (error) throw error;
+        if (!cancelled) setLots(data ?? []);
+      } catch (err) {
+        if (!cancelled) console.error("Error loading lots:", err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
     loadLots();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => { cancelled = true; };
   }, []);
 
   const saveLot = useCallback(async (id: string, updates: { status: Lot["status"]; price: number | null }) => {

@@ -1,4 +1,4 @@
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 interface LotMiniMapProps {
   lotId: string;
@@ -9,7 +9,7 @@ export function LotMiniMap({ lotId }: LotMiniMapProps) {
     <div className="relative w-full h-64 rounded-xl overflow-hidden bg-surface-container shadow-ambient border border-outline-variant/10">
       <div
         className="absolute inset-0 opacity-40 bg-cover bg-center grayscale"
-        style={{ backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303341/laholanda/lots/masterplan-render.jpg")}')` }}
+        style={{ backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303341/laholanda/lots/masterplan-render.jpg", CLD_WIDTHS.CARD)}')` }}
       />
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-24 h-24 border-2 border-heritage-gold bg-heritage-gold/20 flex items-center justify-center rounded-sm">

@@ -1,4 +1,4 @@
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export default function WellnessSection() {
   return (
@@ -6,7 +6,7 @@ export default function WellnessSection() {
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-30">
         {/* Placeholder decorativo */}
       </div>
-      <div className="px-margin-desktop max-w-container-max mx-auto relative z-10">
+      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="font-display-lg text-display-lg-mobile mb-8">
@@ -33,14 +33,16 @@ export default function WellnessSection() {
             </div>
           </div>
           <div className="relative">
-            <div className="rounded-2xl overflow-hidden shadow-2xl h-[600px]">
+            <div className="rounded-2xl overflow-hidden shadow-2xl h-[350px] sm:h-[500px] md:h-[600px]">
               <img
                 alt="Luxury pool area"
                 className="w-full h-full object-cover"
-                src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304319/laholanda/events/piscinas.jpg")}
+                loading="lazy"
+                decoding="async"
+                src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304319/laholanda/events/piscinas.jpg", CLD_WIDTHS.LARGE)}
               />
             </div>
-            <div className="absolute -bottom-6 -right-6 glass-panel p-8 rounded-2xl text-primary max-w-xs shadow-xl border border-white/20">
+            <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 glass-panel p-4 md:p-8 rounded-2xl text-primary max-w-[200px] md:max-w-xs shadow-xl border border-white/20">
               <p className="font-headline-md mb-2">Lujo Moderno</p>
               <p className="text-caption font-body-md opacity-80">Arquitectura que celebra el exterior.</p>
             </div>

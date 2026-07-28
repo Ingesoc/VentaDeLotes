@@ -1,9 +1,9 @@
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export default function NaturalWonders() {
   return (
     <section className="bg-surface-container-low py-section-gap">
-      <div className="px-margin-desktop max-w-container-max mx-auto">
+      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-headline-lg text-display-lg-mobile text-primary mb-4">
             Maravillas Naturales
@@ -14,11 +14,13 @@ export default function NaturalWonders() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1 */}
-          <div className="md:col-span-2 relative h-[500px] rounded-2xl overflow-hidden group">
+          <div className="md:col-span-2 relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl overflow-hidden group">
             <img
               alt="Local viewpoint"
               className="w-full h-full object-cover img-zoom-lg"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304306/laholanda/events/miradorQuindio.png")}
+              loading="lazy"
+              decoding="async"
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304306/laholanda/events/miradorQuindio.png", CLD_WIDTHS.LARGE)}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">
@@ -29,11 +31,13 @@ export default function NaturalWonders() {
             </div>
           </div>
           {/* Card 2 */}
-          <div className="relative h-[500px] rounded-2xl overflow-hidden group">
+          <div className="relative h-[250px] sm:h-[300px] md:h-[500px] rounded-2xl overflow-hidden group">
             <img
               alt="I Love Quimbaya square"
               className="w-full h-full object-cover img-zoom-lg"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304292/laholanda/events/lovequimbaya.jpg")}
+              loading="lazy"
+              decoding="async"
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304292/laholanda/events/lovequimbaya.jpg", CLD_WIDTHS.CARD)}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">

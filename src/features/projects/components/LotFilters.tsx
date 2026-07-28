@@ -28,7 +28,7 @@ export function LotFilters({
           id="filter-status"
           value={status}
           onChange={(e) => onStatusChange(e.target.value as LotStatus | "all")}
-          className="bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-primary pb-2 pl-0"
+          className="bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-primary pb-2 pl-0 min-h-[48px]"
         >
           <option value="all">Todos los estados</option>
           <option value="disponible">Disponible</option>
@@ -48,7 +48,7 @@ export function LotFilters({
           id="filter-area"
           value={areaRange}
           onChange={(e) => onAreaRangeChange(e.target.value as AreaRange)}
-          className="bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-primary pb-2 pl-0"
+          className="bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-primary pb-2 pl-0 min-h-[48px]"
         >
           <option value="all">Todos los tamaños</option>
           <option value="under-2005">Menos de 2005 m²</option>

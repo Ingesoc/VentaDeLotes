@@ -6,7 +6,7 @@ export function WhatsAppButton() {
       href="https://wa.me/573127370811"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-coffee-green hover:bg-forest-green text-white p-4 rounded-full shadow-2xl transition-colors transition-transform duration-300 flex items-center justify-center border border-white/20 group"
+      className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 bg-coffee-green hover:bg-forest-green text-white p-4 rounded-full shadow-2xl transition-colors transition-transform duration-300 flex items-center justify-center border border-white/20 group tap-target hover:scale-105 active:scale-95"
       aria-label="Contactar por WhatsApp"
     >
       <MessageCircle className="w-6 h-6 fill-white" />

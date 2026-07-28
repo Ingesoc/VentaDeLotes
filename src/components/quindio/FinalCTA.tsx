@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function FinalCTA() {
   return (
-    <section className="py-section-gap px-margin-desktop max-w-container-max mx-auto text-center">
-      <div className="bg-earth-beige rounded-3xl p-16 border border-outline-variant/30 relative overflow-hidden">
+    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
+      <div className="bg-earth-beige rounded-3xl p-8 md:p-16 border border-outline-variant/30 relative overflow-hidden">
         <div className="relative z-10">
           <h2 className="font-headline-lg text-primary mb-6">Sé parte de este paraíso.</h2>
           <p className="font-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">

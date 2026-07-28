@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { lots } from "@/constants/lots";
 import { lotMarkers } from "./lotMarkers";
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 const statusColors: Record<string, string> = {
   disponible: "bg-deep-forest text-on-primary hover:bg-heritage-gold hover:text-primary",
@@ -23,7 +23,7 @@ export function MasterPlanSection() {
 
       <div className="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl group">
         <img
-          src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg")}
+          src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.MASTERPLAN)}
           alt="Vista aérea del plano general de la parcelación La Holanda en Quimbaya, Quindío"
           loading="lazy"
           decoding="async"
@@ -38,7 +38,7 @@ export function MasterPlanSection() {
               key={lot.id}
               to={`/projects/${lot.id}`}
               style={{ top: marker.top, left: marker.left }}
-              className={`absolute w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-lot-number text-xs md:text-sm font-bold shadow-lg transition-transform duration-300 -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 hover:shadow-xl ${
+              className={`absolute w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-lot-number text-xs md:text-sm font-bold shadow-lg transition-transform duration-300 -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 hover:shadow-xl min-w-[44px] min-h-[44px] md:min-w-[48px] md:min-h-[48px] ${
                 statusColors[lot.status]
               }`}
             >

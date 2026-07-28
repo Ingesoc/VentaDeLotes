@@ -35,24 +35,26 @@ export function LotGallery({ lot }: LotGalleryProps) {
           <button
             onClick={() => setActiveView("aerial")}
             type="button"
-            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-colors ${
+            className={`px-3 sm:px-4 py-2 rounded-md text-label-caps font-label-caps transition-colors tap-target-sm min-w-[44px] ${
               activeView === "aerial"
                 ? "bg-deep-forest text-on-primary"
                 : "text-on-surface-variant hover:bg-deep-forest/5"
             }`}
           >
-            Vista Aérea
+            <span className="hidden sm:inline">Vista Aérea</span>
+            <span className="sm:hidden">Aérea</span>
           </button>
           <button
             onClick={() => setActiveView("perspective")}
             type="button"
-            className={`px-4 py-2 rounded-md text-label-caps font-label-caps transition-colors ${
+            className={`px-3 sm:px-4 py-2 rounded-md text-label-caps font-label-caps transition-colors tap-target-sm min-w-[44px] ${
               activeView === "perspective"
                 ? "bg-deep-forest text-on-primary"
                 : "text-on-surface-variant hover:bg-deep-forest/5"
             }`}
           >
-            Vista en Perspectiva
+            <span className="hidden sm:inline">Vista en Perspectiva</span>
+            <span className="sm:hidden">Perspectiva</span>
           </button>
         </div>
       </div>

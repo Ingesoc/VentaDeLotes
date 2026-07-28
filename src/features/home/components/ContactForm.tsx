@@ -91,7 +91,7 @@ export function ContactForm() {
                 type="text"
                 placeholder="Nombre completo"
                 {...register("name")}
-                className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
+                className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md safe-input text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
               />
               {errors.name && (
                 <p className="text-caption font-caption text-red-600 mt-1">
@@ -108,7 +108,7 @@ export function ContactForm() {
                 type="email"
                 placeholder="Correo electrónico"
                 {...register("email")}
-                className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
+                className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md safe-input text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
               />
               {errors.email && (
                 <p className="text-caption font-caption text-red-600 mt-1">
@@ -127,7 +127,7 @@ export function ContactForm() {
               type="tel"
               placeholder="Número de teléfono"
               {...register("phone")}
-              className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
+              className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md safe-input text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50"
             />
             {errors.phone && (
               <p className="text-caption font-caption text-red-600 mt-1">
@@ -142,10 +142,10 @@ export function ContactForm() {
             </label>
             <textarea
               id="message"
-              rows={4}
+              rows={3}
               placeholder="¿En qué lote estás interesado?"
               {...register("message")}
-              className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50 resize-none"
+              className="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-heritage-gold text-body-md font-body-md safe-input text-on-background px-0 py-3 transition-colors placeholder:text-on-surface-variant/50 resize-none"
             />
           </div>
 
@@ -153,7 +153,7 @@ export function ContactForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-heritage-gold text-primary px-10 py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity inline-flex items-center gap-2 shadow-lg disabled:opacity-60"
+              className="bg-heritage-gold text-primary px-8 sm:px-10 py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity inline-flex items-center gap-2 shadow-lg disabled:opacity-60 tap-target"
             >
               {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
               <Send className="w-5 h-5" />

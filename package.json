@@ -11,8 +11,23 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "preview": "vite preview",
-    "prepare": "husky"
+    "preview": "vite preview --port 4173",
+    "prepare": "husky",
+    "lighthouse:mobile": "lighthouse http://localhost:4173 --config-path=lighthouse.config.mjs --output=html --output-path=./reports/lighthouse-mobile.html --chrome-flags=\"--headless --no-sandbox\"",
+    "lighthouse:mobile:json": "lighthouse http://localhost:4173 --config-path=lighthouse.config.mjs --output=json --output-path=./reports/lighthouse-mobile.json --chrome-flags=\"--headless --no-sandbox\"",
+    "lighthouse:desktop": "lighthouse http://localhost:4173 --preset=desktop --output=html --output-path=./reports/lighthouse-desktop.html --chrome-flags=\"--headless --no-sandbox\"",
+    "lighthouse:multi": "npm run lighthouse:mobile && npm run lighthouse:desktop",
+    "predaudit": "mkdir -p reports",
+    "audit:kill": "taskkill /F /IM node.exe 2>nul || exit /b 0",
+    "audit:preview": "start /B npx vite preview --port 4173 --host",
+    "audit:mobile": "npm run build && npm run predaudit && start /B npm run preview && timeout /t 5 /nobreak >nul && npm run lighthouse:mobile && npm run audit:kill",
+    "audit:all": "npm run build && npm run predaudit && npm run audit:preview && timeout /t 5 /nobreak >nul && npm run lighthouse:mobile && npm run lighthouse:mobile:json && npm run lighthouse:desktop && npm run audit:kill",
+    "audit:script": "node run-lighthouse.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:mobile": "playwright test --project=chromium-mobile",
+    "test:e2e:install": "playwright install chromium"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
@@ -32,6 +47,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.62.0",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -39,6 +55,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/coverage-v8": "^4.1.10",
     "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
@@ -47,11 +64,13 @@
     "happy-dom": "^20.11.1",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
+    "lighthouse": "^13.4.1",
     "lint-staged": "^17.0.8",
     "prettier": "^3.9.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.62.0",
     "vite": "^8.1.1",
+    "vite-plugin-pwa": "^1.3.0",
     "vitest": "^4.1.10"
   }
 }

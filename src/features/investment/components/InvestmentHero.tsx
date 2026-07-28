@@ -15,15 +15,16 @@ export function InvestmentHero() {
           <p className="text-body-lg font-body-lg text-surface-container-high mb-10 max-w-2xl">
             Descubra un potencial de crecimiento sin precedentes en el Quindío. Una rara convergencia de turismo en auge, desarrollo de infraestructura y preservación ecológica hace que la tierra aquí sea un activo de primera clase.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <Link
               to="/investment#roi"
-              className="bg-heritage-gold text-white font-label-bold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg text-center flex items-center justify-center gap-2"
+              className="bg-heritage-gold text-white font-label-bold px-6 sm:px-8 py-4 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg text-center flex items-center justify-center gap-2 tap-target"
             >
-              Explorar Potencial de ROI <ArrowRight className="w-4 h-4" />
+              <span className="whitespace-normal sm:whitespace-nowrap">Explorar ROI</span>
+              <ArrowRight className="w-4 h-4 shrink-0" />
             </Link>
-            <button type="button" className="bg-transparent border border-white text-white font-label-bold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300 text-center">
-              Descargar Presentación de Inversión
+            <button type="button" className="bg-transparent border border-white text-white font-label-bold px-6 sm:px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300 text-center tap-target text-sm sm:text-base">
+              <span className="whitespace-normal sm:whitespace-nowrap">Descargar Presentación</span>
             </button>
           </div>
         </div>

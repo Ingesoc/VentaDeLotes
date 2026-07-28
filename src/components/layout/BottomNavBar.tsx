@@ -19,11 +19,11 @@ function BottomNavLink({ item }: { item: BottomNavItem }) {
   return (
     <Link
       to={item.to}
-      className={`flex flex-col items-center justify-center active:scale-95 transition-transform ${
+      className={`flex flex-col items-center justify-center active:scale-95 transition-transform min-w-[64px] min-h-[48px] px-2 tap-target-sm ${
         isActive ? "text-heritage-gold" : "text-on-surface-variant"
       }`}
     >
-      <Icon className={`w-6 h-6 mb-1 ${isActive ? "fill-current" : ""}`} />
+      <Icon className={`w-5 h-5 sm:w-6 sm:h-6 mb-1 ${isActive ? "fill-current" : ""}`} />
       <span
         className={`text-caption font-caption ${isActive ? "font-bold" : ""}`}
       >

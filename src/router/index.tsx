@@ -1,4 +1,3 @@
-import { lazy, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "@/components/layout/RootLayout";
 import ErrorPage from "@/components/ui/ErrorPage";
@@ -7,13 +6,9 @@ import ErrorPage from "@/components/ui/ErrorPage";
 import { HomePage } from "@/features/home/HomePage";
 import { ProjectsPage } from "@/features/projects/ProjectsPage";
 
-// Páginas secundarias — lazy loading para reducir bundle inicial
-const InvestmentPage = lazy(() => import("@/features/investment/InvestmentPage").then(m => ({ default: m.InvestmentPage })));
-const ProjectDetailPage = lazy(() => import("@/features/projects/ProjectDetailPage").then(m => ({ default: m.ProjectDetailPage })));
-const DescubreQuindio = lazy(() => import("../pages/DescubreQuindio"));
-
-// Admin pages se cargan via route lazy property (React Router v7)
-// para cargar el modulo completo en paralelo, no solo el componente.
+// Páginas secundarias — lazy loading via route-level lazy (React Router v7)
+// para cargar el módulo completo en paralelo, evitando React.lazy()
+// que rompe la regla react-refresh/only-export-components.
 
 export const router = createBrowserRouter([
   {
@@ -27,11 +22,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "investment",
-        element: (
-          <Suspense fallback={<div className="min-h-[60dvh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
-            <InvestmentPage />
-          </Suspense>
-        ),
+        lazy: () => import("@/features/investment/InvestmentPage").then(m => ({ Component: m.InvestmentPage })),
       },
       {
         path: "projects",
@@ -39,19 +30,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "projects/:id",
-        element: (
-          <Suspense fallback={<div className="min-h-[60dvh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
-            <ProjectDetailPage />
-          </Suspense>
-        ),
+        lazy: () => import("@/features/projects/ProjectDetailPage").then(m => ({ Component: m.ProjectDetailPage })),
       },
       {
         path: "descubre-quindio",
-        element: (
-          <Suspense fallback={<div className="min-h-[60dvh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" /></div>}>
-            <DescubreQuindio />
-          </Suspense>
-        ),
+        lazy: () => import("../pages/DescubreQuindio").then(m => ({ Component: m.default })),
       },
     ],
   },
@@ -59,16 +42,16 @@ export const router = createBrowserRouter([
   {
     path: "/admin/login",
     errorElement: <ErrorPage />,
-    lazy: () => import("@/features/admin/LoginPage"),
+    lazy: () => import("@/features/admin/LoginPage").then(m => ({ Component: m.Component })),
   },
   // Rutas admin (protegidas) — route-level lazy property en vez de React.lazy
   {
     path: "/admin",
     errorElement: <ErrorPage />,
-    lazy: () => import("@/features/admin/components/AdminGuard"),
+    lazy: () => import("@/features/admin/components/AdminGuard").then(m => ({ Component: m.Component })),
     children: [
       {
-        lazy: () => import("@/features/admin/components/AdminLayout"),
+        lazy: () => import("@/features/admin/components/AdminLayout").then(m => ({ Component: m.Component })),
         children: [
           {
             index: true,
@@ -76,11 +59,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "dashboard",
-            lazy: () => import("@/features/admin/DashboardPage"),
+            lazy: () => import("@/features/admin/DashboardPage").then(m => ({ Component: m.Component })),
           },
           {
             path: "lots",
-            lazy: () => import("@/features/admin/LotsPage"),
+            lazy: () => import("@/features/admin/LotsPage").then(m => ({ Component: m.Component })),
           },
         ],
       },

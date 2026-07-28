@@ -1,8 +1,8 @@
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export default function CulturalHeritage() {
   return (
-    <section className="py-section-gap px-margin-desktop max-w-container-max mx-auto" id="explore">
+    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="explore">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center mb-20">
         <div className="lg:col-span-5">
           <h2 className="font-headline-lg text-display-lg-mobile text-primary mb-6">
@@ -16,12 +16,14 @@ export default function CulturalHeritage() {
             <span className="font-label-bold uppercase tracking-widest">Vive Quimbaya</span>
           </div>
         </div>
-        <div className="lg:col-span-7 grid grid-cols-2 gap-4">
+        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="rounded-xl overflow-hidden shadow-lg transform translate-y-8 group">
             <img
               alt="Festival de Faroles"
-              className="w-full h-[400px] object-cover img-zoom"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304267/laholanda/events/festival%20de%20Faroles%20Quimbaya%201.jpg")}
+              className="w-full h-[250px] sm:h-[400px] object-cover img-zoom"
+              loading="lazy"
+              decoding="async"
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304267/laholanda/events/festival%20de%20Faroles%20Quimbaya%201.jpg", CLD_WIDTHS.CARD)}
             />
             <div className="p-4 bg-white">
               <p className="font-label-bold text-primary">Festival de Velas y Faroles</p>
@@ -31,8 +33,10 @@ export default function CulturalHeritage() {
           <div className="rounded-xl overflow-hidden shadow-lg group">
             <img
               alt="Arrieros traditions"
-              className="w-full h-[400px] object-cover img-zoom"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304215/laholanda/events/arrieros.jpg")}
+              className="w-full h-[250px] sm:h-[400px] object-cover img-zoom"
+              loading="lazy"
+              decoding="async"
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304215/laholanda/events/arrieros.jpg", CLD_WIDTHS.CARD)}
             />
             <div className="p-4 bg-white">
               <p className="font-label-bold text-primary">Legado Arriero</p>

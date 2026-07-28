@@ -137,6 +137,10 @@
   --spacing-base: 8px;
   --spacing-section-gap: 120px;
 
+  /* Breakpoints adicionales */
+  --breakpoint-xs: 375px;
+  --breakpoint-xxs: 360px;
+
   /* Bordes */
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
@@ -194,6 +198,33 @@ html {
   body {
     padding-bottom: 72px;
   }
+}
+
+/* ─── Tap Target Utility ───────────────────────────────────────── */
+.tap-target {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tap-target-sm {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Safe Input Font Size (evita zoom automático en iOS) ──────── */
+.safe-input {
+  font-size: 16px !important;
+}
+
+/* ─── Text Balancing ───────────────────────────────────────────── */
+.text-balance {
+  text-wrap: balance;
 }
 
 /* Material Symbols */

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export function InvestmentCTA() {
   return (
@@ -9,7 +9,7 @@ export function InvestmentCTA() {
         <div
           className="absolute inset-0 opacity-20"
           style={{
-            backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784652550/laholanda/landscapes/aida-investment-cta.png")}')`,
+            backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784652550/laholanda/landscapes/aida-investment-cta.png", CLD_WIDTHS.LARGE)}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

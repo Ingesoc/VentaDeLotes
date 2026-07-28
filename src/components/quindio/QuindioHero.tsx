@@ -1,4 +1,4 @@
-import { cldUrl } from "@/lib/cloudinary";
+import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export default function QuindioHero() {
   return (
@@ -6,11 +6,11 @@ export default function QuindioHero() {
       <div className="absolute inset-0 z-0">
         <div
           className="w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg")}')` }}
+          style={{ backgroundImage: `url('${cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg", CLD_WIDTHS.HERO)}')` }}
         ></div>
         <div className="absolute inset-0 bg-linear-to-r from-primary/80 via-primary/40 to-transparent"></div>
       </div>
-      <div className="relative z-10 w-full px-margin-desktop max-w-container-max mx-auto">
+      <div className="relative z-10 w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         <div className="max-w-2xl text-white stagger-reveal" style={{ animationDelay: "0.2s" }}>
           <span className="text-heritage-gold font-label-bold tracking-widest uppercase mb-4 block">
             Destino: Quindío
