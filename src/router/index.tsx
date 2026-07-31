@@ -36,6 +36,14 @@ export const router = createBrowserRouter([
         path: "descubre-quindio",
         lazy: () => import("../pages/DescubreQuindio").then(m => ({ Component: m.default })),
       },
+      {
+        path: "contact",
+        lazy: () => import("../pages/ContactPage").then(m => ({ Component: m.default })),
+      },
+      {
+        path: "saved",
+        element: <Navigate to="/projects" replace />,
+      },
     ],
   },
   // Login admin (público)

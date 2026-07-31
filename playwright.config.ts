@@ -42,11 +42,12 @@ export default defineConfig({
     },
   ],
 
-  // Servidor de preview automático
+  // Servidor de preview — el CI lo inicia explícitamente con wait-on
+  // Localmente: bun run preview && bun run test:e2e
   webServer: {
-    command: "npm run preview",
+    command: "bun run preview",
     url: "http://localhost:4173",
-    reuseExistingServer: !process.env.CI,
-    timeout: 15_000,
+    reuseExistingServer: true,
+    timeout: 60_000,
   },
 });

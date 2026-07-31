@@ -20,6 +20,11 @@ export interface Lot {
   view?: string;
   access?: string;
   sharedAerialWith?: string;
+  /** Coordenadas geográficas aproximadas del lote */
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export const lots: Lot[] = [
@@ -34,6 +39,7 @@ export const lots: Lot[] = [
     },
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.61923, lng: -75.76700 },
   },
   {
     id: "02",
@@ -48,6 +54,7 @@ export const lots: Lot[] = [
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "03",
+    coordinates: { lat: 4.61866, lng: -75.76802 },
   },
   {
     id: "03",
@@ -62,6 +69,7 @@ export const lots: Lot[] = [
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "02",
+    coordinates: { lat: 4.61832, lng: -75.76834 },
   },
   {
     id: "04",
@@ -76,6 +84,7 @@ export const lots: Lot[] = [
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "05",
+    coordinates: { lat: 4.61799, lng: -75.76865 },
   },
   {
     id: "05",
@@ -90,6 +99,7 @@ export const lots: Lot[] = [
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "04",
+    coordinates: { lat: 4.61752, lng: -75.76901 },
   },
   {
     id: "06",
@@ -103,6 +113,7 @@ export const lots: Lot[] = [
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946328/laholanda/lots/lote-06-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.61891, lng: -75.77010 },
   },
   {
     id: "07",
@@ -117,6 +128,7 @@ export const lots: Lot[] = [
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "08",
+    coordinates: { lat: 4.61934, lng: -75.76963 },
   },
   {
     id: "08",
@@ -134,6 +146,7 @@ export const lots: Lot[] = [
     topography: "Ondulada suave",
     view: "Panorámica al valle",
     access: "Directo principal",
+    coordinates: { lat: 4.61973, lng: -75.76933 },
   },
   {
     id: "09",
@@ -147,6 +160,7 @@ export const lots: Lot[] = [
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946336/laholanda/lots/lote-09-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.62017, lng: -75.76905 },
   },
   {
     id: "10",
@@ -154,6 +168,7 @@ export const lots: Lot[] = [
     price: undefined,
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.62028, lng: -75.76756 },
   },
   {
     id: "11",
@@ -166,6 +181,7 @@ export const lots: Lot[] = [
     },
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.62062, lng: -75.76813 },
   },
   {
     id: "12",
@@ -178,6 +194,7 @@ export const lots: Lot[] = [
     },
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.62085, lng: -75.76879 },
   },
   {
     id: "13",
@@ -191,6 +208,7 @@ export const lots: Lot[] = [
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.62074, lng: -75.77030 },
   },
   {
     id: "14",
@@ -204,6 +222,7 @@ export const lots: Lot[] = [
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.62012, lng: -75.77081 },
   },
   {
     id: "15",
@@ -211,6 +230,7 @@ export const lots: Lot[] = [
     price: undefined,
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.61937, lng: -75.77152 },
   },
   {
     id: "16",
@@ -218,6 +238,7 @@ export const lots: Lot[] = [
     price: undefined,
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    coordinates: { lat: 4.61846, lng: -75.77122 },
   },
 ];
 

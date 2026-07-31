@@ -67,3 +67,6 @@ Imagenes drone*/
 *.png
 *.mp4
 *.MP4
+# Stryker temp sandboxes & coverage reports
+.stryker-tmp/
+coverage/

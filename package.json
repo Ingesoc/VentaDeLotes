@@ -11,6 +11,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:mutation": "stryker run",
     "preview": "vite preview --port 4173",
     "prepare": "husky",
     "lighthouse:mobile": "lighthouse http://localhost:4173 --config-path=lighthouse.config.mjs --output=html --output-path=./reports/lighthouse-mobile.html --chrome-flags=\"--headless --no-sandbox\"",
@@ -48,6 +49,8 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.62.0",
+    "@stryker-mutator/core": "^9.6.1",
+    "@stryker-mutator/vitest-runner": "^9.6.1",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -72,6 +75,9 @@
     "vite": "^8.1.1",
     "vite-plugin-pwa": "^1.3.0",
     "vitest": "^4.1.10"
+  },
+  "knip": {
+    "entry": ["stryker.config.mjs"]
   },
   "overrides": {
     "postcss": "^8.5.18"

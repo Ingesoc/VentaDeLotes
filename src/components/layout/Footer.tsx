@@ -1,4 +1,5 @@
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Send, Compass } from "lucide-react";
+import { Link } from "react-router-dom";
 import { project } from "@/constants/project";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
@@ -27,6 +28,13 @@ export function Footer() {
             <p className="text-caption font-caption text-warm-white/40">
               {project.type} · {project.developer}
             </p>
+            <Link
+              to="/descubre-quindio"
+              className="inline-flex items-center gap-2 text-body-md font-body-md text-soft-gold hover:text-warm-white transition-colors mt-6 group"
+            >
+              <Compass className="w-4 h-4 transition-transform group-hover:rotate-12" />
+              Descubre Quindío
+            </Link>
           </div>
 
           {/* Ubicación */}
@@ -71,6 +79,13 @@ export function Footer() {
               <MapPin className="w-3.5 h-3.5 text-soft-gold shrink-0" />
               {project.contact.office}
             </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 text-body-md font-body-md text-soft-gold hover:text-warm-white transition-colors mt-6 group"
+            >
+              <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              Formulario de contacto
+            </Link>
           </div>
         </div>
 

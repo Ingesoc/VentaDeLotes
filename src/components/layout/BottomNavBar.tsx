@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Compass, TrendingUp, Heart, MessageCircle } from "lucide-react";
+import { Compass, TrendingUp, Heart, Phone } from "lucide-react";
 import type { BottomNavItem } from "@/constants/navLinks";
 import { bottomNavItems } from "@/constants/navLinks";
 
@@ -8,7 +8,7 @@ const iconMap = {
   Compass,
   TrendingUp,
   Heart,
-  MessageCircle,
+  Phone,
 } as const;
 
 function BottomNavLink({ item }: { item: BottomNavItem }) {

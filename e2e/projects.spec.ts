@@ -8,10 +8,6 @@ test.describe("Página de proyectos", () => {
     await expect(page.locator("h1")).toContainText("Descubre tu santuario");
 
     // Debe haber al menos un lote visible
-    const lotCards = page.locator("a[href^='/projects/']");
-    // En /projects, los botones "Ver detalle" son links a /projects/{id}
-    const detailLinks = page.locator('a[href*="/projects/"]').last();
-    // Verificar que hay resultados
     await expect(page.getByText(/mostrando/i)).toBeVisible();
   });
 

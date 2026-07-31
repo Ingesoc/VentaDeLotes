@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -32,21 +31,9 @@ const slides = [
 ];
 
 export default function HomeCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const scrollTo = useCallback((i: number) => emblaApi && emblaApi.scrollTo(i), [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
-    emblaApi.on("select", onSelect);
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi]);
 
   return (
     <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full max-w-5xl mx-auto my-12 border border-outline-variant/20">
@@ -83,20 +70,6 @@ export default function HomeCarousel() {
             </div>
           ))}
         </div>
-      </div>
-      {/* Indicadores */}
-      <div className="absolute bottom-6 left-8 flex gap-2 z-20">
-        {slides.map((s, i) => (
-          <button
-            key={s.alt}
-            onClick={() => scrollTo(i)}
-            type="button"
-            className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer tap-target-sm ${
-              i === selectedIndex ? "bg-heritage-gold w-8" : "bg-white/40 hover:bg-white/70"
-            }`}
-            aria-label={`Ir a slide ${i + 1}`}
-          />
-        ))}
       </div>
     </div>
   );

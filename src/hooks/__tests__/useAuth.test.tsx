@@ -121,6 +121,26 @@ describe("useAuth", () => {
     expect(loginResult.error).toBe("Invalid credentials");
   });
 
+  it("returns error when login succeeds but no user data returned", async () => {
+    // Case: signInWithPassword returns success but data.user is null
+    mockSignInWithPassword.mockResolvedValue({
+      data: { user: null },
+      error: null,
+    });
+
+    const { result } = renderAuthHook();
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    const loginResult = await act(async () =>
+      result.current.login("admin@laholanda.com", "password123"),
+    );
+
+    expect(loginResult.user).toBeNull();
+    expect(loginResult.error).toBe("Error al iniciar sesión");
+    // User should remain null
+    expect(result.current.user).toBeNull();
+  });
+
   it("logs out successfully", async () => {
     mockGetSession.mockResolvedValue({
       data: { session: { user: mockUser } },
@@ -166,9 +186,54 @@ describe("useAuth", () => {
     await waitFor(() => expect(result.current.user).toBeNull());
   });
 
+  it("updates user when auth state changes with SIGNED_IN with null session", async () => {
+    // Edge case: SIGNED_IN event but no user in session
+    const { result } = renderAuthHook();
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    act(() => {
+      subscriptionCallback("SIGNED_IN", { user: null });
+    });
+
+    await waitFor(() => expect(result.current.user).toBeNull());
+  });
+
   it("throws error when used outside AuthProvider", () => {
     expect(() => {
       renderHook(() => useAuth());
     }).toThrow("useAuth must be used inside an AuthProvider");
+  });
+
+  it("unsubscribes from auth state changes on unmount", async () => {
+    const unsubscribe = vi.fn();
+    mockOnAuthStateChange.mockImplementation(
+      (callback: (event: string, session: unknown) => void) => {
+        subscriptionCallback = callback;
+        return {
+          data: { subscription: { unsubscribe } },
+        };
+      },
+    );
+
+    const { unmount } = renderAuthHook();
+    await waitFor(() => expect(mockGetSession).toHaveBeenCalled());
+
+    unmount();
+
+    expect(unsubscribe).toHaveBeenCalledOnce();
+  });
+
+  it("maintains stable login and logout references", async () => {
+    const { result, rerender } = renderAuthHook();
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    const initialLogin = result.current.login;
+    const initialLogout = result.current.logout;
+
+    rerender();
+
+    // login and logout are wrapped in useCallback with empty deps, so they should be stable
+    expect(result.current.login).toBe(initialLogin);
+    expect(result.current.logout).toBe(initialLogout);
   });
 });

@@ -4,8 +4,14 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "vite-plugin-sitemap";
 import { VitePWA } from "vite-plugin-pwa";
+// IDs de los 16 lotes del plan maestro — se mantienen sincronizados con src/constants/lots.ts
+const LOT_IDS = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"];
+const LOT_ROUTES = LOT_IDS.map((id) => `/projects/${id}`);
+const DYNAMIC_ROUTES = ["/", "/investment", "/projects", "/descubre-quindio", "/contact", ...LOT_ROUTES];
 
-const DYNAMIC_ROUTES = ["/", "/investment", "/projects", "/descubre-quindio"];
+const LOT_PRIORITIES = Object.fromEntries(
+  LOT_IDS.map((id) => [`/projects/${id}`, 0.7]),
+);
 
 export default defineConfig({
   plugins: [
@@ -101,6 +107,8 @@ export default defineConfig({
         "/investment": 0.9,
         "/projects": 0.9,
         "/descubre-quindio": 0.8,
+        "/contact": 0.8,
+        ...LOT_PRIORITIES,
       },
       changefreq: "weekly",
       exclude: ["/admin", "/admin/*"],
@@ -162,5 +170,16 @@ export default defineConfig({
     setupFiles: "./src/test/setup.ts",
     css: true,
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html", "json-summary", "clover"],
+      reportsDirectory: "./coverage",
+      thresholds: {
+        statements: 80,
+        branches: 70,
+        functions: 75,
+        lines: 80,
+      },
+    },
   },
 });

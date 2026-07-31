@@ -1,0 +1,49 @@
+version: 2
+updates:
+  # Dependencias npm (producción y desarrollo)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Bogota"
+    # Agrupar todos los updates de npm en un solo PR por semana
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      development-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+    # Límite de PRs abiertos simultáneamente
+    open-pull-requests-limit: 5
+    # Etiquetas para identificar PRs de dependencias
+    labels:
+      - "dependencies"
+      - "npm"
+    # Estrategia de versionado: solo subir minor/patch, no major automático
+    versioning-strategy: "increase"
+    # Ignorar overrides que ya tenemos configurados (postcss)
+    ignore:
+      - dependency-name: "postcss"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+    # Asignar los PRs automáticamente
+    # reviewers:  # Opcional: descomentar y listar GitHub usernames
+    #   - "username"
+
+  # GitHub Actions (workflows)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    open-pull-requests-limit: 5

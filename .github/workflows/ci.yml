@@ -37,6 +37,9 @@ jobs:
       - name: React Doctor
         run: npx react-doctor@latest --verbose
 
+      - name: Security Audit
+        run: npm audit --audit-level=critical
+
   e2e:
     runs-on: ubuntu-latest
     steps:
@@ -67,7 +70,29 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || '' }}
 
       - name: E2E Tests (Chromium)
-        run: npx playwright test --project=chromium-mobile --project=chromium-desktop
+        run: |
+          # Start preview server in background
+          bun run preview &
+          PREVIEW_PID=$!
+          trap "kill $PREVIEW_PID 2>/dev/null" EXIT
+
+          # Wait for server using curl (wait-on nativo sin dependencias)
+          echo "Waiting for preview server at http://localhost:4173..."
+          SERVER_READY=false
+          for i in $(seq 1 60); do
+            if curl -s -o /dev/null http://localhost:4173; then
+              SERVER_READY=true
+              echo "✔ Server ready after ${i}s"
+              break
+            fi
+            sleep 1
+          done
+          if [ "$SERVER_READY" = false ]; then
+            echo "⚠ Server did not start within 60s — tests will likely fail"
+          fi
+
+          # Run tests (reuseExistingServer: true, no intenta iniciar otro)
+          npx playwright test --project=chromium-mobile --project=chromium-desktop
 
       - name: Upload E2E Report
         if: always()

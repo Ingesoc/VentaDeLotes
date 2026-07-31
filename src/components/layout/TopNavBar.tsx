@@ -23,8 +23,9 @@ export function TopNavBar() {
           </Link>
           <div className="hidden md:flex gap-8 items-center font-body-md text-body-md">
             <a className="text-forest-green dark:text-warm-white hover:text-soft-gold dark:hover:text-soft-gold transition-colors" href="/#proceso">Proceso</a>
+            <Link className="text-forest-green dark:text-warm-white hover:text-soft-gold dark:hover:text-soft-gold transition-colors" to="/descubre-quindio">Quindío</Link>
             <Link className="text-forest-green dark:text-warm-white hover:text-soft-gold dark:hover:text-soft-gold transition-colors" to="/projects">Lotes</Link>
-            <a className="text-forest-green dark:text-warm-white hover:text-soft-gold dark:hover:text-soft-gold transition-colors" href="/#contacto">Contacto</a>
+            <Link className="text-forest-green dark:text-warm-white hover:text-soft-gold dark:hover:text-soft-gold transition-colors" to="/contact">Contacto</Link>
             <div className="flex items-center gap-4 ml-4">
               <a className="bg-soft-gold text-deep-forest px-6 py-2 rounded-lg font-medium hover:brightness-110 transition-[filter]" href="/#contacto">
                 Reservar
@@ -46,8 +47,9 @@ export function TopNavBar() {
           <i className="fa-solid fa-xmark text-3xl"></i>
         </button>
         <a className="text-xl sm:text-2xl text-warm-white hover:text-soft-gold transition-colors tap-target py-3" href="/#proceso" onClick={toggleMenu}>Proceso</a>
+        <Link className="text-xl sm:text-2xl text-warm-white hover:text-soft-gold transition-colors tap-target py-3" to="/descubre-quindio" onClick={toggleMenu}>Quindío</Link>
         <Link className="text-xl sm:text-2xl text-warm-white hover:text-soft-gold transition-colors tap-target py-3" to="/projects" onClick={toggleMenu}>Lotes</Link>
-        <a className="text-xl sm:text-2xl text-warm-white hover:text-soft-gold transition-colors tap-target py-3" href="/#contacto" onClick={toggleMenu}>Contacto</a>
+        <Link className="text-xl sm:text-2xl text-warm-white hover:text-soft-gold transition-colors tap-target py-3" to="/contact" onClick={toggleMenu}>Contacto</Link>
         <a className="bg-soft-gold text-deep-forest px-10 py-4 rounded-lg text-xl font-medium tap-target" href="/#contacto" onClick={toggleMenu}>
           Reservar
         </a>

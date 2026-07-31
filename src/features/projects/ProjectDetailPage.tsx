@@ -1,7 +1,9 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { ChevronRight } from "lucide-react";
 import PageSEO from "@/components/seo/PageSEO";
 import { getLotById, getRelatedLots } from "@/constants/lots";
+import { project } from "@/constants/project";
 import { LotGallery } from "./components/LotGallery";
 import { LotSpecs } from "./components/LotSpecs";
 import { LotMiniMap } from "./components/LotMiniMap";
@@ -37,14 +39,99 @@ export function ProjectDetailPage() {
 
   const relatedLots = getRelatedLots(lot.id, 2);
 
+  // Construir descripción enriquecida para SEO / OG
+  const details = [
+    `${lot.areaM2.toLocaleString()} m²`,
+    lot.view,
+    lot.topography,
+    lot.access,
+  ].filter(Boolean).join(" · ");
+
+  const priceInfo = lot.price
+    ? `$${(lot.price / 1_000_000).toLocaleString("es-CO")}M COP`
+    : "Consultar precio";
+
+  const statusDesc = {
+    disponible: `Disponible desde ${priceInfo}.`,
+    reservado: "Actualmente reservado — consulta disponibilidad.",
+    vendido: "Vendido — conoce lotes similares disponibles.",
+  }[lot.status];
+
+  const description = `Lote campestre ${lot.id} en La Holanda, Quimbaya, Quindío. ${lot.areaM2.toLocaleString()} m² de santuario natural. ${details}. ${statusDesc} Desarrollado por INGESOCC SAS.`;
+
+  const ogImage = lot.perspectiveImage || lot.aerialImage;
+
+  const keywords = [
+    `lote ${lot.id} la holanda`,
+    `terreno ${lot.areaM2.toLocaleString()} m² quimbaya`,
+    "parcelación campestre quindío",
+    "lote rural eje cafetero",
+    "inversión inmobiliaria quindío",
+    lot.view && `lote con ${lot.view.toLowerCase()}`,
+    lot.topography && `terreno ${lot.topography.toLowerCase()}`,
+  ].filter(Boolean).join(", ");
+
   return (
     <>
       <PageSEO
-        title={`Lote ${lot.id} - ${lot.areaM2.toLocaleString()} m² | La Holanda`}
-        description={`Lote campestre de ${lot.areaM2.toLocaleString()} m² en Quimbaya, Quindío. ${lot.status === "disponible" ? "Disponible para inversión." : lot.status === "reservado" ? "Actualmente reservado." : "Vendido."}`}
+        title={`Lote ${lot.id} — ${lot.areaM2.toLocaleString()} m² en Quimbaya, Quindío | La Holanda`}
+        description={description}
         ogUrl={`https://www.laholanda.com/projects/${lot.id}`}
-        ogImage={lot.aerialImage}
+        ogImage={ogImage}
+        ogType="article"
+        keywords={keywords}
       />
+
+      {/* Structured Data (JSON-LD) — RealEstateListing */}
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "RealEstateListing",
+            name: `Lote ${lot.id} — ${lot.areaM2.toLocaleString()} m² en Quimbaya, Quindío`,
+            description,
+            url: `https://www.laholanda.com/projects/${lot.id}`,
+            image: ogImage,
+            datePosted: new Date().toISOString().split("T")[0],
+            offers: {
+              "@type": "Offer",
+              price: lot.price ? lot.price / 1_000_000 : undefined,
+              priceCurrency: "COP",
+              priceValidUntil: "2028-12-31",
+              availability: lot.status === "disponible"
+                ? "https://schema.org/InStock"
+                : lot.status === "reservado"
+                  ? "https://schema.org/Reserved"
+                  : "https://schema.org/SoldOut",
+              url: `https://www.laholanda.com/projects/${lot.id}`,
+              seller: {
+                "@type": "Organization",
+                name: project.developer,
+                url: "https://www.laholanda.com",
+              },
+            },
+            area: {
+              "@type": "QuantitativeValue",
+              value: lot.areaM2,
+              unitText: "m²",
+            },
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: project.location.address,
+              addressLocality: project.location.municipality,
+              addressRegion: project.location.department,
+              addressCountry: "CO",
+            },
+            ...(lot.coordinates && {
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: lot.coordinates.lat,
+                longitude: lot.coordinates.lng,
+              },
+            }),
+          })}
+        </script>
+      </Helmet>
       <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24 page-enter">
         {/* Migas de pan */}
         <nav className="flex items-center gap-2 text-on-surface-variant text-label-caps font-label-caps mb-4 uppercase tracking-widest">

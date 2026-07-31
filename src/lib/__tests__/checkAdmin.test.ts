@@ -42,7 +42,7 @@ describe("checkAdminStatus", () => {
     expect(result).toBe(false);
   });
 
-  it("returns false when RPC call fails", async () => {
+  it("returns false when RPC call fails with error", async () => {
     const supabase = {
       rpc: vi.fn().mockResolvedValue({
         data: null,
@@ -52,6 +52,40 @@ describe("checkAdminStatus", () => {
 
     const result = await checkAdminStatus(supabase, "admin@laholanda.com");
     expect(result).toBe(false);
+  });
+
+  it("returns false when RPC fails even if data is truthy", async () => {
+    // Kill mutants: if(error) → false / Block emptied
+    // When data=true and error present, real code enters if(error) and returns false.
+    // With mutants skipping the block, !!data=true would be returned instead.
+    const supabase = {
+      rpc: vi.fn().mockResolvedValue({
+        data: true,
+        error: { message: "Permission denied" },
+      }),
+    } as unknown as SupabaseClient;
+
+    const result = await checkAdminStatus(supabase, "admin@laholanda.com");
+    expect(result).toBe(false);
+  });
+
+  it("logs error message to console when RPC fails", async () => {
+    // Kill StringLiteral mutant: "Error checking admin status:" → ""
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const supabase = {
+      rpc: vi.fn().mockResolvedValue({
+        data: null,
+        error: { message: "Database error" },
+      }),
+    } as unknown as SupabaseClient;
+
+    await checkAdminStatus(supabase, "admin@laholanda.com");
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      "Error checking admin status:",
+      "Database error",
+    );
+    errorSpy.mockRestore();
   });
 
   it("coerces truthy non-boolean RPC responses to true", async () => {
