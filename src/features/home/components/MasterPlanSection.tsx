@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { lots } from "@/constants/lots";
 import { lotMarkers } from "./lotMarkers";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";

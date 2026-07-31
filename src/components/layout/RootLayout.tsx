@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import { HelmetProvider } from "react-helmet-async";
 import { TopNavBar } from "./TopNavBar";
 import { Footer } from "./Footer";

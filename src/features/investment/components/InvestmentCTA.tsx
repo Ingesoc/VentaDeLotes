@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export function InvestmentCTA() {

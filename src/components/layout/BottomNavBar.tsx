@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 import { Compass, TrendingUp, Heart, Phone } from "lucide-react";
 import type { BottomNavItem } from "@/constants/navLinks";
 import { bottomNavItems } from "@/constants/navLinks";

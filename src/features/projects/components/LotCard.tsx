@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Ruler, DollarSign } from "lucide-react";
 import type { Lot } from "@/constants/lots";
 import { LazyImage } from "@/components/ui/LazyImage";

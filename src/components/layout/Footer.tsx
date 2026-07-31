@@ -1,5 +1,5 @@
 import { Phone, Mail, MapPin, Send, Compass } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { project } from "@/constants/project";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 

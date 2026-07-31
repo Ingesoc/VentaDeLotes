@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { BottomNavBar } from "../BottomNavBar";
 
 // Use vi.hoisted() so the variable is created before vi.mock runs (hoisted to top)
@@ -8,8 +8,8 @@ const { mockUseLocation } = vi.hoisted(() => ({
   mockUseLocation: vi.fn(),
 }));
 
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
   return {
     ...actual,
     useLocation: mockUseLocation,

@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router";
 import { RootLayout } from "@/components/layout/RootLayout";
 import ErrorPage from "@/components/ui/ErrorPage";
 
@@ -6,7 +6,7 @@ import ErrorPage from "@/components/ui/ErrorPage";
 import { HomePage } from "@/features/home/HomePage";
 import { ProjectsPage } from "@/features/projects/ProjectsPage";
 
-// Páginas secundarias — lazy loading via route-level lazy (React Router v7)
+// Páginas secundarias — lazy loading via route-level lazy (React Router v8)
 // para cargar el módulo completo en paralelo, evitando React.lazy()
 // que rompe la regla react-refresh/only-export-components.
 

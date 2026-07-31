@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router";
 import { useAuth } from "@/hooks/useAuthContext";
 import { supabase } from "@/lib/supabase";
 import { checkAdminStatus } from "@/lib/checkAdmin";

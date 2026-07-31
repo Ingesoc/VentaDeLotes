@@ -14,7 +14,7 @@ created: 2026-07-21
 |---------|---------|-----------|
 | `react` | ^19.2.7 | UI Library |
 | `react-dom` | ^19.2.7 | Renderizado DOM |
-| `react-router-dom` | ^7.18.1 | Routing SPA |
+| `react-router` | ^8.3.0 | Routing SPA (v8, reemplaza react-router-dom) |
 | `@supabase/supabase-js` | ^2.110.0 | Cliente Supabase (cargado vía CDN) |
 | `@tanstack/react-query` | ^5.101.2 | Data fetching y caché |
 | `tailwindcss` | ^4.3.2 | CSS Utility Framework |
