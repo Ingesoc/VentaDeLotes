@@ -2,7 +2,10 @@ import { lots } from "@/constants/lots";
 import { LotCard } from "@/features/projects/components/LotCard";
 
 export function FeaturedLots() {
-  const featured = lots.filter((lot) => lot.areaM2 !== null).slice(0, 3);
+  // Solo se muestran lotes en venta (el lote 01 es "no_disponible")
+  const featured = lots
+    .filter((lot) => lot.status === "disponible")
+    .slice(0, 3);
 
   return (
     <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">

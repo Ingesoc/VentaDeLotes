@@ -23,13 +23,13 @@ export default function RuralLifestyle() {
               Experimenta el verdadero significado de "Campo Lindo". Nuestros proyectos están conectados por pintorescos caminos rurales que ofrecen una transición perfecta entre la comodidad del pueblo y la tranquilidad de tu finca privada.
             </p>
             <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-heritage-gold">unpaved_road</span>
-                <span className="font-label-bold text-primary">Acceso Fluido</span>
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="material-symbols-outlined text-heritage-gold shrink-0">unpaved_road</span>
+                <span className="font-label-bold text-primary min-w-0">Acceso Fluido</span>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-heritage-gold">nature_people</span>
-                <span className="font-label-bold text-primary">Seguridad Privada</span>
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="material-symbols-outlined text-heritage-gold shrink-0">nature_people</span>
+                <span className="font-label-bold text-primary min-w-0">Seguridad Privada</span>
               </div>
             </div>
             <img

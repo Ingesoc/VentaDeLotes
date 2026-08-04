@@ -1,12 +1,20 @@
 import { Link } from "react-router";
-import { lots } from "@/constants/lots";
+import { lots, type LotStatus } from "@/constants/lots";
 import { lotMarkers } from "./lotMarkers";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
-const statusColors: Record<string, string> = {
-  disponible: "bg-deep-forest text-on-primary hover:bg-heritage-gold hover:text-primary",
-  reservado: "bg-heritage-gold text-primary hover:bg-deep-forest hover:text-on-primary",
-  vendido: "bg-obsidian/70 text-white hover:bg-heritage-gold hover:text-primary",
+const statusColors: Record<LotStatus, string> = {
+  disponible: "bg-deep-forest",
+  reservado: "bg-heritage-gold",
+  vendido: "bg-obsidian/80",
+  no_disponible: "bg-obsidian/80",
+};
+
+const statusLabel: Record<LotStatus, string> = {
+  disponible: "Disponible",
+  reservado: "Reservado",
+  vendido: "Vendido",
+  no_disponible: "No disponible",
 };
 
 export function MasterPlanSection() {
@@ -38,11 +46,14 @@ export function MasterPlanSection() {
               key={lot.id}
               to={`/projects/${lot.id}`}
               style={{ top: marker.top, left: marker.left }}
-              className={`absolute w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-lot-number text-xs md:text-sm font-bold shadow-lg transition-transform duration-300 -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 hover:shadow-xl min-w-[44px] min-h-[44px] md:min-w-[48px] md:min-h-[48px] ${
-                statusColors[lot.status]
-              }`}
+              aria-label={`Lote ${lot.id}, ${statusLabel[lot.status]}`}
+              className="absolute -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center min-w-[44px] min-h-[44px] md:min-w-[48px] md:min-h-[48px] group/marker"
             >
-              {lot.id}
+              {/* Punto sutil: casi invisible por defecto, se muestra con el color de estado al hacer hover */}
+              <span
+                className={`w-6 h-6 rounded-full opacity-15 transition-all duration-300 group-hover/marker:opacity-100 group-hover/marker:scale-125 group-hover/marker:shadow-lg ${statusColors[lot.status]}`}
+              />
+              <span className="sr-only">Lote {lot.id}</span>
             </Link>
           );
         })}

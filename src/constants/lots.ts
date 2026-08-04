@@ -1,6 +1,6 @@
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
-export type LotStatus = "disponible" | "reservado" | "vendido";
+export type LotStatus = "disponible" | "reservado" | "vendido" | "no_disponible";
 
 export interface PriceSchedule {
   "2026-09-15": number;
@@ -37,7 +37,7 @@ export const lots: Lot[] = [
       "2027-09-15": 258963900,
       "2028-10-15": 298804500,
     },
-    status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
+    status: "no_disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61923, lng: -75.76700 },
   },

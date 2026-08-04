@@ -1,11 +1,11 @@
-import { describe, it, expect, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import QuindioHero from "../QuindioHero";
 import CulturalHeritage from "../CulturalHeritage";
 import NaturalWonders from "../NaturalWonders";
 import RuralLifestyle from "../RuralLifestyle";
-import WellnessSection from "../WellnessSection";
+import QuindioParks from "../QuindioParks";
 import FinalCTA from "../FinalCTA";
 
 // Mock cloudinary
@@ -155,50 +155,79 @@ describe("RuralLifestyle", () => {
   });
 });
 
-/* ─── WellnessSection ──────────────────────────── */
-describe("WellnessSection", () => {
+/* ─── QuindioParks ─────────────────────────────── */
+describe("QuindioParks", () => {
+  beforeAll(() => {
+    // Embla requiere ResizeObserver y matchMedia, que no existen en jsdom
+    vi.stubGlobal(
+      "ResizeObserver",
+      class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
+    vi.stubGlobal(
+      "matchMedia",
+      (query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      }),
+    );
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+        takeRecords() {
+          return [];
+        }
+      },
+    );
+  });
+
+  afterAll(() => {
+    vi.unstubAllGlobals();
+  });
+
   it("renders the main heading", () => {
-    renderInRouter(<WellnessSection />);
+    renderInRouter(<QuindioParks />);
     expect(
-      screen.getByRole("heading", { name: /Bienestar y Recreación/i }),
+      screen.getByRole("heading", { name: /Parques y Atractivos del Quindío/i }),
     ).toBeInTheDocument();
   });
 
   it("renders the description", () => {
-    renderInRouter(<WellnessSection />);
+    renderInRouter(<QuindioParks />);
     expect(
-      screen.getByText(/Nuestras comodidades de estilo de vida/),
+      screen.getByText(/A minutos de tu lote/),
     ).toBeInTheDocument();
   });
 
-  it("renders amenity cards", () => {
-    renderInRouter(<WellnessSection />);
-    expect(
-      screen.getByText("Piscinas de Nivel Olímpico"),
-    ).toBeInTheDocument();
-    expect(screen.getByText("Senderos Ecológicos")).toBeInTheDocument();
+  it("renders the park slides", () => {
+    renderInRouter(<QuindioParks />);
+    expect(screen.getByText("Parque Nacional del Café")).toBeInTheDocument();
+    expect(screen.getByText("Valle del Cocora")).toBeInTheDocument();
+    expect(screen.getByText("Panaca")).toBeInTheDocument();
+    expect(screen.getByText("RECUCA")).toBeInTheDocument();
+    expect(screen.getByText("Parque de los Arrieros")).toBeInTheDocument();
   });
 
-  it("renders amenity descriptions", () => {
-    renderInRouter(<WellnessSection />);
+  it("renders the navigation arrows", () => {
+    renderInRouter(<QuindioParks />);
     expect(
-      screen.getByText("Aguas cristalinas rodeadas de jardines nativos."),
+      screen.getByRole("button", { name: /anterior/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        "Millas de senderos privados a través del bosque cafetero.",
-      ),
+      screen.getByRole("button", { name: /siguiente/i }),
     ).toBeInTheDocument();
-  });
-
-  it("renders the floating card with 'Lujo Moderno'", () => {
-    renderInRouter(<WellnessSection />);
-    expect(screen.getByText("Lujo Moderno")).toBeInTheDocument();
-  });
-
-  it("renders the pool image with correct alt text", () => {
-    renderInRouter(<WellnessSection />);
-    expect(screen.getByAltText("Luxury pool area")).toBeInTheDocument();
   });
 });
 
@@ -218,17 +247,20 @@ describe("FinalCTA", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the 'Ver Proyectos' link to /projects", () => {
+  it("renders the 'Ver Lotes' link to /projects", () => {
     renderInRouter(<FinalCTA />);
-    const link = screen.getByText("Ver Proyectos");
+    const link = screen.getByText("Ver Lotes");
     expect(link).toBeInTheDocument();
     expect(link.closest("a")?.getAttribute("href")).toBe("/projects");
   });
 
-  it("renders the 'Hablar con un Agente' link to /#contacto", () => {
+  it("renders the 'Hablar con un Agente' link to WhatsApp", () => {
     renderInRouter(<FinalCTA />);
     const link = screen.getByText("Hablar con un Agente");
     expect(link).toBeInTheDocument();
-    expect(link.closest("a")?.getAttribute("href")).toBe("/#contacto");
+    expect(link.closest("a")?.getAttribute("href")).toBe(
+      "https://wa.me/573127370811",
+    );
+    expect(link.closest("a")?.getAttribute("target")).toBe("_blank");
   });
 });

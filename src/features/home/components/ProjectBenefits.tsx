@@ -44,7 +44,7 @@ export function ProjectBenefits() {
                 <Hammer className="w-6 h-6 text-primary" />
               </div>
               <h3 className="text-headline-md font-headline-md text-primary">
-                Servicios de Construcción
+                Servicios adicionales
               </h3>
             </div>
             <ul className="space-y-4">

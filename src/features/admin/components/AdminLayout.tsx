@@ -28,26 +28,26 @@ export function AdminLayout() {
   };
 
   return (
-    <div className="min-h-dvh bg-surface flex">
-      {/* Barra lateral */}
-      <aside className="w-64 bg-deep-forest text-warm-white flex flex-col shrink-0">
-        <div className="p-6 border-b border-white/10">
-          <h2 className="font-display-lg text-xl text-soft-gold">
+    <div className="min-h-dvh bg-surface flex flex-col md:flex-row">
+      {/* Barra lateral: cabecera apilada en móvil, sidebar fija en desktop */}
+      <aside className="w-full md:w-64 shrink-0 bg-deep-forest text-warm-white flex flex-col md:h-dvh">
+        <div className="p-4 md:p-6 border-b border-white/10 flex items-center justify-between gap-4 md:block">
+          <h2 className="font-display-lg text-xl text-soft-gold shrink-0">
             Verdant Admin
           </h2>
-          <p className="text-caption text-warm-white/60 mt-1">
+          <p className="text-caption text-warm-white/60 mt-0 md:mt-1 truncate min-w-0">
             {user?.email}
           </p>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-3 md:p-4 flex flex-wrap md:flex-col gap-1">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.exact}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-lg text-body-md font-body-md transition-colors ${
+                `flex items-center gap-3 px-4 py-3 rounded-lg text-body-md font-body-md whitespace-nowrap transition-colors ${
                   isActive
                     ? "bg-heritage-gold/20 text-soft-gold font-semibold"
                     : "text-warm-white/70 hover:bg-white/5 hover:text-warm-white"
@@ -73,14 +73,14 @@ export function AdminLayout() {
       </aside>
 
       {/* Contenido principal */}
-      <div className="flex-1 overflow-auto">
-        <header className="sticky top-0 z-10 bg-surface/90 backdrop-blur-md border-b border-outline-variant/20 px-8 py-4">
+      <div className="flex-1 min-w-0 md:overflow-auto">
+        <header className="sticky top-0 z-10 bg-surface/90 backdrop-blur-md border-b border-outline-variant/20 px-4 md:px-8 py-4">
           <div className="flex items-center gap-2 text-on-surface-variant text-caption font-caption uppercase tracking-wider">
             <Eye className="w-4 h-4" />
             Panel de Administración
           </div>
         </header>
-        <main className="p-8">
+        <main className="p-4 md:p-8">
           <Outlet />
         </main>
       </div>

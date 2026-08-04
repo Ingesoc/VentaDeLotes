@@ -3,7 +3,7 @@ import QuindioHero from "../components/quindio/QuindioHero";
 import CulturalHeritage from "../components/quindio/CulturalHeritage";
 import NaturalWonders from "../components/quindio/NaturalWonders";
 import RuralLifestyle from "../components/quindio/RuralLifestyle";
-import WellnessSection from "../components/quindio/WellnessSection";
+import QuindioParks from "../components/quindio/QuindioParks";
 import FinalCTA from "../components/quindio/FinalCTA";
 import { cldUrl } from "@/lib/cloudinary";
 import { useScrollReveal } from "../hooks/useScrollReveal";
@@ -29,7 +29,7 @@ export default function DescubreQuindio() {
         <CulturalHeritage />
         <NaturalWonders />
         <RuralLifestyle />
-        <WellnessSection />
+        <QuindioParks />
         <FinalCTA />
       </div>
     </>

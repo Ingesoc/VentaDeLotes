@@ -3,26 +3,26 @@ const steps = [
     icon: "fa-solid fa-mountain",
     title: "1. Compra tu lote",
     description:
-      "Elige el espacio perfecto dentro de nuestro entorno natural exclusivo.",
+      "Elige el espacio perfecto dentro de nuestro entorno natural exclusivo, con precio especial por pago de contado o separación con el 60% inicial y saldo al momento de escriturar.",
   },
   {
     icon: "fa-solid fa-building",
     title: "2. Diseño",
     description:
-      "Recibe un paquete de diseño arquitectónico armónico con el paisaje.",
+      "Recibe un diseño arquitectónico tipo, o un diseño personalizado acorde a tus necesidades (servicio adicional).",
   },
   {
     icon: "fa-solid fa-house",
     title: "3. Construcción",
     description:
-      "Construimos tu casa asegurando los más altos estándares de calidad.",
+      "Podemos cotizar, planificar y diseñar la casa de tus sueños; construye con nosotros (servicio adicional).",
   },
 ];
 
 export function ProcessSteps() {
   return (
-    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-      <div className="text-center mb-16">
+    <section className="py-14 md:py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+      <div className="text-center mb-10">
         <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
           Cómo funciona
         </h2>
@@ -31,15 +31,15 @@ export function ProcessSteps() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
         <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-outline-variant/30 z-0" />
         {steps.map((step) => (
           <div
             key={step.title}
-            className="relative z-10 flex flex-col items-center text-center bg-surface-container-lowest p-8 rounded-xl shadow-ambient border border-outline-variant/10 hover-lift"
+            className="relative z-10 flex flex-col items-center text-center bg-surface-container-lowest p-6 rounded-xl shadow-ambient border border-outline-variant/10 hover-lift"
           >
-            <div className="w-20 h-20 bg-deep-forest text-on-primary rounded-full flex items-center justify-center mb-6 shadow-md">
-              <i className={`${step.icon} text-4xl`}></i>
+            <div className="w-14 h-14 bg-deep-forest text-on-primary rounded-full flex items-center justify-center mb-4 shadow-md">
+              <i className={`${step.icon} text-2xl`}></i>
             </div>
             <h3 className="text-headline-md font-headline-md text-primary mb-3">
               {step.title}

@@ -34,6 +34,7 @@ export function LotFilters({
           <option value="disponible">Disponible</option>
           <option value="reservado">Reservado</option>
           <option value="vendido">Vendido</option>
+          <option value="no_disponible">No disponible</option>
         </select>
       </div>
 

@@ -1,5 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import type { Lot } from "@/constants/lots";
+import { formatExactPrice } from "@/lib/format";
 
 interface LotSpecsProps {
   lot: Lot;
@@ -7,6 +8,10 @@ interface LotSpecsProps {
 
 export function LotSpecs({ lot }: LotSpecsProps) {
   const specs = [
+    {
+      label: "Precio",
+      value: lot.price ? formatExactPrice(lot.price) : "Consultar precio",
+    },
     {
       label: "Área Total",
       value: lot.areaM2
@@ -42,7 +47,7 @@ export function LotSpecs({ lot }: LotSpecsProps) {
       </dl>
 
       <a
-        href="https://wa.me/"
+        href="https://wa.me/573127370811"
         target="_blank"
         rel="noopener noreferrer"
         className="w-full mt-8 flex items-center justify-center gap-2 bg-heritage-gold text-primary py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity shadow-md"

@@ -9,6 +9,7 @@ import { LotSpecs } from "./components/LotSpecs";
 import { LotMiniMap } from "./components/LotMiniMap";
 import { AcquisitionSteps } from "./components/AcquisitionSteps";
 import { LotCard } from "./components/LotCard";
+import { formatExactPrice } from "@/lib/format";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useTrackPageView } from "@/hooks/useTrackPageView";
 
@@ -16,6 +17,7 @@ const statusLabel = {
   disponible: "Disponible",
   reservado: "Reservado",
   vendido: "Vendido",
+  no_disponible: "No disponible",
 } as const;
 
 export function ProjectDetailPage() {
@@ -55,6 +57,7 @@ export function ProjectDetailPage() {
     disponible: `Disponible desde ${priceInfo}.`,
     reservado: "Actualmente reservado — consulta disponibilidad.",
     vendido: "Vendido — conoce lotes similares disponibles.",
+    no_disponible: "No disponible — conoce lotes similares disponibles.",
   }[lot.status];
 
   const description = `Lote campestre ${lot.id} en La Holanda, Quimbaya, Quindío. ${lot.areaM2.toLocaleString()} m² de santuario natural. ${details}. ${statusDesc} Desarrollado por INGESOCC SAS.`;
@@ -155,13 +158,22 @@ export function ProjectDetailPage() {
               Santuario Natural en Quindío
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-start md:items-end gap-3">
             <span className="bg-deep-forest/10 text-deep-forest text-label-caps font-label-caps px-4 py-2 rounded-full uppercase">
               {statusLabel[lot.status]}
             </span>
-            {lot.price && (
-              <p className="text-lot-number font-lot-number text-primary">
-                ${(lot.price / 1_000_000).toLocaleString("es-CO")}M COP
+            {lot.price ? (
+              <div className="text-right">
+                <p className="text-body-lg font-body-lg text-primary">
+                  ${(lot.price / 1_000_000).toLocaleString("es-CO")}M COP
+                </p>
+                <p className="text-body-md font-body-md text-on-surface-variant">
+                  {formatExactPrice(lot.price)}
+                </p>
+              </div>
+            ) : (
+              <p className="text-body-lg font-body-lg text-primary">
+                Consultar precio
               </p>
             )}
           </div>

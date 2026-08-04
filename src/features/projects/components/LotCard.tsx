@@ -2,17 +2,7 @@ import { Link } from "react-router";
 import { Ruler, DollarSign } from "lucide-react";
 import type { Lot } from "@/constants/lots";
 import { LazyImage } from "@/components/ui/LazyImage";
-
-function formatPrice(price: number): string {
-  const millones = price / 1_000_000;
-  if (millones >= 100) {
-    return `$${Math.round(millones).toLocaleString("es-CO")}M`;
-  }
-  return `$${millones.toLocaleString("es-CO", {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
-  })}M`;
-}
+import { formatPrice, formatExactPrice } from "@/lib/format";
 
 const statusStyles: Record<Lot["status"], { label: string; badge: string }> = {
   disponible: {
@@ -27,6 +17,10 @@ const statusStyles: Record<Lot["status"], { label: string; badge: string }> = {
     label: "Vendido",
     badge: "bg-obsidian/70 text-white",
   },
+  no_disponible: {
+    label: "No disponible",
+    badge: "bg-obsidian/70 text-white",
+  },
 };
 
 interface LotCardProps {
@@ -35,12 +29,13 @@ interface LotCardProps {
 
 export function LotCard({ lot }: LotCardProps) {
   const status = statusStyles[lot.status];
-  const isSold = lot.status === "vendido";
+  const isUnavailable =
+    lot.status === "vendido" || lot.status === "no_disponible";
 
   return (
     <div
       className={`bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-ambient flex flex-col group hover-lift ${
-        isSold ? "opacity-70 grayscale-[30%]" : ""
+        isUnavailable ? "opacity-70 grayscale-[30%]" : ""
       }`}
     >
       <div className="relative">
@@ -63,11 +58,21 @@ export function LotCard({ lot }: LotCardProps) {
         <h3 className="text-lot-number font-lot-number text-primary mb-2">
           Lote {lot.id}
         </h3>
-        {lot.price && (
-          <p className="text-lot-number font-lot-number text-primary mb-2 flex items-center gap-2">
+        {lot.price ? (
+          <div className="mb-2">
+            <p className="text-body-lg font-body-lg text-primary flex items-center gap-2">
+              <DollarSign className="w-5 h-5 text-heritage-gold" />
+              {formatPrice(lot.price)}
+              <span className="text-caption font-caption text-on-surface-variant font-normal">COP</span>
+            </p>
+            <p className="text-body-md font-body-md text-on-surface-variant">
+              {formatExactPrice(lot.price)}
+            </p>
+          </div>
+        ) : (
+          <p className="text-body-lg font-body-lg text-primary mb-2 flex items-center gap-2">
             <DollarSign className="w-5 h-5 text-heritage-gold" />
-            {formatPrice(lot.price)}
-            <span className="text-caption font-caption text-on-surface-variant font-normal">COP</span>
+            Consultar precio
           </p>
         )}
         <p className="text-body-md font-body-md text-on-surface-variant flex items-center gap-2 mb-6 grow">
@@ -77,7 +82,7 @@ export function LotCard({ lot }: LotCardProps) {
             : "Área por confirmar"}
         </p>
 
-        {isSold ? (
+        {isUnavailable ? (
           <button
             disabled
             type="button"

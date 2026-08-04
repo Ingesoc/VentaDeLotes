@@ -4,8 +4,10 @@ import { lots, type LotStatus } from "@/constants/lots";
 import { LotCard } from "./components/LotCard";
 import { LotFilters, type AreaRange } from "./components/LotFilters";
 import { EmptyState } from "./components/EmptyState";
+import { project } from "@/constants/project";
 import { cldUrl } from "@/lib/cloudinary";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { YouTubeVideo } from "@/components/ui/YouTubeVideo";
 
 function matchesAreaRange(areaM2: number | null, range: AreaRange): boolean {
   if (range === "all") return true;
@@ -73,6 +75,24 @@ export function ProjectsPage() {
           </div>
         </div>
 
+        {/* Video promocional con carga perezosa */}
+        <section className="mb-16 md:mb-24">
+          <div className="text-center mb-8">
+            <h2 className="text-headline-md font-headline-md text-primary mb-3">
+              Conoce La Holanda en video
+            </h2>
+            <p className="text-body-md font-body-md text-on-surface-variant max-w-2xl mx-auto">
+              Recorre la parcelación y descubre por qué es el lugar ideal para
+              tu proyecto de vida.
+            </p>
+          </div>
+          <YouTubeVideo
+            videoId="hT4bLxh-8uo"
+            title="Video promocional de La Holanda — Parcelación Campestre en Quimbaya, Quindío"
+            className="mx-auto max-w-4xl"
+          />
+        </section>
+
         {filteredLots.length === 0 ? (
           <EmptyState onClearFilters={handleClearFilters} />
         ) : (
@@ -82,6 +102,32 @@ export function ProjectsPage() {
             ))}
           </div>
         )}
+
+        {/* Ubicación de la finca */}
+        <section className="mt-16 md:mt-24">
+          <div className="text-center mb-8">
+            <h2 className="text-headline-md font-headline-md text-primary mb-3">
+              Ubicación de la Finca
+            </h2>
+            <p className="text-body-md font-body-md text-on-surface-variant max-w-2xl mx-auto">
+              Nuestros lotes se encuentran en {project.location.address} ·{" "}
+              {project.location.distanceToTown}.
+            </p>
+          </div>
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-outline-variant/10">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15905.886477864153!2d-75.769!3d4.619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1ses!2sco!4v1"
+              width="100%"
+              height="400"
+              className="w-full border-0"
+              sandbox="allow-scripts allow-popups"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Ubicación La Holanda — Vía Quimbaya-Alcalá, Vereda Jazmín, Quimbaya"
+            />
+          </div>
+        </section>
       </div>
     </>
   );

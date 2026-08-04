@@ -31,9 +31,9 @@ export function HomePage() {
         <section className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
           <HomeCarousel />
         </section>
+        <MasterPlanSection />
         <ProcessSteps />
         <ProjectBenefits />
-        <MasterPlanSection />
         <FeaturedLots />
         <InvestmentComparison />
         <ContactForm />

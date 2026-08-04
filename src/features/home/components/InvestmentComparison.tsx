@@ -19,14 +19,14 @@ export function InvestmentComparison() {
           {/* Ciudad */}
           <div className="flex-1 bg-surface p-8 rounded-xl border border-outline-variant/30 flex flex-col">
             <h3 className="text-headline-md font-headline-md text-on-surface-variant mb-6 text-center">
-              Apartamento en la Ciudad
+              Propiedad en Zona Urbana
             </h3>
             <ul className="space-y-6 flex-1">
               <li className="flex items-start gap-4">
                 <Minus className="w-5 h-5 text-error mt-1 shrink-0" />
                 <div>
                   <p className="font-label-bold text-on-surface">
-                    Alto Costo Inicial
+                    Alto Costo por m²
                   </p>
                   <p className="text-caption text-on-surface-variant">
                     Precio premium por metro cuadrado.

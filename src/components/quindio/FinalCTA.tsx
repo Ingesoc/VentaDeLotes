@@ -14,10 +14,12 @@ export default function FinalCTA() {
               to="/projects"
               className="bg-primary text-white px-10 py-4 rounded-lg font-label-bold hover:bg-deep-forest transition-colors duration-300 inline-block"
             >
-              Ver Proyectos
+              Ver Lotes
             </Link>
             <a
-              href="/#contacto"
+              href="https://wa.me/573127370811"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-transparent border border-primary text-primary px-10 py-4 rounded-lg font-label-bold hover:bg-primary hover:text-white transition-colors duration-300 inline-block"
             >
               Hablar con un Agente

@@ -130,13 +130,13 @@ describe("ProcessSteps", () => {
   it("renders each step description", () => {
     renderInRouter(<ProcessSteps />);
     expect(
-      screen.getByText("Elige el espacio perfecto dentro de nuestro entorno natural exclusivo."),
+      screen.getByText(/precio especial por pago de contado/),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Recibe un paquete de diseño arquitectónico armónico con el paisaje."),
+      screen.getByText(/diseño personalizado acorde a tus necesidades/),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Construimos tu casa asegurando los más altos estándares de calidad."),
+      screen.getByText(/construye con nosotros/),
     ).toBeInTheDocument();
   });
 
@@ -167,9 +167,9 @@ describe("ProjectBenefits", () => {
     expect(screen.getByText("Incluye")).toBeInTheDocument();
   });
 
-  it("renders the 'Servicios de Construcción' card", () => {
+  it("renders the 'Servicios adicionales' card", () => {
     renderInRouter(<ProjectBenefits />);
-    expect(screen.getByText("Servicios de Construcción")).toBeInTheDocument();
+    expect(screen.getByText("Servicios adicionales")).toBeInTheDocument();
   });
 
   it("renders purchase includes items from project constants", () => {
@@ -181,7 +181,12 @@ describe("ProjectBenefits", () => {
   it("renders construction services items", () => {
     renderInRouter(<ProjectBenefits />);
     expect(screen.getByText("Diseño arquitectónico personalizado")).toBeInTheDocument();
-    expect(screen.getByText("Licencias de construcción")).toBeInTheDocument();
+    expect(screen.getByText("Estudios, trámites y licencias")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Construcción respaldada por más de 20 años de experiencia",
+      ),
+    ).toBeInTheDocument();
   });
 });
 
@@ -211,13 +216,13 @@ describe("MasterPlanSection", () => {
 
   it("renders lot markers as links to /projects/:id", () => {
     renderInRouter(<MasterPlanSection />);
-    const lot01 = screen.getByText("01");
+    const lot01 = screen.getByRole("link", { name: /Lote 01/i });
     expect(lot01).toBeInTheDocument();
-    expect(lot01.closest("a")?.getAttribute("href")).toBe("/projects/01");
+    expect(lot01).toHaveAttribute("href", "/projects/01");
 
-    const lot02 = screen.getByText("02");
+    const lot02 = screen.getByRole("link", { name: /Lote 02/i });
     expect(lot02).toBeInTheDocument();
-    expect(lot02.closest("a")?.getAttribute("href")).toBe("/projects/02");
+    expect(lot02).toHaveAttribute("href", "/projects/02");
   });
 
   it("renders the 'Límite de lote' legend", () => {
@@ -229,10 +234,10 @@ describe("MasterPlanSection", () => {
     renderInRouter(<MasterPlanSection />);
     // Lote 99 is in the mock but has no marker in lotMarkers mock
     // It should not render a link
-    expect(screen.queryByText("99")).toBeNull();
+    expect(screen.queryByRole("link", { name: /Lote 99/i })).toBeNull();
     // Lots 01 and 02 with markers should still render
-    expect(screen.getByText("01")).toBeInTheDocument();
-    expect(screen.getByText("02")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Lote 01/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Lote 02/i })).toBeInTheDocument();
   });
 });
 
@@ -252,10 +257,10 @@ describe("InvestmentComparison", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the city apartment card", () => {
+  it("renders the urban property card", () => {
     renderInRouter(<InvestmentComparison />);
     expect(
-      screen.getByText("Apartamento en la Ciudad"),
+      screen.getByText("Propiedad en Zona Urbana"),
     ).toBeInTheDocument();
   });
 
@@ -273,7 +278,7 @@ describe("InvestmentComparison", () => {
 
   it("renders city downsides", () => {
     renderInRouter(<InvestmentComparison />);
-    expect(screen.getByText("Alto Costo Inicial")).toBeInTheDocument();
+    expect(screen.getByText("Alto Costo por m²")).toBeInTheDocument();
     expect(screen.getByText("Altos Costos de Administración")).toBeInTheDocument();
     expect(screen.getByText("Apreciación Moderada")).toBeInTheDocument();
   });

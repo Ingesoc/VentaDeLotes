@@ -70,3 +70,6 @@ Imagenes drone*/
 # Stryker temp sandboxes & coverage reports
 .stryker-tmp/
 coverage/
+
+# Imágenes locales de lotes para subir a Cloudinary (Canva)
+canva-lotes/

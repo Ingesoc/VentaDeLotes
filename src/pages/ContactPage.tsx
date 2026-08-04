@@ -70,10 +70,10 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Mapa embebido */}
+            {/* Mapa de la oficina */}
             <div className="rounded-2xl overflow-hidden shadow-xl border border-outline-variant/10 mb-16">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15905.886477864153!2d-75.769!3d4.619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1ses!2sco!4v1"
+                src="https://www.google.com/maps?q=Km%206%20v%C3%ADa%20La%20Tebaida%2C%20Armenia%2C%20Quind%C3%ADo%2C%20Colombia&z=15&output=embed"
                 width="100%"
                 height="400"
                 className="w-full border-0"
@@ -81,7 +81,7 @@ export default function ContactPage() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación La Holanda — Vía Quimbaya-Alcalá, Vereda Jazmín"
+                title="Oficina INGESOCC SAS — Armenia, Km 6 vía La Tebaida, Bodega 2"
               />
             </div>
 

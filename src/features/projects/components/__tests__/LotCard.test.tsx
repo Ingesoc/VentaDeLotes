@@ -32,6 +32,16 @@ describe("LotCard", () => {
     expect(screen.getByText("$189M")).toBeInTheDocument();
   });
 
+  it("renders the exact price in COP below the abbreviated price", () => {
+    renderWithRouter(<LotCard lot={createMockLot({ price: 189242850 })} />);
+    expect(screen.getByText("$189.242.850 COP")).toBeInTheDocument();
+  });
+
+  it('shows "Consultar precio" when price is not set', () => {
+    renderWithRouter(<LotCard lot={createMockLot({ price: undefined })} />);
+    expect(screen.getByText("Consultar precio")).toBeInTheDocument();
+  });
+
   it("renders price with one decimal when under 100M", () => {
     renderWithRouter(
       <LotCard lot={createMockLot({ price: 85_500_000 })} />,
@@ -59,6 +69,17 @@ describe("LotCard", () => {
     expect(
       screen.getByRole("button", { name: /no disponible/i }),
     ).toBeDisabled();
+  });
+
+  it('shows "No disponible" state and disabled button for unavailable lots', () => {
+    renderWithRouter(
+      <LotCard lot={createMockLot({ status: "no_disponible" })} />,
+    );
+    expect(screen.getAllByText("No disponible").length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole("button", { name: /no disponible/i }),
+    ).toBeDisabled();
+    expect(screen.queryByRole("link", { name: /ver detalle/i })).toBeNull();
   });
 
   it('renders "Ver detalle" link for available lots', () => {
