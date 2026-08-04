@@ -1,18 +1,16 @@
-import { MessageCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { project } from "@/constants/project";
 
 export function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/573127370811"
+      href={`https://wa.me/${project.contact.whatsapp}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 bg-coffee-green hover:bg-forest-green text-white p-4 rounded-full shadow-2xl transition-colors transition-transform duration-300 flex items-center justify-center border border-white/20 group tap-target hover:scale-105 active:scale-95"
+      className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 bg-coffee-green hover:bg-forest-green text-white p-3 rounded-full shadow-2xl transition-transform duration-300 flex items-center justify-center border border-white/20 tap-target hover:scale-110 active:scale-95"
       aria-label="Contactar por WhatsApp"
     >
-      <MessageCircle className="w-6 h-6 fill-white" />
-      <span className="overflow-hidden whitespace-nowrap opacity-0 scale-x-[0.01] group-hover:opacity-100 group-hover:scale-x-100 group-hover:translate-x-2 transition-opacity transition-transform duration-500 ease-out origin-left text-sm font-label-bold">
-        Chat en Vivo
-      </span>
+      <WhatsAppIcon className="w-6 h-6" />
     </a>
   );
 }

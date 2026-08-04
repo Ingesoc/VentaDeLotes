@@ -34,6 +34,7 @@ export const project = {
   contact: {
     company: "INGESOCC SAS",
     phone: "3217151831",
+    whatsapp: "573127370811",
     email: "gerencia.ingesocc@gmail.com",
     office: "Armenia - Km 6 vía La Tebaida, Bodega 2",
   },

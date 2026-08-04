@@ -6,6 +6,8 @@ interface YouTubeVideoProps {
   /** Texto accesible y `title` del iframe */
   title: string;
   className?: string;
+  /** Se invoca cuando el usuario hace clic y el video comienza a reproducirse */
+  onPlay?: () => void;
 }
 
 const THUMBNAIL_BASE = "https://i.ytimg.com/vi";
@@ -27,6 +29,7 @@ export function YouTubeVideo({
   videoId,
   title,
   className = "",
+  onPlay,
 }: YouTubeVideoProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [thumbIndex, setThumbIndex] = useState(0);
@@ -57,7 +60,10 @@ export function YouTubeVideo({
       ) : (
         <button
           type="button"
-          onClick={() => setIsPlaying(true)}
+          onClick={() => {
+            setIsPlaying(true);
+            onPlay?.();
+          }}
           aria-label={`Reproducir video: ${title}`}
           className="group absolute inset-0 h-full w-full cursor-pointer"
         >

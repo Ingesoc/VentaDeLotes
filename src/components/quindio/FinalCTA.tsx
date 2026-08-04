@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { project } from "@/constants/project";
 
 export default function FinalCTA() {
   return (
@@ -17,7 +18,7 @@ export default function FinalCTA() {
               Ver Lotes
             </Link>
             <a
-              href="https://wa.me/573127370811"
+              href={`https://wa.me/${project.contact.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-transparent border border-primary text-primary px-10 py-4 rounded-lg font-label-bold hover:bg-primary hover:text-white transition-colors duration-300 inline-block"

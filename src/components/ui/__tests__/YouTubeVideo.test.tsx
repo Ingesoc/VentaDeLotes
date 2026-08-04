@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { YouTubeVideo } from "../YouTubeVideo";
 
@@ -50,6 +50,13 @@ describe("YouTubeVideo", () => {
     );
     expect(iframe?.getAttribute("allowfullscreen")).not.toBeNull();
     expect(iframe?.getAttribute("title")).toBe(TITLE);
+  });
+
+  it("calls onPlay when the play button is clicked", () => {
+    const onPlay = vi.fn();
+    renderVideo({ onPlay });
+    fireEvent.click(screen.getByRole("button", { name: `Reproducir video: ${TITLE}` }));
+    expect(onPlay).toHaveBeenCalledTimes(1);
   });
 
   it("has a 16:9 aspect ratio container", () => {

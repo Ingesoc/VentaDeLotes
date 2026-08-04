@@ -12,6 +12,7 @@ const statusColors: Record<string, string> = {
   disponible: "bg-deep-forest text-on-primary",
   reservado: "bg-heritage-gold text-primary",
   vendido: "bg-obsidian/70 text-white",
+  no_disponible: "bg-outline-variant/40 text-on-surface-variant",
 };
 
 interface LotsTableProps {
@@ -108,6 +109,7 @@ function LotRow({
             <option value="disponible">Disponible</option>
             <option value="reservado">Reservado</option>
             <option value="vendido">Vendido</option>
+            <option value="no_disponible">No disponible</option>
           </select>
         ) : (
           <span

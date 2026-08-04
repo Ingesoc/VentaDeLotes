@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS lots (
   id text PRIMARY KEY,
   area_m2 numeric,
   price bigint,
-  status text NOT NULL DEFAULT 'disponible' CHECK (status IN ('disponible', 'reservado', 'vendido')),
+  status text NOT NULL DEFAULT 'disponible' CHECK (status IN ('disponible', 'reservado', 'vendido', 'no_disponible')),
   aerial_image text,
   perspective_image text,
   topography text,
@@ -34,16 +34,15 @@ CREATE TABLE IF NOT EXISTS page_views (
   viewed_at timestamptz DEFAULT now()
 );
 
--- 4. Leads table policies (must be created after the leads table exists)
--- If the leads table doesn't exist yet, create it:
--- CREATE TABLE IF NOT EXISTS leads (
---   id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
---   name text NOT NULL,
---   email text NOT NULL,
---   phone text NOT NULL,
---   message text,
---   created_at timestamptz DEFAULT now()
--- );
+-- 4. Leads table (formulario de contacto — se escribe vía submit_lead RPC)
+CREATE TABLE IF NOT EXISTS leads (
+  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name text NOT NULL,
+  email text NOT NULL,
+  phone text NOT NULL,
+  message text,
+  created_at timestamptz DEFAULT now()
+);
 
 -- 5. Función helper que bypasea RLS para evitar recursión infinita
 CREATE OR REPLACE FUNCTION is_admin(email text)

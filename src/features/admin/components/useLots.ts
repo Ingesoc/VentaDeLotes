@@ -6,7 +6,7 @@ export interface Lot {
   id: string;
   area_m2: number | null;
   price: number | null;
-  status: "disponible" | "reservado" | "vendido";
+  status: "disponible" | "reservado" | "vendido" | "no_disponible";
   aerial_image: string;
 }
 

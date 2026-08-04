@@ -1,6 +1,7 @@
-import { MessageCircle } from "lucide-react";
 import type { Lot } from "@/constants/lots";
+import { project } from "@/constants/project";
 import { formatExactPrice } from "@/lib/format";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 interface LotSpecsProps {
   lot: Lot;
@@ -47,12 +48,12 @@ export function LotSpecs({ lot }: LotSpecsProps) {
       </dl>
 
       <a
-        href="https://wa.me/573127370811"
+        href={`https://wa.me/${project.contact.whatsapp}`}
         target="_blank"
         rel="noopener noreferrer"
         className="w-full mt-8 flex items-center justify-center gap-2 bg-heritage-gold text-primary py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity shadow-md"
       >
-        <MessageCircle className="w-5 h-5" />
+        <WhatsAppIcon className="w-5 h-5" />
         Reservar este lote
       </a>
     </div>
