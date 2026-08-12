@@ -3,166 +3,65 @@ tags:
   - architecture
   - overview
 created: 2026-07-21
+updated: 2026-08-12
 ---
 
-# 🏗️ Arquitectura del Proyecto
+# Arquitectura del proyecto
 
-> 📊 **Diagramas interactivos disponibles en:** [Diagramas de Arquitectura](../diagrams/architecture.md)
->
-> Los diagramas usan sintaxis **Mermaid**, compatible nativamente con Obsidian.  
-> En Obsidian: usa `Ctrl/Cmd + Click` para navegar o vista `Preview` para renderizar.
+Los diagramas están en [Diagramas de arquitectura](../diagrams/architecture.md). Son archivos HTML que se abren en cualquier navegador y usan la paleta del proyecto. Incluyen la vista general del sistema, el flujo de autenticación, el modelo de datos, el árbol de rutas, el pipeline de CI y la estructura de carpetas.
 
 ---
 
-## Diagrama de Contexto del Sistema
+## Estructura del código
 
-```mermaid
-graph TB
-    subgraph "👤 Usuarios"
-        U[Visitante Web]
-        A[Administrador]
-    end
-
-    subgraph "🌐 Navegador (SPA)"
-        direction TB
-        REACT[React 19 App]
-        ROUTER[React Router v7]
-        QUERY[TanStack Query]
-    end
-
-    subgraph "☁️ Servicios Cloud"
-        SUPABASE[("Supabase
-                    Auth + PostgreSQL + RLS")]
-        CLOUDINARY[("Cloudinary
-                    CDN + Upload")]
-        FONTS[("Google Fonts")]
-    end
-
-    U -->|Navega| REACT
-    A -->|Gestiona lotes| REACT
-    REACT --> ROUTER
-    REACT --> QUERY
-    QUERY -->|Fetch/Cache| SUPABASE
-    REACT -->|Auth| SUPABASE
-    REACT -->|Sube imágenes| CLOUDINARY
-    REACT -->|Sirve imágenes| CLOUDINARY
-    SUPABASE -->|RPC: has_backstage_access| REACT
 ```
-
-## Diagrama de Componentes
-
-```mermaid
-graph TB
-    subgraph "Providers"
-        QUERY_PROV[QueryClientProvider]
-        AUTH_PROV[AuthProvider]
-    end
-
-    subgraph "Router"
-        PUBLIC[Public Routes]
-        ADMIN[Admin Routes - lazy]
-    end
-
-    subgraph "Layouts"
-        ROOT[RootLayout<br/>Nav + Footer + WhatsApp]
-        ADMIN_LAYOUT[AdminLayout<br/>Sidebar + Header]
-    end
-
-    subgraph "Pages"
-        HOME[HomePage]
-        INVEST[InvestmentPage]
-        PROJ[ProjectsPage]
-        QUINDIO[DescubreQuindio]
-        LOGIN[LoginPage]
-        DASH[DashboardPage]
-        LOTS[LotsPage]
-    end
-
-    QUERY_PROV --> AUTH_PROV
-    AUTH_PROV --> PUBLIC
-    AUTH_PROV --> ADMIN
-    PUBLIC --> ROOT
-    ROOT --> HOME & INVEST & PROJ & QUINDIO
-    ADMIN --> LOGIN
-    ADMIN --> DASH
-    ADMIN --> LOTS
-    ADMIN -.->|Protegido por| ADMIN_LAYOUT
+src/
+├── components/     Componentes globales (layout, ui, seo, home, quindio)
+├── constants/      Datos estaticos (lotes, stats, navLinks, project)
+├── features/       Modulos por funcionalidad (admin, home, investment, projects)
+│   └── home/
+│       ├── components/   JSX y presentacion
+│       └── hooks/        Logica de negocio (useContactForm)
+├── hooks/          Custom hooks globales (auth, scroll reveal, tracking)
+├── lib/            Clientes e integraciones (supabase, cloudinary, leads, checkAdmin)
+├── pages/          Paginas independientes (Contacto, DescubreQuindio)
+├── router/         Configuracion de rutas
+├── main.tsx        Punto de entrada
+└── index.css       Tema Tailwind v4 + estilos globales
 ```
 
 ---
 
-## 📂 Estructura del Código
+## Principios de arquitectura
 
-```mermaid
-graph TB
-    subgraph "src/"
-        SRC_COMPONENTS[components/]
-        SRC_CONSTANTS[constants/]
-        SRC_FEATURES[features/]
-        SRC_HOOKS[hooks/]
-        SRC_LIB[lib/]
-        SRC_PAGES[pages/]
-        SRC_ROUTER[router/]
-        SRC_MAIN[main.tsx]
-        SRC_CSS[index.css]
-    end
+### 1. Organización por funcionalidad (feature-based)
 
-    subgraph "features/"
-        ADMIN[admin/]
-        HOME_F[home/]
-        INVEST[investment/]
-        PROJECTS[projects/]
-    end
+Los módulos se organizan por dominio funcional en `src/features/`. Cada feature contiene sus componentes, hooks y lógica. Esto facilita el mantenimiento, la escalabilidad y el code splitting.
 
-    SRC_FEATURES --> ADMIN
-    SRC_FEATURES --> HOME_F
-    SRC_FEATURES --> INVEST
-    SRC_FEATURES --> PROJECTS
-```
+### 2. Code splitting por ruta
 
-### Descripción de Directorios
-
-| Directorio | Propósito |
-|-----------|-----------|
-| `components/` | Componentes globales reutilizables (layout, UI, SEO) |
-| `constants/` | Datos estáticos e inmutables (lotes, stats, nav, proyecto) |
-| `features/` | Módulos feature-based: cada feature tiene su página y componentes |
-| `hooks/` | Custom hooks globales (auth, scroll reveal, tracking) |
-| `lib/` | Clientes e integraciones (Supabase, Cloudinary, checkAdmin) |
-| `pages/` | Páginas independientes sin feature module propio |
-| `router/` | Configuración de React Router (rutas + code splitting) |
-
----
-
-## 🧩 Principios Arquitectónicos
-
-### 1. Feature-Based Organization
-Los módulos se organizan por **dominio funcional** (`features/`) en lugar de por tipo técnico. Cada feature contiene sus propios componentes, lógica y estado. Esto facilita:
-
-- **Mantenibilidad:** Cada feature es autocontenida
-- **Escalabilidad:** Nuevas features no afectan las existentes
-- **Code Splitting:** Las features se pueden cargar bajo demanda
-
-### 2. Code Splitting Estratégico
-El panel administrativo se carga **bajo demanda** mediante `React.lazy()` + `Suspense`. Esto:
-- Reduce el bundle inicial en ~40%
-- Oculta nombres de tablas administrativas del bundle público
-- Mejora el rendimiento percibido en dispositivos móviles
+Las rutas secundarias y todo el panel admin se cargan bajo demanda con la propiedad `lazy` de React Router v8:
 
 ```typescript
-const AdminLayout = lazy(() => 
-  import("@/features/admin/components/AdminLayout")
-    .then(m => ({ default: m.AdminLayout }))
-);
+{
+  path: "investment",
+  lazy: () => import("@/features/investment/InvestmentPage")
+    .then((m) => ({ Component: m.InvestmentPage })),
+}
 ```
 
-### 3. Estado y Data Fetching
-- **TanStack React Query** para caché de datos del servidor (configurado en `main.tsx` como `QueryClientProvider`)
-- **React Context** para estado de autenticación (`AuthProvider`)
-- **Datos estáticos** (lotes, stats) viven en `constants/` como objetos inmutables `as const`
+Las páginas principales (Home, Projects) se cargan de inmediato para un primer render rápido. Ver [ADR-001](../decisions/adr-001-react-router-code-splitting.md).
 
-### 4. CSS-first Theming (Tailwind v4)
-Tailwind CSS v4 con configuración CSS-first mediante `@theme`. Sin archivo `tailwind.config.js`:
+### 3. Estado y datos
+
+- El estado de autenticación vive en React Context (`AuthProvider`).
+- Los datos de los lotes son estáticos e inmutables en `src/constants/` (objetos `as const`).
+- Las escrituras (leads, visitas, CRUD admin) van a Supabase mediante funciones RPC o el cliente REST.
+- El componente `ContactForm` depende de una función inyectable (`submitLead`) en lugar de usar Supabase directamente (ver [leads.ts](../../src/lib/leads.ts)).
+
+### 4. Tema CSS-first (Tailwind v4)
+
+Tailwind v4 se configura en CSS con `@theme` dentro de `src/index.css`. No existe `tailwind.config.js`:
 
 ```css
 @theme {
@@ -172,38 +71,41 @@ Tailwind CSS v4 con configuración CSS-first mediante `@theme`. Sin archivo `tai
 }
 ```
 
-### 5. Autenticación Delegada
-Supabase Auth maneja todo el ciclo de vida de sesiones (login, refresh, logout). El frontend solo consume el estado vía `onAuthStateChange`. La verificación de rol admin se hace mediante una función RPC en PostgreSQL (`has_backstage_access`).
+### 5. Autenticación delegada
 
-### 6. Import Map para Supabase SDK
-`@supabase/supabase-js` se carga desde CDN (esm.sh) vía Import Map en lugar de empaquetarse, para:
-- Reducir el tamaño del bundle
-- Evitar falsos positivos de react-doctor
-- Aprovechar el caché del navegador
+Supabase Auth administra el ciclo de vida de la sesión (login, refresh, logout). El frontend solo consume el estado con `onAuthStateChange`. La verificación de rol admin se hace en PostgreSQL con la función RPC `has_backstage_access`.
+
+### 6. Import Map para el SDK de Supabase
+
+`@supabase/supabase-js` se carga desde un CDN (esm.sh) mediante Import Map y se excluye del bundle. Reduce el tamaño del build y evita falsos positivos de react-doctor. Ver [ADR-004](../decisions/adr-004-import-map-supabase.md).
+
+### 7. Supabase tolerante a configuraciones incompletas
+
+El cliente de Supabase (`src/lib/supabase.ts`) no interrumpe el arranque de la app si faltan las variables de entorno: usa una URL provisional y las llamadas fallan de forma controlada. Esto permite que los tests e2e del CI funcionen sin secrets configurados.
 
 ---
 
-## 🔐 Consideraciones de Seguridad
+## Seguridad
 
 | Aspecto | Implementación |
-|---------|---------------|
-| Rutas protegidas | `AdminGuard.tsx` verifica auth + rol admin |
-| RLS en BD | Políticas Row Level Security en Supabase |
-| Secrets | Variables de entorno (`VITE_*`) nunca hardcodeadas |
-| Bundle seguro | Import Map evita exponer strings de Supabase |
-| Admin verification | Server-side via RPC PostgreSQL |
+| --- | --- |
+| Rutas protegidas | `AdminGuard` verifica autenticación + rol admin |
+| RLS en base de datos | Políticas Row Level Security en cada tabla |
+| Secrets | Variables de entorno `VITE_*`, nunca hardcodeadas |
+| Verificación de admin | Server-side vía RPC en PostgreSQL |
+| Iframes | `sandbox` sin `allow-same-origin` en el reproductor de YouTube |
 
 ---
 
-## 📐 Decisiones Técnicas Relacionadas
+## Decisiones técnicas relacionadas
 
-- [ADR-001: Code Splitting](../decisions/adr-001-react-router-code-splitting.md)
+- [ADR-001: Code splitting](../decisions/adr-001-react-router-code-splitting.md)
 - [ADR-002: Tailwind v4 CSS-first](../decisions/adr-002-tailwind-css-v4-theme.md)
 - [ADR-003: Auth con Supabase](../decisions/adr-003-supabase-auth.md)
 - [ADR-004: Import Map Supabase](../decisions/adr-004-import-map-supabase.md)
 
-## 🔗 Enlaces Relacionados
+## Enlaces relacionados
 
-- [📊 Diagramas de Arquitectura (Mermaid)](../diagrams/architecture.md)
-- [🚀 Guía de Onboarding](../guides/onboarding.md)
-- [⚙️ Stack Tecnológico](../stack/tech-stack.md)
+- [Diagramas de arquitectura](../diagrams/architecture.md)
+- [Guía de onboarding](../guides/onboarding.md)
+- [Stack tecnológico](../stack/tech-stack.md)

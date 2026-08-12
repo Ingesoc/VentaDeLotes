@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import {
-  Eye,
-  MessageSquare,
-  TrendingUp,
-  Warehouse,
-} from "lucide-react";
+import { Eye, MessageSquare, TrendingUp, Warehouse } from "lucide-react";
+import { bucketByDay, type ChartPoint } from "./lib/analytics";
+
+// Los gráficos (Recharts) se cargan de forma diferida: solo entran en el
+// bundle del dashboard, que ya es lazy por ruta.
+const DashboardCharts = lazy(() =>
+  import("./DashboardCharts").then((m) => ({ default: m.DashboardCharts })),
+);
 
 interface DashboardStats {
   totalLots: number;
@@ -15,12 +17,26 @@ interface DashboardStats {
   recentLeads: { name: string; email: string; created_at: string }[];
 }
 
+type StatusRow = { status: string };
+
+const DAYS = 14;
+
+const STATUS_LABEL: Record<string, string> = {
+  disponible: "Disponible",
+  reservado: "Reservado",
+  vendido: "Vendido",
+  no_disponible: "No disponible",
+};
+
 export function Component() {
   return <DashboardPage />;
 }
 
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [viewsByDay, setViewsByDay] = useState<ChartPoint[]>([]);
+  const [leadsByDay, setLeadsByDay] = useState<ChartPoint[]>([]);
+  const [lotsByStatus, setLotsByStatus] = useState<ChartPoint[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,12 +49,23 @@ export function DashboardPage() {
           { count: totalPageViews },
           { data: viewsData },
           { data: recentLeadsData },
+          { data: statusRows },
         ] = await Promise.all([
           supabase.from("lots").select("*", { count: "exact", head: true }),
           supabase.from("leads").select("*", { count: "exact", head: true }),
-          supabase.from("page_views").select("*", { count: "exact", head: true }),
-          supabase.from("page_views").select("lot_id").not("lot_id", "is", null),
-          supabase.from("leads").select("name, email, created_at").order("created_at", { ascending: false }).limit(5),
+          supabase
+            .from("page_views")
+            .select("*", { count: "exact", head: true }),
+          supabase
+            .from("page_views")
+            .select("lot_id, viewed_at")
+            .not("lot_id", "is", null),
+          supabase
+            .from("leads")
+            .select("name, email, created_at")
+            .order("created_at", { ascending: false })
+            .limit(5),
+          supabase.from("lots").select("status"),
         ]);
 
         const viewCounts: Record<string, number> = {};
@@ -58,6 +85,23 @@ export function DashboardPage() {
           mostViewedLots,
           recentLeads: recentLeadsData ?? [],
         });
+
+        setViewsByDay(bucketByDay(viewsData ?? [], DAYS));
+        setLeadsByDay(bucketByDay(recentLeadsData ?? [], DAYS));
+
+        const statusCounts = (statusRows as StatusRow[] | null)?.reduce<
+          Record<string, number>
+        >((acc, row) => {
+          acc[row.status] = (acc[row.status] || 0) + 1;
+          return acc;
+        }, {});
+
+        setLotsByStatus(
+          Object.entries(statusCounts ?? {}).map(([status, count]) => ({
+            label: STATUS_LABEL[status] ?? status,
+            count,
+          })),
+        );
       } catch (err) {
         console.error("Error fetching dashboard stats:", err);
       } finally {
@@ -83,7 +127,8 @@ export function DashboardPage() {
     return (
       <div className="text-center py-16">
         <p className="text-on-surface-variant">
-          No se pudieron cargar las estadísticas. Verifica la conexión con Supabase.
+          No se pudieron cargar las estadísticas. Verifica la conexión con
+          Supabase.
         </p>
       </div>
     );
@@ -147,6 +192,22 @@ export function DashboardPage() {
         ))}
       </div>
 
+      {/* Gráficos (carga diferida) */}
+      <Suspense
+        fallback={
+          <div className="h-64 flex items-center justify-center text-on-surface-variant">
+            Cargando gráficos...
+          </div>
+        }
+      >
+        <DashboardCharts
+          viewsByDay={viewsByDay}
+          leadsByDay={leadsByDay}
+          lotsByStatus={lotsByStatus}
+          days={DAYS}
+        />
+      </Suspense>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Más vistos */}
         <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/20 p-6">
@@ -194,11 +255,12 @@ export function DashboardPage() {
           ) : (
             <div className="space-y-4">
               {stats.recentLeads.map((lead) => (
-                <div key={lead.email} className="flex items-center justify-between">
+                <div
+                  key={lead.email}
+                  className="flex items-center justify-between"
+                >
                   <div>
-                    <p className="font-label-bold text-primary">
-                      {lead.name}
-                    </p>
+                    <p className="font-label-bold text-primary">{lead.name}</p>
                     <p className="text-caption text-on-surface-variant">
                       {lead.email}
                     </p>

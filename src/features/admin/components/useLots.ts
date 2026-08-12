@@ -93,12 +93,77 @@ export function useLots() {
     }
   }, []);
 
+  const reloadLots = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("lots")
+      .select("*")
+      .order("id");
+
+    if (error) throw error;
+    setLots(data ?? []);
+  }, []);
+
+  const createLot = useCallback(
+    async (input: {
+      id: string;
+      areaM2: number | null;
+      price: number | null;
+      status: Lot["status"];
+    }): Promise<{ ok: boolean; error?: string }> => {
+      setSaving(true);
+      try {
+        const { error } = await supabase.from("lots").insert({
+          id: input.id,
+          area_m2: input.areaM2,
+          price: input.price,
+          status: input.status,
+          aerial_image: "",
+          perspective_image: "",
+        });
+        if (error) throw error;
+
+        await reloadLots();
+        return { ok: true };
+      } catch (err) {
+        console.error("Error creating lot:", err);
+        return {
+          ok: false,
+          error:
+            err instanceof Error
+              ? err.message
+              : "No se pudo crear el lote. Verifica que el ID no exista ya.",
+        };
+      } finally {
+        setSaving(false);
+      }
+    },
+    [reloadLots],
+  );
+
+  const deleteLot = useCallback(async (id: string): Promise<boolean> => {
+    setSaving(true);
+    try {
+      const { error } = await supabase.from("lots").delete().eq("id", id);
+      if (error) throw error;
+
+      setLots((prev) => prev.filter((lot) => lot.id !== id));
+      return true;
+    } catch (err) {
+      console.error("Error deleting lot:", err);
+      return false;
+    } finally {
+      setSaving(false);
+    }
+  }, []);
+
   return {
     lots,
     loading,
     saving,
     uploading,
     saveLot,
+    createLot,
+    deleteLot,
     handleUploadImage,
   };
 }

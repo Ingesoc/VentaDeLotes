@@ -5,39 +5,39 @@ tags:
   - setup
   - getting-started
 created: 2026-07-21
+updated: 2026-08-12
 ---
 
-# 🚀 Guía de Onboarding
+# Guía de onboarding
 
-> Bienvenido al proyecto **La Holanda**. Esta guía te ayudará a configurar tu entorno de desarrollo, entender la arquitectura del proyecto y empezar a contribuir rápidamente.
+Bienvenido al proyecto La Holanda. Esta guía te ayuda a configurar tu entorno de desarrollo, entender la arquitectura y empezar a contribuir.
 
 ---
 
-## 📋 Prerrequisitos
+## Prerrequisitos
 
-| Herramienta | Versión Mínima | Instalación |
-|-------------|---------------|-------------|
-| [Bun](https://bun.sh) | 1.2+ | `curl -fsSL https://bun.sh/install \| bash` |
-| [Git](https://git-scm.com) | 2.40+ | `winget install Git.Git` (Windows) |
+| Herramienta | Versión mínima | Instalación |
+| --- | --- | --- |
+| [Bun](https://bun.sh) | 1.2 (el CI usa 1.3.14) | `curl -fsSL https://bun.sh/install | bash` |
+| [Git](https://git-scm.com) | 2.40 | `winget install Git.Git` (Windows) |
 | Editor | VS Code (recomendado) | [Descargar](https://code.visualstudio.com/) |
 
-### Verificar instalación
+### Verificar la instalación
 
 ```bash
-bun --version   # → 1.2.x o superior
-git --version   # → 2.40.x o superior
-node --version  # → No requerido, Bun incluye Node.js compatibility
+bun --version   # 1.2.x o superior
+git --version   # 2.40.x o superior
 ```
 
 ---
 
-## 🛠️ Configuración Inicial
+## Configuración inicial
 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/lotes-quindio.git
-cd lotes-quindio
+git clone https://github.com/Ingesoc/VentaDeLotes.git
+cd VentaDeLotes
 ```
 
 ### 2. Instalar dependencias
@@ -46,40 +46,44 @@ cd lotes-quindio
 bun install
 ```
 
-Esto instalará todas las dependencias listadas en `package.json` y ejecutará el hook `prepare` de Husky.
+Instala todas las dependencias de `package.json` y ejecuta el hook `prepare` de Husky.
 
-### 3. Configurar variables de entorno
+### 3. Configurar las variables de entorno
 
-Crea un archivo `.env` en la raíz del proyecto:
+Copia el archivo de ejemplo y completa los valores:
 
 ```bash
-# .env — Copia este contenido y reemplaza con valores reales
+cp .env.example .env
+```
 
-# Supabase (requerido para auth y base de datos)
+El archivo `.env` debe tener:
+
+```bash
+# Supabase (obligatorio para auth y base de datos)
 VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
-VITE_SUPABASE_ANON_KEY=tu-anon-key-aqui
+VITE_SUPABASE_ANON_KEY=tu-anon-key
 
-# Cloudinary (requerido para subida de imágenes en admin)
+# Cloudinary (obligatorio para subir imágenes desde el admin)
 VITE_CLOUDINARY_CLOUD_NAME=tu-cloud-name
 VITE_CLOUDINARY_UPLOAD_PRESET=tu-upload-preset
 ```
 
-> ⚠️ **Nunca commitees el archivo `.env`**. Está en `.gitignore`.
+Nunca subas el archivo `.env` al repositorio. Está en `.gitignore`.
 
-#### ¿Dónde obtener estos valores?
+#### ¿Dónde obtener los valores?
 
 | Variable | Dónde obtenerla |
-|----------|----------------|
+| --- | --- |
 | `VITE_SUPABASE_URL` | Supabase Dashboard → Settings → API → Project URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase Dashboard → Settings → API → anon public |
 | `VITE_CLOUDINARY_CLOUD_NAME` | Cloudinary Dashboard → Account Details |
-| `VITE_CLOUDINARY_UPLOAD_PRESET` | Cloudinary Dashboard → Settings → Upload → Upload Presets (crear uno nuevo) |
+| `VITE_CLOUDINARY_UPLOAD_PRESET` | Cloudinary Dashboard → Settings → Upload → Upload Presets |
 
-> Si no tienes acceso a estos servicios, pide las credenciales a un miembro del equipo.
+Si no tienes acceso a estos servicios, pide las credenciales a un miembro del equipo. La app funciona sin ellas, pero las funciones que usan Supabase (formulario de contacto, panel admin) fallarán.
 
 ---
 
-## 🏃‍♂️ Ejecutar el Proyecto
+## Ejecutar el proyecto
 
 ### Desarrollo
 
@@ -87,95 +91,87 @@ VITE_CLOUDINARY_UPLOAD_PRESET=tu-upload-preset
 bun run dev
 ```
 
-Esto inicia el servidor de desarrollo de Vite en `http://localhost:5173` (por defecto).
+Inicia el servidor de desarrollo de Vite en `http://localhost:5173`, con hot reload y TypeScript en segundo plano.
 
-- Hot Module Replacement (HMR) activo
-- TypeScript type-checking en segundo plano
-- Tailwind CSS compilado on-the-fly
-
-### Build de Producción
+### Build de producción
 
 ```bash
 bun run build
 ```
 
-Esto ejecuta: `tsc -b && vite build`
+Ejecuta `tsc -b && vite build`: verifica tipos y genera el bundle optimizado en `dist/`.
 
-1. **TypeScript Check**: `tsc -b` verifica tipos en todo el proyecto
-2. **Build**: Vite genera el bundle optimizado en `dist/`
-
-### Vista Previa del Build
+### Vista previa del build
 
 ```bash
 bun run preview
 ```
 
-Sirve el contenido de `dist/` en `http://localhost:4173`.
+Sirve `dist/` en `http://localhost:4173`.
 
-### Linting
+### Linting y análisis
 
 ```bash
-bun run lint           # ESLint sobre todo el proyecto
-bun run lint:doctor    # Análisis react-doctor (recomendado antes de commits)
+bun run lint           # ESLint
+bun run lint:doctor    # React Doctor
 ```
 
 ---
 
-## 📁 Estructura del Proyecto (Lo Esencial)
+## Estructura del proyecto (lo esencial)
 
 ```
-lotes-quindio/
-├── src/                          # Código fuente
-│   ├── components/               # Componentes globales reutilizables
-│   │   ├── layout/               #   Nav, Footer, Layout wrappers
-│   │   ├── ui/                   #   LazyImage, WhatsAppButton
-│   │   └── seo/                  #   PageSEO (react-helmet-async)
-│   ├── constants/                # Datos estáticos (lotes, stats, nav)
-│   ├── features/                 # Módulos por funcionalidad
-│   │   ├── home/                 #   Landing page principal
-│   │   ├── investment/           #   Página de inversión
-│   │   ├── projects/             #   Catálogo de lotes
-│   │   └── admin/                #   Panel de administración
-│   ├── hooks/                    # Custom hooks globales
-│   ├── lib/                      # Clientes (Supabase, Cloudinary)
-│   ├── pages/                    # Páginas independientes
-│   ├── router/                   # Configuración de React Router
-│   ├── main.tsx                  # Entry point de la aplicación
-│   └── index.css                 # Tema Tailwind v4 + estilos globales
-├── supabase/                     # Migraciones y seeds de BD
-├── public/                       # Assets estáticos (favicon, robots.txt)
-├── scripts/                      # Scripts de utilidad (Cloudinary upload)
-└── docs/                         # Documentación del proyecto
+src/
+├── components/               Componentes globales reutilizables
+│   ├── layout/               TopNavBar, Footer, BottomNavBar, RootLayout
+│   ├── ui/                   LazyImage, WhatsAppButton, YouTubeVideo, ErrorPage
+│   ├── seo/                  PageSEO
+│   └── home/                 HomeCarousel
+├── constants/                Datos estáticos (lotes, stats, navLinks, project)
+├── features/                 Módulos por funcionalidad
+│   ├── home/                 Página principal (hero, carrusel, formulario)
+│   ├── investment/           Página de inversión
+│   ├── projects/             Catálogo de lotes
+│   └── admin/                Panel de administración
+├── hooks/                    Custom hooks globales (useAuth, useScrollReveal)
+├── lib/                      Clientes e integraciones (supabase, cloudinary, leads)
+├── pages/                    Páginas independientes (Contacto, DescubreQuindio)
+├── router/                   Configuración de React Router
+├── main.tsx                  Punto de entrada
+└── index.css                 Tema Tailwind v4 + estilos globales
+e2e/                          Tests end-to-end (Playwright)
+supabase/                     Migraciones SQL
+docs/                         Documentación del proyecto
 ```
 
 ---
 
-## 🔐 Acceso al Panel Admin
+## Acceso al panel admin
 
-1. Navega a `http://localhost:5173/admin/login`
-2. Inicia sesión con credenciales de Supabase Auth
-3. El sistema verifica si el email tiene permisos de admin via RPC
-4. Si eres admin, accedes al Dashboard
+1. Navega a `http://localhost:5173/admin/login`.
+2. Inicia sesión con un usuario de Supabase Auth.
+3. El sistema verifica si el email tiene permisos de admin vía RPC (`has_backstage_access`).
+4. Si es admin, accede al dashboard.
 
-### Crear un Admin
+### Crear un admin
 
-Para agregar un nuevo administrador:
-
-1. Ve al SQL Editor de Supabase Dashboard
+1. Abre el SQL Editor de Supabase.
 2. Ejecuta:
+
    ```sql
-   INSERT INTO admin_users (email) VALUES ('email@ejemplo.com');
+   INSERT INTO admins (email) VALUES ('email@ejemplo.com');
    ```
-3. El usuario ya puede iniciar sesión en `/admin/login`
+
+3. El usuario ya puede iniciar sesión en `/admin/login`.
 
 ---
 
-## 🧩 Cómo Crear una Página Nueva
+## Cómo crear una página nueva
 
 ### Paso 1: Crear el feature module
 
 ```bash
-mkdir src/features/mi-feature/components/
+mkdir -p src/features/mi-feature/components
 ```
 
 ### Paso 2: Crear el componente de página
@@ -187,13 +183,8 @@ import PageSEO from "@/components/seo/PageSEO";
 export function MiFeaturePage() {
   return (
     <>
-      <PageSEO
-        title="Mi Feature"
-        description="Descripción para SEO"
-      />
-      <div className="page-enter">
-        {/* Contenido aquí */}
-      </div>
+      <PageSEO title="Mi Feature" description="Descripción para SEO" />
+      <div className="page-enter">{/* Contenido */}</div>
     </>
   );
 }
@@ -201,64 +192,66 @@ export function MiFeaturePage() {
 
 ### Paso 3: Registrar la ruta
 
-En `src/router/index.tsx`, agrega la ruta dentro del `RootLayout`:
+En `src/router/index.tsx`, agrega la ruta dentro de `RootLayout`. Usa `lazy` si la página no es crítica:
 
 ```typescript
 {
   path: "mi-feature",
-  element: <MiFeaturePage />,
+  lazy: () => import("@/features/mi-feature/MiFeaturePage")
+    .then((m) => ({ Component: m.MiFeaturePage })),
 }
 ```
 
+Las páginas principales (Home, Projects) se importan de forma directa para un primer render rápido.
+
 ### Paso 4: Agregar al sitemap
 
-En `vite.config.ts`, agrega la ruta a `dynamicRoutes`:
+En `vite.config.ts`, agrega la ruta a `DYNAMIC_ROUTES`.
 
-```typescript
-dynamicRoutes: ["/", "/investment", "/projects", "/descubre-quindio", "/mi-feature"],
-```
+### Paso 5: Agregar tests
+
+Crea `src/features/mi-feature/components/__tests__/MiFeaturePage.test.tsx` con Vitest y Testing Library, siguiendo los patrones existentes.
 
 ---
 
-## 🎨 Convenciones de Estilo
+## Convenciones de estilo
 
 ### Colores
-Usa siempre los tokens semánticos definidos en el tema:
 
-| Token | Uso | Ejemplo |
-|-------|-----|---------|
-| `bg-primary` | Fondos principales | `bg-primary` |
-| `text-on-primary` | Texto sobre primary | `text-on-primary` |
-| `bg-surface` | Fondos de tarjetas | `bg-surface` |
-| `text-soft-gold` | Acentos dorados | `text-soft-gold` |
-| `bg-deep-forest` | Fondos oscuros | `bg-deep-forest` |
+Usa siempre los tokens semánticos del tema:
+
+| Clase | Uso |
+| --- | --- |
+| `bg-primary` | Fondos principales |
+| `text-on-primary` | Texto sobre fondo primary |
+| `bg-surface` | Fondos de tarjetas |
+| `text-soft-gold` | Acentos dorados |
+| `bg-deep-forest` | Fondos oscuros |
 
 ### Tipografía
-- **Títulos**: `font-display-lg` (Playfair Display)
-- **Cuerpo**: `font-body-md` (Inter)
-- **Etiquetas**: `font-label-bold` (Inter, uppercase)
 
-### Animaciones Disponibles
-| Clase | Efecto |
-|-------|--------|
-| `page-enter` | Animación de entrada al cargar página |
-| `hover-lift` | Elevación suave al hover |
-| `img-zoom` | Zoom al hacer hover en contenedor `.group` |
-| `reveal` | Scroll reveal (usar con `useScrollReveal` hook) |
-| `card-border-glow` | Brillo en borde al hover |
-| `pulse-glow` | Pulso animado intermitente |
-| `glass-card` | Efecto vidrio (glassmorphism) |
+- Títulos: `font-display-lg` (Playfair Display).
+- Cuerpo: `font-body-md` (Inter).
+- Etiquetas: `font-label-bold` (Inter, mayúsculas).
+
+### Accesibilidad
+
+- Los inputs del formulario usan la clase `safe-input` (16px para evitar el zoom automático en iOS).
+- Los botones táctiles usan `tap-target` (mínimo 48px).
+- Los elementos interactivos llevan `aria-label` descriptivo.
 
 ---
 
-## 🔄 Git Workflow
+## Flujo de trabajo con Git
 
 ### Ramas
-- `main` — Rama principal, producción
-- Crear ramas de feature desde `main`
+
+- `main` es la rama de producción.
+- Crea ramas de feature desde `main`.
 
 ### Commits
-Usamos commits descriptivos en español:
+
+Usa mensajes descriptivos en español:
 
 ```bash
 git checkout -b feat/mi-nueva-funcionalidad
@@ -267,75 +260,68 @@ git commit -m "feat: descripción clara del cambio"
 git push origin feat/mi-nueva-funcionalidad
 ```
 
-### Pre-commit Hooks
-Husky ejecuta `lint-staged` automáticamente antes de cada commit:
-- Linting de archivos staged
-- Si hay errores de ESLint, el commit se rechaza
+### Pre-commit
 
-### Pull Requests
-1. Crea un PR desde tu rama hacia `main`
-2. GitHub Actions ejecuta CI automáticamente
-3. Espera a que el CI pase (build + react-doctor)
-4. Solicita revisión de código
+Husky ejecuta el hook `pre-commit` antes de cada commit.
+
+### Pull requests
+
+1. Crea un PR desde tu rama hacia `main`.
+2. GitHub Actions ejecuta el CI automáticamente.
+3. Espera a que pasen los jobs `quality` y `e2e`.
+4. Solicita revisión de código.
 
 ---
 
-## 🐛 Troubleshooting Común
+## Troubleshooting común
 
-### Error: Missing Supabase environment variables
-```bash
-Error: Missing Supabase environment variables: 
-VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set in .env
-```
-**Solución:** Crea el archivo `.env` con las variables requeridas (ver [#3. Configurar variables de entorno](#3-configurar-variables-de-entorno)).
+### El panel admin no carga o no deja entrar
 
-### Error: Bun command not found
-```bash
-bun: command not found
-```
-**Solución:** Instala Bun globalmente:
+1. Verifica que el email esté registrado en la tabla `admins` de Supabase.
+2. Confirma que las variables de entorno de Supabase sean correctas.
+3. Revisa la consola del navegador por errores de red o CORS.
+
+### Las variables de Supabase no están configuradas
+
+La app ya no se bloquea al arrancar: usa valores provisionales y las llamadas reales fallan de forma controlada. Configura el `.env` para que el formulario de contacto y el panel admin funcionen.
+
+### `bun: command not found`
+
+Instala Bun:
+
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```
 
-### Error en CI: react-doctor fails
-```bash
-artifact-baas-authority-surface found issues
-```
-**Solución:** Asegúrate de que el Import Map para `@supabase/supabase-js` esté configurado en `index.html`. Revisa [ADR-004](../decisions/adr-004-import-map-supabase.md).
-
 ### El build falla con errores de TypeScript
-**Solución:** Corrige los errores señalados. El proyecto usa `strict: true` con `noUnusedLocals` y `noUnusedParameters` activados.
 
-### Hot reload no funciona
-**Solución:** Asegúrate de que Vite esté corriendo (puerto 5173). Si el problema persiste, reinicia el servidor.
+Corrige los errores señalados. El proyecto usa `strict: true` con `noUnusedLocals` y `noUnusedParameters`.
 
-### No puedo acceder al admin
-1. Verifica que el email esté registrado en la tabla `admin_users` de Supabase
-2. Confirma que las variables de entorno de Supabase sean correctas
-3. Revisa la consola del navegador por errores de CORS o autenticación
+### El CI falla en `bun install --frozen-lockfile`
+
+El lockfile `bun.lock` está desactualizado. Ejecuta `bun install` y sube el lockfile actualizado.
 
 ---
 
-## 📚 Documentación Relacionada
+## Documentación relacionada
 
-- [Índice de Documentación](../index.md)
-- [Arquitectura del Proyecto](../architecture/overview.md)
-- [Stack Tecnológico](../stack/tech-stack.md)
-- [Decisiones Técnicas (ADR)](../decisions/README.md)
-- [Diagramas de Arquitectura](../diagrams/architecture.md)
+- [Índice de documentación](../index.md)
+- [Arquitectura del proyecto](../architecture/overview.md)
+- [Stack tecnológico](../stack/tech-stack.md)
+- [Decisiones técnicas (ADR)](../decisions/README.md)
+- [Diagramas de arquitectura](../diagrams/architecture.md)
 
 ---
 
-## 🎯 Checklist de Incorporación
+## Checklist de incorporación
 
-- [ ] Leí esta guía de onboarding
-- [ ] Instalé Bun y verifiqué la versión
-- [ ] Cloné el repositorio
-- [ ] Ejecuté `bun install` sin errores
-- [ ] Configuré el archivo `.env`
-- [ ] Ejecuté `bun run dev` y vi el proyecto en el navegador
-- [ ] Ejecuté `bun run build` exitosamente
-- [ ] Revisé la estructura del proyecto
-- [ ] Exploré el panel admin en `/admin/login`
-- [ ] Revisé los ADRs en [docs/decisions/README](../decisions/README.md)
+- [ ] Leí esta guía.
+- [ ] Instalé Bun y verifiqué la versión.
+- [ ] Cloné el repositorio.
+- [ ] Ejecuté `bun install` sin errores.
+- [ ] Configuré el archivo `.env`.
+- [ ] Ejecuté `bun run dev` y vi el proyecto en el navegador.
+- [ ] Ejecuté `bun run build` con éxito.
+- [ ] Revisé la estructura del proyecto.
+- [ ] Exploré el panel admin en `/admin/login`.
+- [ ] Revisé los ADR en [docs/decisions/README](../decisions/README.md).

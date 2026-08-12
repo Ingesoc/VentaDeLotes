@@ -1,11 +1,18 @@
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 
 interface LotsHeaderProps {
   search: string;
   onSearchChange: (value: string) => void;
+  onNewLot?: () => void;
+  creating?: boolean;
 }
 
-export function LotsHeader({ search, onSearchChange }: LotsHeaderProps) {
+export function LotsHeader({
+  search,
+  onSearchChange,
+  onNewLot,
+  creating = false,
+}: LotsHeaderProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div>
@@ -13,21 +20,37 @@ export function LotsHeader({ search, onSearchChange }: LotsHeaderProps) {
           Gestión de Lotes
         </h1>
         <p className="text-body-md text-on-surface-variant mt-1">
-          Edita estado, precio e imágenes de los lotes
+          Crea, edita y elimina los lotes de la parcelación
         </p>
       </div>
 
-      <div className="relative w-full sm:w-72">
-        <label htmlFor="search-lot" className="sr-only">Buscar lote por ID o estado</label>
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
-        <input
-          id="search-lot"
-          type="text"
-          value={search}
-          onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Buscar lote..."
-          className="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant/30 rounded-lg text-body-md font-body-md text-on-background focus:ring-2 focus:ring-heritage-gold focus:border-transparent transition-colors"
-        />
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <div className="relative w-full sm:w-72">
+          <label htmlFor="search-lot" className="sr-only">
+            Buscar lote por ID o estado
+          </label>
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+          <input
+            id="search-lot"
+            type="text"
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="Buscar lote..."
+            className="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant/30 rounded-lg text-body-md font-body-md text-on-background focus:ring-2 focus:ring-heritage-gold focus:border-transparent transition-colors"
+          />
+        </div>
+
+        {onNewLot && (
+          <button
+            type="button"
+            onClick={onNewLot}
+            disabled={creating}
+            className="flex items-center justify-center gap-2 bg-deep-forest text-on-primary font-label-bold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-60 tap-target"
+          >
+            <Plus className="w-4 h-4" />
+            Nuevo Lote
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,10 @@
+# Configuración local del proyecto Supabase (Supabase CLI).
+# Reemplaza el project_id con un identificador local a tu gusto
+# (no es el project ref de la nube).
+
+project_id = "la-holanda"
+
+[functions.notify-lead]
+# Valida el JWT de la anon key en cada invocación (protege la función
+# de llamadas externas sin credenciales).
+verify_jwt = true

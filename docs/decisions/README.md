@@ -4,27 +4,28 @@ tags:
   - adr
   - index
 created: 2026-07-21
+updated: 2026-08-12
 ---
 
-# 📐 Architecture Decision Records (ADR)
+# Decisiones de arquitectura (ADR)
 
-Este directorio contiene los **Architecture Decision Records** del proyecto. Cada ADR documenta una decisión técnica significativa, el contexto que la motivó y las alternativas consideradas.
+Este directorio contiene los Architecture Decision Records (ADR) del proyecto. Cada ADR documenta una decisión técnica importante, el contexto que la motivó y las alternativas consideradas.
 
-## ADRs Activos
+## ADRs activos
 
 | # | Título | Estado | Fecha |
-|---|--------|--------|-------|
-| [ADR-001](./adr-001-react-router-code-splitting.md) | Code Splitting con React Router y Lazy Loading | ✅ Aprobado | 2026-07-21 |
-| [ADR-002](./adr-002-tailwind-css-v4-theme.md) | Tema CSS-first con Tailwind CSS v4 | ✅ Aprobado | 2026-07-21 |
-| [ADR-003](./adr-003-supabase-auth.md) | Autenticación con Supabase Auth | ✅ Aprobado | 2026-07-21 |
-| [ADR-004](./adr-004-import-map-supabase.md) | Import Map para Supabase SDK vía CDN | ✅ Aprobado | 2026-07-21 |
+| --- | --- | --- | --- |
+| [ADR-001](./adr-001-react-router-code-splitting.md) | Code splitting con React Router | Aprobado | 2026-07-21 |
+| [ADR-002](./adr-002-tailwind-css-v4-theme.md) | Tema CSS-first con Tailwind v4 | Aprobado | 2026-07-21 |
+| [ADR-003](./adr-003-supabase-auth.md) | Autenticación con Supabase | Aprobado | 2026-07-21 |
+| [ADR-004](./adr-004-import-map-supabase.md) | Import Map para el SDK de Supabase | Aprobado | 2026-07-21 |
 
 ## Formato de ADR
 
-Cada ADR sigue el formato [Michael Nygard](https://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions):
+Cada ADR sigue el formato de Michael Nygard:
 
 ```markdown
-# ADR-NNN: Título de la Decisión
+# ADR-NNN: Título de la decisión
 
 ## Contexto
 ¿Qué problema estamos resolviendo? ¿Qué factores influyen?
@@ -33,8 +34,8 @@ Cada ADR sigue el formato [Michael Nygard](https://thinkrelevance.com/blog/2011/
 ¿Qué elegimos hacer?
 
 ## Consecuencias
-¿Qué trade-offs, riesgos y beneficios resultan?
+¿Qué beneficios y riesgos resultan?
 
-## Alternativas Consideradas
+## Alternativas consideradas
 ¿Qué otras opciones exploramos y por qué las descartamos?
 ```

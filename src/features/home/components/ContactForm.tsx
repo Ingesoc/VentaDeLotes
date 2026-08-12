@@ -1,52 +1,20 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Send } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import {
+  useContactForm,
+  type SubmitLeadFn,
+} from "../hooks/useContactForm";
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Ingresa tu nombre completo"),
-  email: z.email("Correo electrónico inválido"),
-  phone: z.string().min(7, "Ingresa un número de teléfono válido"),
-  message: z.string().optional(),
-});
+interface ContactFormProps {
+  /**
+   * Función inyectable para persistir el lead (DIP). Por defecto usa la
+   * implementación real sobre Supabase; los tests inyectan un mock.
+   */
+  submitLead?: SubmitLeadFn;
+}
 
-type ContactFormValues = z.infer<typeof contactSchema>;
-
-export function ContactForm() {
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<ContactFormValues>({
-    resolver: zodResolver(contactSchema),
-  });
-
-  const onSubmit = async (data: ContactFormValues) => {
-    try {
-      const { error } = await supabase.rpc("submit_lead", {
-        p_name: data.name,
-        p_email: data.email,
-        p_phone: data.phone,
-        p_message: data.message || null,
-      });
-
-      if (error) throw error;
-
-      setSubmitStatus("success");
-      reset();
-      setTimeout(() => setSubmitStatus("idle"), 5000);
-    } catch (err) {
-      console.error("Error al enviar lead a Supabase:", err);
-      setSubmitStatus("error");
-    }
-  };
+export function ContactForm({ submitLead }: ContactFormProps = {}) {
+  const { register, handleSubmit, errors, isSubmitting, submitStatus } =
+    useContactForm({ submitLead });
 
   return (
     <section
@@ -77,7 +45,7 @@ export function ContactForm() {
         )}
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit}
           className="space-y-6"
           noValidate
         >

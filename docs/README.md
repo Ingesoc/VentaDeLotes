@@ -1,89 +1,84 @@
-# 📋 La Holanda — Documentación Técnica
+# La Holanda — Documentación Técnica
 
 > **Proyecto:** La Holanda — Parcelación Campestre
 > **Desarrollador:** INGESOCC SAS
 > **Ubicación:** Quimbaya, Quindío, Colombia
 > **URL:** [laholanda.com](https://www.laholanda.com/)
 
-Bienvenido a la documentación técnica del proyecto. Este repositorio contiene las decisiones arquitectónicas, configuración del stack, features implementadas y guías de despliegue.
+Bienvenido a la documentación técnica del proyecto. Aquí se explican la arquitectura, el stack tecnológico, las funciones implementadas, las decisiones técnicas y las guías de despliegue.
 
 ---
 
-## 👋 ¿Nuevo en el Proyecto?
+## ¿Nuevo en el proyecto?
 
-➡️ [🚀 Guía de Onboarding](./guides/onboarding.md) — Configura tu entorno, instala dependencias y empieza a contribuir.
+Empieza por la [guía de onboarding](./guides/onboarding.md): configura tu entorno, instala las dependencias y aprende a contribuir.
 
 ---
 
-## 📁 Estructura de la Documentación
+## Estructura de la documentación
 
 | Sección | Descripción |
-|---------|-------------|
-| [🚀 Guía de Onboarding](./guides/onboarding.md) | Configuración inicial y guía para nuevos desarrolladores |
-| [📊 Diagramas](./diagrams/architecture.md) | Diagramas Mermaid de arquitectura, componentes y flujos |
-| [🏗️ Arquitectura](./architecture/overview.md) | Visión general de la arquitectura del proyecto |
-| [⚙️ Stack Tecnológico](./stack/tech-stack.md) | Stack, dependencias y herramientas |
-| [📐 Decisiones Técnicas (ADR)](./decisions/README.md) | Architecture Decision Records |
-| [🗺️ Routing](./features/routing.md) | Sistema de enrutamiento y navegación |
-| [🔐 Autenticación](./features/authentication.md) | Sistema de autenticación con Supabase |
-| [🛠️ Panel Admin](./features/admin-panel.md) | Panel de administración de lotes |
-| [🔍 SEO y Meta Tags](./features/seo.md) | Estrategia SEO y etiquetas Open Graph |
-| [🖼️ Manejo de Medios](./features/media.md) | Cloudinary y manejo de imágenes |
-| [🗄️ Base de Datos](./features/database.md) | Esquema Supabase y migraciones |
-| [🚀 CI/CD](./deployment/ci-cd.md) | Pipeline de integración y despliegue continuo |
-| [🧪 Testing y Calidad](./features/quality.md) | Testing, linting, type-checking y herramientas de calidad |
+| --- | --- |
+| [Guía de onboarding](./guides/onboarding.md) | Configuración inicial para nuevos desarrolladores |
+| [Diagramas](./diagrams/architecture.md) | Diagramas HTML de arquitectura y flujos |
+| [Arquitectura](./architecture/overview.md) | Visión general de la arquitectura |
+| [Stack tecnológico](./stack/tech-stack.md) | Dependencias, scripts y configuración |
+| [Decisiones técnicas (ADR)](./decisions/README.md) | Registro de decisiones de arquitectura |
+| [Routing](./features/routing.md) | Sistema de rutas y navegación |
+| [Autenticación](./features/authentication.md) | Autenticación con Supabase |
+| [Panel admin](./features/admin-panel.md) | Administración de lotes |
+| [SEO](./features/seo.md) | Estrategia SEO y meta tags |
+| [Manejo de medios](./features/media.md) | Cloudinary e imágenes |
+| [Base de datos](./features/database.md) | Esquema de Supabase y migraciones |
+| [CI/CD](./deployment/ci-cd.md) | Pipeline de integración continua |
+| [Testing y calidad](./features/quality.md) | Tests, linting y herramientas de calidad |
+| [Procedimientos de QA](./qa/procedures.md) | Guía práctica de aseguramiento de calidad |
 
 ---
 
-## 🎯 Stack Principal
+## Stack principal
 
 | Capa | Tecnología |
-|------|-----------|
-| **Frontend** | React 19 + TypeScript 6 + Vite 8 |
-| **Estilos** | Tailwind CSS 4 (CSS-first configuration) |
-| **Backend** | Supabase (Auth + PostgreSQL + RLS) |
-| **Medios** | Cloudinary (Upload Widget + CDN) |
-| **Routing** | React Router v7 |
-| **Estado** | TanStack React Query v5 |
-| **Formularios** | React Hook Form + Zod v4 |
-| **Carousel** | Embla Carousel + Autoplay |
-| **SEO** | react-helmet-async + vite-plugin-sitemap |
-| **Package Manager** | Bun |
+| --- | --- |
+| Frontend | React 19 + TypeScript + Vite 8 |
+| Estilos | Tailwind CSS v4 (CSS-first con `@theme`) |
+| Backend | Supabase (Auth + PostgreSQL + RLS) |
+| Medios | Cloudinary (CDN + widget de subida) |
+| Routing | React Router v8 |
+| Formularios | React Hook Form + Zod v4 |
+| Carrusel | Embla Carousel |
+| SEO | react-helmet-async + vite-plugin-sitemap |
+| PWA | vite-plugin-pwa |
+| Gestor de paquetes | Bun |
 
 ---
 
-## 🧭 Convenciones del Proyecto
+## Convenciones del proyecto
 
 | Convención | Estándar |
-|-----------|----------|
+| --- | --- |
 | TypeScript | Strict mode, `verbatimModuleSyntax`, `erasableSyntaxOnly` |
-| Alias de imports | `@/` → `./src/*` |
-| Estilos | Tailwind CSS v4 con `@theme` (no `tailwind.config.js`) |
-| Componentes | Feature-based organization en `src/features/` |
-| Componentes globales | `src/components/` (layout, ui, shared) |
+| Alias de imports | `@/` apunta a `./src/*` |
+| Estilos | Tailwind v4 con `@theme` (no hay `tailwind.config.js`) |
+| Organización | Feature-based en `src/features/` |
+| Componentes globales | `src/components/` (layout, ui, seo, shared) |
 | Constantes | `src/constants/` (objetos `as const`) |
-| Hooks | `src/hooks/` |
+| Hooks | `src/hooks/` y `src/features/*/hooks/` |
 | Linting | ESLint flat config + Prettier + Husky |
-| Commit hooks | lint-staged (pre-commit) |
+| Idiomas | Código y commits en español, documentación en español |
 
 ---
 
-## 🔗 Enlaces Rápidos
+## Enlaces rápidos
 
-### Para Nuevos Desarrolladores
-- [⚙️ Configurar entorno](./guides/onboarding.md#configuración-inicial)
-- [🏃‍♂️ Correr el proyecto](./guides/onboarding.md#ejecutar-el-proyecto)
-- [📝 Crear una página nueva](./guides/onboarding.md#cómo-crear-una-página-nueva)
-- [🐛 Troubleshooting](./guides/onboarding.md#troubleshooting-común)
+### Para nuevos desarrolladores
+- [Configurar el entorno](./guides/onboarding.md#configuración-inicial)
+- [Ejecutar el proyecto](./guides/onboarding.md#ejecutar-el-proyecto)
+- [Crear una página nueva](./guides/onboarding.md#cómo-crear-una-página-nueva)
+- [Troubleshooting](./guides/onboarding.md#troubleshooting-común)
 
-### Decisiones Técnicas
-- [ADR-001: Code Splitting con React Router](./decisions/adr-001-react-router-code-splitting.md)
+### Decisiones técnicas
+- [ADR-001: Code splitting con React Router](./decisions/adr-001-react-router-code-splitting.md)
 - [ADR-002: Tema CSS-first con Tailwind v4](./decisions/adr-002-tailwind-css-v4-theme.md)
 - [ADR-003: Autenticación con Supabase](./decisions/adr-003-supabase-auth.md)
 - [ADR-004: Import Map para Supabase SDK](./decisions/adr-004-import-map-supabase.md)
-
-### Diagramas
-- [📊 Diagrama de Contexto](./diagrams/architecture.md#1-diagrama-de-contexto-del-sistema-c4-nivel-1)
-- [📊 Diagrama de Componentes](./diagrams/architecture.md#2-diagrama-de-componentes-react)
-- [📊 Flujo de Autenticación](./diagrams/architecture.md#3-flujo-de-autenticación-secuencia)
-- [📊 Esquema de BD](./diagrams/architecture.md#4-esquema-de-base-de-datos-erd)

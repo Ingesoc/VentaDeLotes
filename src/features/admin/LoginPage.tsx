@@ -14,8 +14,36 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [resetting, setResetting] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const handleResetPassword = async () => {
+    if (resetSent) return;
+    if (!email.trim()) {
+      setError("Escribe tu email para poder enviarte el enlace de recuperación.");
+      return;
+    }
+
+    setError(null);
+    setResetting(true);
+    try {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+        email.trim(),
+        { redirectTo: `${window.location.origin}/reset-password` },
+      );
+      if (resetError) {
+        setError(resetError.message);
+        return;
+      }
+      setResetSent(true);
+    } catch {
+      setError("Error inesperado al enviar el correo de recuperación.");
+    } finally {
+      setResetting(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,6 +144,22 @@ export function LoginPage() {
               {submitting ? "Ingresando..." : "Ingresar"}
             </button>
           </form>
+
+          {resetSent ? (
+            <div className="mt-4 p-4 bg-green-50 text-green-800 rounded-lg text-center text-sm font-medium">
+              Revisa tu correo: te enviamos un enlace para restablecer la
+              contraseña.
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handleResetPassword}
+              disabled={resetting}
+              className="mt-4 w-full text-center text-body-md font-body-md text-heritage-gold hover:text-primary hover:underline transition-colors disabled:opacity-60 tap-target"
+            >
+              {resetting ? "Enviando enlace..." : "¿Olvidaste tu contraseña?"}
+            </button>
+          )}
 
           <p className="mt-6 text-center text-caption font-caption text-on-surface-variant">
             Panel exclusivo para administradores

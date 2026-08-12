@@ -23,9 +23,13 @@ export function InvestmentHero() {
               <span className="whitespace-normal sm:whitespace-nowrap">Explorar ROI</span>
               <ArrowRight className="w-4 h-4 shrink-0" />
             </Link>
-            <button type="button" className="bg-transparent border border-white text-white font-label-bold px-6 sm:px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300 text-center tap-target text-sm sm:text-base">
+            <a
+              href="/Lotes%20La%20Holanda.pdf"
+              download="Lotes La Holanda.pdf"
+              className="bg-transparent border border-white text-white font-label-bold px-6 sm:px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300 text-center tap-target text-sm sm:text-base"
+            >
               <span className="whitespace-normal sm:whitespace-nowrap">Descargar Presentación</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>

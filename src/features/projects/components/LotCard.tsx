@@ -1,8 +1,9 @@
 import { Link } from "react-router";
-import { Ruler, DollarSign } from "lucide-react";
+import { Ruler, DollarSign, Heart } from "lucide-react";
 import type { Lot } from "@/constants/lots";
 import { LazyImage } from "@/components/ui/LazyImage";
 import { formatPrice, formatExactPrice } from "@/lib/format";
+import { useSavedLots } from "@/features/projects/hooks/useSavedLots";
 
 const statusStyles: Record<Lot["status"], { label: string; badge: string }> = {
   disponible: {
@@ -31,6 +32,8 @@ export function LotCard({ lot }: LotCardProps) {
   const status = statusStyles[lot.status];
   const isUnavailable =
     lot.status === "vendido" || lot.status === "no_disponible";
+  const { isSaved, toggleSave } = useSavedLots();
+  const saved = isSaved(lot.id);
 
   return (
     <div
@@ -47,6 +50,25 @@ export function LotCard({ lot }: LotCardProps) {
           aspectClassName="aspect-[4/3]"
           className="img-zoom"
         />
+        <button
+          type="button"
+          onClick={() => toggleSave(lot.id)}
+          aria-label={
+            saved
+              ? `Quitar el lote ${lot.id} de guardados`
+              : `Guardar el lote ${lot.id}`
+          }
+          aria-pressed={saved}
+          className="absolute top-3 left-3 z-10 p-2.5 rounded-full bg-surface/85 backdrop-blur-md border border-outline-variant/20 shadow-sm hover:scale-110 active:scale-95 transition-transform tap-target"
+        >
+          <Heart
+            className={`w-5 h-5 ${
+              saved
+                ? "fill-heritage-gold text-heritage-gold"
+                : "text-on-surface-variant"
+            }`}
+          />
+        </button>
         <span
           className={`absolute top-4 right-4 px-3 py-1 rounded-full text-label-caps font-label-caps uppercase ${status.badge}`}
         >

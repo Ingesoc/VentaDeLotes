@@ -1,7 +1,10 @@
-import { lots } from "@/constants/lots";
+import { usePublicLots } from "@/features/projects/hooks/usePublicLots";
 import { LotCard } from "@/features/projects/components/LotCard";
 
 export function FeaturedLots() {
+  // Datos vivos de Supabase con fallback a las constantes
+  const { lots } = usePublicLots();
+
   // Solo se muestran lotes en venta (el lote 01 es "no_disponible")
   const featured = lots
     .filter((lot) => lot.status === "disponible")

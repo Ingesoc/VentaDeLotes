@@ -5,6 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  # Permite lanzar el workflow manualmente (job mutation con Stryker)
+  workflow_dispatch:
 
 env:
   # Versión de bun fijada para que coincida con la del lockfile local (bun.lock).
@@ -107,3 +109,21 @@ jobs:
           name: e2e-report
           path: reports/e2e-report/
           retention-days: 7
+
+  # Mutation testing (Stryker) — se ejecuta manualmente para no ralentizar
+  # cada PR: un análisis completo puede tomar más de 20 minutos.
+  mutation:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Mutation Testing
+        run: bun run test:mutation

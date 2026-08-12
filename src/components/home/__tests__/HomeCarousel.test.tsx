@@ -85,6 +85,25 @@ describe("HomeCarousel", () => {
     expect(document.querySelector("iframe")).toBeInTheDocument();
   });
 
+  it("monta el video con autoplay silenciado (autoplay=1&mute=1)", () => {
+    renderCarousel();
+
+    fireEvent.click(screen.getByRole("button", { name: /Reproducir video/i }));
+    const src = document.querySelector("iframe")?.getAttribute("src");
+    expect(src).toContain("autoplay=1");
+    expect(src).toContain("mute=1");
+    expect(src).toContain("youtube-nocookie.com/embed/N7LYM3pt_hg");
+  });
+
+  it("ofrece el botón de activar sonido en el video silenciado", () => {
+    renderCarousel();
+
+    fireEvent.click(screen.getByRole("button", { name: /Reproducir video/i }));
+    expect(
+      screen.getByRole("button", { name: "Activar sonido" }),
+    ).toBeInTheDocument();
+  });
+
   it("pausa el autoplay mientras el slide del video está visible", () => {
     renderCarousel();
     const autoplay = autoplayInstances.at(-1);

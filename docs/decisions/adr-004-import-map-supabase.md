@@ -4,16 +4,19 @@ tags:
   - build
   - performance
 created: 2026-07-21
+updated: 2026-08-12
 status: approved
 ---
 
-# ADR-004: Import Map para Supabase SDK vía CDN
+# ADR-004: Import Map para el SDK de Supabase
 
 ## Contexto
-El análisis con `react-doctor` detectaba violaciones de la regla `artifact-baas-authority-surface` porque el bundle de producción contenía strings internos del SDK de Supabase (como nombres de tablas y columnas). Adicionalmente, el SDK de Supabase (`@supabase/supabase-js`) es una dependencia grande que inflaba el bundle.
+
+El análisis con react-doctor detectaba violaciones de la regla `artifact-baas-authority-surface` porque el bundle de producción contenía strings internos del SDK de Supabase (nombres de tablas y columnas). Además, el SDK es una dependencia grande que inflaba el bundle.
 
 ## Decisión
-Cargar `@supabase/supabase-js` desde un **CDN vía Import Map** en lugar de empaquetarlo en el bundle:
+
+Cargar `@supabase/supabase-js` desde un CDN mediante un Import Map, en lugar de empaquetarlo en el bundle:
 
 ```html
 <!-- index.html -->
@@ -26,7 +29,8 @@ Cargar `@supabase/supabase-js` desde un **CDN vía Import Map** en lugar de empa
 </script>
 ```
 
-Y en `vite.config.ts` se excluye del bundling:
+Y en `vite.config.ts` se excluye del bundle:
+
 ```typescript
 build: {
   rollupOptions: {
@@ -39,20 +43,23 @@ optimizeDeps: {
 ```
 
 ## Consecuencias
-✅ **Positivas:**
-- Bundle de producción más pequeño (el SDK no se incluye)
-- Las reglas de `react-doctor` ya no detectan falsos positivos
-- El SDK se cachea en el navegador (CDN caching)
-- Versión específica fijada (`@2.110.0`) — sin sorpresas
 
-⚠️ **Trade-offs:**
-- Dependencia de disponibilidad de `esm.sh` CDN
-- No funciona offline (requiere conexión a internet)
-- El SDK no pasa por el pipeline de build (no se minifica con el resto)
-- `esm.sh` es un CDN de terceros — punto adicional de falla
+Ventajas:
 
-## Alternativas Consideradas
-1. **Bundle normal (sin external):** Rechazado por los falsos positivos de react-doctor
-2. **Tree-shaking manual:** Imposible; el SDK está optimizado como una unidad
-3. **Ignorar react-doctor:** Podría ocultar problemas reales en el futuro
-4. **CDN alternativo (unpkg, jsdelivr):** esm.sh ofrece mejor compatibilidad ESM
+- Bundle de producción más pequeño.
+- react-doctor ya no reporta falsos positivos por el SDK.
+- El SDK se cachea en el navegador (caché de CDN).
+- La versión queda fijada (`@2.110.0`) para evitar sorpresas.
+
+Desventajas:
+
+- Dependencia de la disponibilidad del CDN esm.sh.
+- No funciona sin conexión a internet.
+- El SDK no pasa por el minificador del build.
+
+## Alternativas consideradas
+
+1. **Bundle normal (sin external):** rechazado por los falsos positivos de react-doctor.
+2. **Tree-shaking manual:** imposible; el SDK está optimizado como una unidad.
+3. **Ignorar react-doctor:** podría ocultar problemas reales en el futuro.
+4. **CDN alternativo (unpkg, jsdelivr):** esm.sh ofrece mejor compatibilidad ESM.

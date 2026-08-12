@@ -4,52 +4,50 @@ tags:
   - routing
   - performance
 created: 2026-07-21
+updated: 2026-08-12
 status: approved
 ---
 
-# ADR-001: Code Splitting con React Router y Lazy Loading
+# ADR-001: Code splitting con React Router
 
 ## Contexto
-El proyecto incluye un panel de administración con tres páginas (Login, Dashboard, Lots) que no son necesarias para la mayoría de los usuarios. Incluir todo el código administrativo en el bundle inicial:
-- Aumenta el tiempo de carga inicial (~40% más de JS)
-- Expone nombres de tablas y componentes administrativos en el bundle público
-- Impacta negativamente el rendimiento en dispositivos móviles, crítico para el mercado objetivo
+
+El proyecto incluye páginas secundarias (inversión, contacto, Descubre Quindío) y un panel de administración con varias páginas que no son necesarias para la mayoría de los visitantes. Incluir todo ese código en el bundle inicial:
+
+- Aumenta el tiempo de carga inicial.
+- Expone nombres de tablas y componentes administrativos en el bundle público.
+- Perjudica el rendimiento en dispositivos móviles, que son el mercado objetivo.
 
 ## Decisión
-Implementar **code splitting estratégico** usando `React.lazy()` + `Suspense` exclusivamente para las rutas administrativas:
+
+Aplicar **code splitting estratégico por ruta**. Las páginas principales (Home, Projects) se importan de forma directa para un primer render rápido; las páginas secundarias y todo el panel admin se cargan bajo demanda con la propiedad `lazy` de React Router v8:
 
 ```typescript
-const AdminLayout = lazy(() => 
-  import("@/features/admin/components/AdminLayout")
-    .then(m => ({ default: m.AdminLayout }))
-);
-const AdminGuard = lazy(() => 
-  import("@/features/admin/components/AdminGuard")
-    .then(m => ({ default: m.AdminGuard }))
-);
+{
+  path: "investment",
+  lazy: () => import("@/features/investment/InvestmentPage")
+    .then((m) => ({ Component: m.InvestmentPage })),
+}
 ```
 
-Las rutas públicas (Home, Investment, Projects, Descubre Quindío) se importan **estáticamente** para mantener la carga instantánea.
-
-### Detalles de Implementación
-- Un solo `<Suspense>` envuelve las rutas `/admin` completas
-- Fallback visual: `min-h-screen bg-deep-forest` (fondo verde oscuro sólido)
-- Las rutas hijas de `/admin` comparten el mismo Suspense padre
-- Las páginas admin se importan con `.then(m => ({ default: m[Component] }))` para manejar exports nombrados
+La propiedad `lazy` de nivel de ruta reemplaza al patrón anterior de `React.lazy()` + `Suspense`. Vite genera un chunk separado por cada ruta lazy.
 
 ## Consecuencias
-✅ **Positivas:**
-- Reducción del bundle inicial (~40% menos JS)
-- Las rutas admin se cargan solo cuando el usuario navega a `/admin/*`
-- Los nombres de componentes administrativos no aparecen en el bundle público
-- Carga instantánea de páginas públicas en dispositivos móviles
 
-⚠️ **Trade-offs:**
-- Pequeña latencia al navegar a `/admin/login` por primera vez
-- Complejidad adicional en la configuración del router
-- El Suspense compartido significa que cualquier ruta admin activa el mismo fallback
+Ventajas:
 
-## Alternativas Consideradas
-1. **Code splitting por ruta pública:** Descartado porque el overhead de lazy loading en rutas críticas (Home) empeora la experiencia
-2. **React Router `lazy` (futuro):** React Router v7 no tiene soporte estable; se reconsiderará cuando esté disponible
-3. **Un solo bundle:** Rechazado por el impacto en rendimiento móvil y exposición de código administrativo
+- Menor tamaño del bundle inicial.
+- El panel admin solo se descarga cuando el usuario navega a `/admin/*`.
+- Los nombres de tablas y componentes administrativos no aparecen en el bundle público.
+- Carga rápida de las páginas principales en móviles.
+
+Desventajas:
+
+- Pequeña latencia al navegar por primera vez a una ruta secundaria.
+- Requiere respetar la convención de exportar `Component` desde los módulos lazy.
+
+## Alternativas consideradas
+
+1. **Code splitting de todas las rutas:** se descartó porque la latencia extra en Home y Projects empeora la experiencia.
+2. **Un solo bundle:** se rechazó por el impacto en el rendimiento móvil y la exposición de código administrativo.
+3. **`React.lazy()` + `Suspense` (patrón anterior):** funcionaba, pero la propiedad `lazy` de ruta es la forma nativa de React Router v8 y evita envolver con Suspense manual.

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estructura del proyecto · La Holanda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #FAFAF8;
+      --color-ink:     #1B4332;
+      --color-muted:   #2D6A4F;
+      --color-accent:  #D4A373;
+      --font-sans:     'Inter', system-ui, sans-serif;
+      --font-serif:    'Playfair Display', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1320px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 900px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Estructura · La Holanda</p>
+    <h1>Estructura de carpetas del proyecto</h1>
+
+    <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="estructura-title estructura-desc">
+      <title id="estructura-title">Estructura de carpetas del proyecto</title>
+      <desc id="estructura-desc">Árbol de carpetas de la carpeta src: componentes, constantes, features por dominio, hooks, clientes de librerías, páginas, router y punto de entrada.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2D6A4F"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#FAFAF8"/>
+
+      <!-- ===== CONECTORES ===== -->
+      <!-- src → bus nivel 1 -->
+      <line x1="640" y1="120" x2="640" y2="164" stroke="#2D6A4F" stroke-width="1"/>
+      <line x1="120" y1="164" x2="1160" y2="164" stroke="#2D6A4F" stroke-width="1"/>
+      <!-- drops a nivel 1 -->
+      <line x1="120" y1="164" x2="120" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="240" y1="164" x2="240" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="360" y1="164" x2="360" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="480" y1="164" x2="480" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="600" y1="164" x2="600" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="720" y1="164" x2="720" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="840" y1="164" x2="840" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="960" y1="164" x2="960" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="1080" y1="164" x2="1080" y2="192" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+
+      <!-- features → bus nivel 2 -->
+      <line x1="360" y1="224" x2="360" y2="268" stroke="#2D6A4F" stroke-width="1"/>
+      <line x1="160" y1="268" x2="568" y2="268" stroke="#2D6A4F" stroke-width="1"/>
+      <line x1="160" y1="268" x2="160" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="296" y1="268" x2="296" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="432" y1="268" x2="432" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="568" y1="268" x2="568" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+
+      <!-- lib → bus nivel 2 -->
+      <line x1="600" y1="224" x2="600" y2="268" stroke="#2D6A4F" stroke-width="1"/>
+      <line x1="600" y1="268" x2="1180" y2="268" stroke="#2D6A4F" stroke-width="1"/>
+      <line x1="680" y1="268" x2="680" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="780" y1="268" x2="780" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="880" y1="268" x2="880" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="980" y1="268" x2="980" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="1080" y1="268" x2="1080" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="1180" y1="268" x2="1180" y2="296" stroke="#2D6A4F" stroke-width="1" marker-end="url(#arrow)"/>
+
+      <!-- ===== RAÍZ: src/ ===== -->
+      <rect x="584" y="72" width="112" height="48" rx="6" fill="#FAFAF8"/>
+      <rect x="584" y="72" width="112" height="48" rx="6" fill="rgba(212,163,115,0.16)" stroke="#D4A373" stroke-width="1"/>
+      <rect x="592" y="80" width="20" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="602" y="89" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SRC</text>
+      <text x="640" y="100" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">src/</text>
+
+      <!-- ===== NIVEL 1 ===== -->
+      <rect x="64" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="64" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="120" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">components</text>
+
+      <rect x="184" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="184" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="240" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">constants</text>
+
+      <rect x="304" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="304" y="192" width="112" height="32" rx="6" fill="rgba(212,163,115,0.05)" stroke="rgba(212,163,115,0.60)" stroke-width="1"/>
+      <text x="360" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">features</text>
+
+      <rect x="424" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="424" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="480" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">hooks</text>
+
+      <rect x="544" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="544" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="600" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">lib</text>
+
+      <rect x="664" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="664" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="720" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">pages</text>
+
+      <rect x="784" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="784" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="840" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">router</text>
+
+      <rect x="904" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="904" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="960" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">index.css</text>
+
+      <rect x="1024" y="192" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="1024" y="192" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="1080" y="212" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">main.tsx</text>
+
+      <!-- ===== NIVEL 2: features/ ===== -->
+      <rect x="104" y="296" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="104" y="296" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="160" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">admin</text>
+
+      <rect x="240" y="296" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="240" y="296" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="296" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">home</text>
+
+      <rect x="376" y="296" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="376" y="296" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="432" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">investment</text>
+
+      <rect x="512" y="296" width="112" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="512" y="296" width="112" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="568" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">projects</text>
+
+      <!-- ===== NIVEL 2: lib/ ===== -->
+      <rect x="636" y="296" width="88" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="636" y="296" width="88" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="680" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">supabase.ts</text>
+
+      <rect x="736" y="296" width="88" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="736" y="296" width="88" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="780" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">cloudinary.ts</text>
+
+      <rect x="836" y="296" width="88" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="836" y="296" width="88" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="880" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">checkAdmin.ts</text>
+
+      <rect x="936" y="296" width="88" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="936" y="296" width="88" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="980" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">format.ts</text>
+
+      <rect x="1036" y="296" width="88" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="1036" y="296" width="88" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="1080" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">leads.ts</text>
+
+      <rect x="1136" y="296" width="88" height="32" rx="6" fill="#FAFAF8"/>
+      <rect x="1136" y="296" width="88" height="32" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="1180" y="316" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">lotService.ts</text>
+
+      <!-- ===== ANOTACIÓN ===== -->
+      <text x="120" y="388" fill="#6E7F71" font-size="12" font-style="italic" font-family="'Playfair Display', serif">El código de cada dominio vive en su carpeta de features;</text>
+      <text x="120" y="408" fill="#6E7F71" font-size="12" font-style="italic" font-family="'Playfair Display', serif">los clientes y la lógica de datos en lib.</text>
+
+      <!-- ===== LEYENDA ===== -->
+      <line x1="120" y1="600" x2="1160" y2="600" stroke="rgba(27,67,50,0.10)" stroke-width="0.8"/>
+      <text x="120" y="616" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEYENDA</text>
+
+      <rect x="120" y="620" width="14" height="10" rx="2" fill="rgba(212,163,115,0.16)" stroke="#D4A373" stroke-width="1"/>
+      <text x="140" y="628" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Raíz</text>
+
+      <rect x="220" y="620" width="14" height="10" rx="2" fill="rgba(212,163,115,0.05)" stroke="rgba(212,163,115,0.60)" stroke-width="1"/>
+      <text x="240" y="628" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Carpeta expandida</text>
+
+      <rect x="400" y="620" width="14" height="10" rx="2" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="420" y="628" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Carpeta o archivo</text>
+    </svg>
+  </div>
+</body>
+</html>

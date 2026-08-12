@@ -5,75 +5,51 @@ tags:
   - linting
   - ci
 created: 2026-07-23
+updated: 2026-08-12
 ---
 
-# 🧪 Testing y Calidad de Código
+# Testing y calidad de código
 
-> **Estado actual:** El proyecto cuenta con herramientas de linting, type-checking, análisis estático **y tests unitarios con Vitest**. Esta guía documenta todas las herramientas de calidad implementadas.
-
----
-
-## 📋 Resumen de Herramientas
+## Resumen de herramientas
 
 | Herramienta | Propósito | Configuración |
-|------------|-----------|---------------|
-| **TypeScript** (`tsc`) | Type-checking estático | `tsconfig.app.json` (strict mode) |
-| **ESLint** | Linting de código | `eslint.config.js` (flat config) |
-| **Prettier** | Formateo de código | Integrado vía `eslint-config-prettier` |
-| **React Doctor** | Análisis de componentes React | `npx react-doctor@latest --verbose` |
-| **Husky** | Git hooks (pre-commit) | `.husky/pre-commit` |
-| **lint-staged** | Linting en archivos staged (instalado, pendiente de configurar) | `package.json` (devDependencies) |
-| **Vitest** | Test runner | `vite.config.ts` (configuración inline) |
-| **Testing Library** | Testing de componentes React | `src/test/setup.ts` |
-| **GitHub Actions** | CI automatizado | `.github/workflows/ci.yml` |
+| --- | --- | --- |
+| TypeScript (`tsc`) | Type-checking estático | `tsconfig.app.json` (strict) |
+| ESLint | Linting | `eslint.config.js` (flat config) |
+| Prettier | Formateo | Integrado vía `eslint-config-prettier` |
+| React Doctor | Análisis de componentes React | `npx react-doctor@latest --verbose` |
+| Husky | Git hooks (pre-commit) | `.husky/pre-commit` |
+| lint-staged | Lint en archivos en stage | Instalado, aún no activo en el hook |
+| Vitest | Test runner de unidades | `vite.config.ts` |
+| Testing Library | Testing de componentes | `src/test/setup.ts` |
+| Playwright | Tests e2e | `playwright.config.ts` |
+| Stryker | Mutation testing | `stryker.config.mjs` |
+| GitHub Actions | CI automatizado | `.github/workflows/ci.yml` |
 
 ---
 
-## 🔍 Linting (ESLint)
+## Linting (ESLint)
 
 ### Configuración
 
-El proyecto usa **ESLint con flat config** (`eslint.config.js`):
+Flat config en `eslint.config.js`:
 
-```typescript
-// eslint.config.js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
-    languageOptions: {
-      globals: globals.browser,
-    },
-  },
-])
-```
-
-### Reglas activas
-- **`@eslint/js` recommended** — Reglas base de JavaScript
-- **`typescript-eslint` recommended** — TypeScript strict
-- **`eslint-plugin-react-hooks`** — Reglas de hooks (rules-of-hooks, exhaustive-deps)
-- **`eslint-plugin-react-refresh`** — Reglas para HMR (Hot Module Replacement)
+- Reglas base: `@eslint/js` recommended.
+- TypeScript: `typescript-eslint` recommended.
+- React Hooks: `eslint-plugin-react-hooks` (incluye las reglas del compilador de React, por ejemplo `react-hooks/refs`, que prohíbe acceder a refs durante el render).
+- React Refresh: `eslint-plugin-react-refresh`.
 
 ### Ejecución
 
 ```bash
-# Lint de todo el proyecto
-npm run lint
-
-# ESLint se ejecuta automáticamente en pre-commit via lint-staged
+bun run lint
 ```
 
 ---
 
-## 🎯 TypeScript Strict Mode
+## TypeScript strict
 
-### Opciones clave (`tsconfig.app.json`)
+Opciones clave (`tsconfig.app.json`):
 
 ```json
 {
@@ -87,63 +63,30 @@ npm run lint
 }
 ```
 
-El type-checking se ejecuta como parte del build:
-
-```bash
-npm run build    # Ejecuta: tsc -b && vite build
-```
-
-Si hay errores de TypeScript, el build **falla**. Esto asegura que ningún código con errores de tipos llegue a producción.
+El type-checking forma parte del build: `bun run build` ejecuta `tsc -b && vite build`. Si hay errores de tipos, el build falla.
 
 ---
 
-## 🩺 React Doctor
+## React Doctor
 
-**React Doctor** es una herramienta de análisis estático para componentes React. Detecta:
-
-- Problemas de rendimiento (re-renders innecesarios)
-- Violaciones de reglas de hooks
-- Exposición de información sensible en bundles
-- Malas prácticas en componentes
-
-### Ejecución
+Análisis estático de componentes React. Detecta problemas de rendimiento, violaciones de reglas de hooks, exposición de información sensible y malas prácticas.
 
 ```bash
-npm run lint:doctor    # npx react-doctor@latest --verbose
+bun run lint:doctor
 ```
 
-### En CI
-
-React Doctor se ejecuta automáticamente en el pipeline de CI después del build. Si encuentra problemas críticos, el pipeline falla.
+El proyecto mantiene un puntaje de 100/100. Se ejecuta automáticamente en el job `quality` del CI.
 
 ---
 
-## 🌀 Pre-commit Hooks (Husky + lint-staged)
+## Husky y lint-staged
 
-### Husky
+Husky instala el hook `pre-commit` mediante el script `prepare` de `package.json`. El hook actual solo imprime un mensaje de confirmación; `lint-staged` está instalado pero todavía no está configurado en el hook.
 
-Husky gestiona los git hooks del proyecto. Se instala automáticamente con `npm install` gracias al script `prepare`:
-
-```json
-// package.json
-"scripts": {
-  "prepare": "husky"
-}
-```
-
-### lint-staged
-
-`lint-staged` está **instalado como dependencia** pero **no está activo**. Permite ejecutar ESLint solo en los archivos que están siendo commiteados, lo que:
-
-- Acelera el linting (solo archivos modificados)
-- Evita que código con errores entre al repositorio
-- Mantiene la consistencia del código
-
-### Activar lint-staged
-
-El hook pre-commit actual (`husky/pre-commit`) solo imprime un mensaje de confirmación. Para activar lint-staged:
+Para activarlo en el futuro:
 
 1. Configurar `lint-staged` en `package.json`:
+
    ```json
    {
      "lint-staged": {
@@ -152,187 +95,171 @@ El hook pre-commit actual (`husky/pre-commit`) solo imprime un mensaje de confir
    }
    ```
 
-2. Actualizar `.husky/pre-commit`:
+2. Reemplazar el contenido de `.husky/pre-commit` por:
+
    ```bash
    npx lint-staged
    ```
 
 ---
 
-## 🚀 Pipeline CI (GitHub Actions)
-
-El workflow de CI se ejecuta en cada push y pull request a `main`:
-
-```yaml
-jobs:
-  react-doctor:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - name: Cache dependencies
-        uses: actions/cache@v4
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-      - name: Build
-        run: bun run build           # tsc -b && vite build
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-      - name: React Doctor
-        run: npx react-doctor@latest --verbose
-```
-
-### Etapas del pipeline
-
-| Etapa | Qué valida | Si falla... |
-|-------|-----------|-------------|
-| `bun install` | Lockfile consistente | Dependencias inconsistentes |
-| `bun run build` | TypeScript + Vite build | Errores de tipos o compilación |
-| `react-doctor` | Calidad de componentes React | Malas prácticas o fugas de información |
-
-### Secrets requeridos en GitHub
-
-| Secret | Propósito |
-|--------|-----------|
-| `VITE_SUPABASE_URL` | URL del proyecto Supabase (necesaria para build) |
-| `VITE_SUPABASE_ANON_KEY` | Anon key de Supabase (necesaria para build) |
-
----
-
-## 🎨 Formateo (Prettier)
-
-Prettier está integrado vía `eslint-config-prettier` para evitar conflictos con ESLint:
-
-```bash
-npx prettier --check src/    # Verificar formato
-npx prettier --write src/   # Formatear archivos
-```
+## Tests unitarios (Vitest)
 
 ### Configuración
 
-Prettier usa configuración por defecto. Para personalizarla, crear un archivo `.prettierrc` en la raíz:
-
-```json
-{
-  "semi": true,
-  "singleQuote": false,
-  "tabWidth": 2,
-  "trailingComma": "all"
-}
-```
-
----
-
-## 🧪 Tests Automatizados
-
-### Configuración
-
-El proyecto usa **Vitest** configurado directamente en `vite.config.ts`:
+Vitest se configura en `vite.config.ts`:
 
 ```typescript
-// vite.config.ts
-/// <reference types="vitest/config" />
-
 test: {
   globals: true,
   environment: "jsdom",
   setupFiles: "./src/test/setup.ts",
   css: true,
+  include: ["src/**/*.{test,spec}.{ts,tsx}"],
+  coverage: {
+    provider: "v8",
+    reporter: ["text", "html", "json-summary", "clover"],
+    reportsDirectory: "./coverage",
+    thresholds: {
+      statements: 80,
+      branches: 70,
+      functions: 75,
+      lines: 80,
+    },
+  },
 }
 ```
 
-### Scripts disponibles
+### Comandos
 
 ```bash
-bun run test            # Modo watch (desarrollo)
-bun run test:run        # Ejecución única (CI)
+bun run test            # Modo watch
+bun run test:run        # Una sola ejecución
 bun run test:coverage   # Con reporte de cobertura
 ```
 
-### Tests implementados
+### Tests actuales
 
-Actualmente hay **31 tests** en **4 archivos**:
+Actualmente hay **257 tests en 18 archivos**:
 
-| Archivo | Tests | Cobertura |
-|---------|:-----:|-----------|
-| `src/lib/__tests__/checkAdmin.test.ts` | 6 | Verificación de permisos admin (email vacío, RPC exitoso, RPC fallido, error de BD) |
-| `src/hooks/__tests__/useAuth.test.tsx` | 9 | Hook de autenticación (login, logout, sesión, cambios de estado, error sin provider) |
-| `src/features/home/components/__tests__/ContactForm.test.tsx` | 6 | Formulario de contacto (renderizado, validación, envío exitoso, error, botón deshabilitado) |
-| `src/features/projects/components/__tests__/LotCard.test.tsx` | 10 | Tarjeta de lote (estados disponible/reservado/vendido, formato de precios, enlaces) |
+| Archivo | Cobertura |
+| --- | --- |
+| `src/components/home/__tests__/HomeCarousel.test.tsx` | Carrusel: slides, autoplay, carga perezosa, sonido |
+| `src/components/layout/__tests__/BottomNavBar.test.tsx` | Navegación inferior móvil |
+| `src/components/layout/__tests__/Footer.test.tsx` | Pie de página |
+| `src/components/layout/__tests__/TopNavBar.test.tsx` | Barra de navegación superior |
+| `src/components/quindio/__tests__/DescubreQuindio.test.tsx` | Página Descubre Quindío |
+| `src/components/seo/__tests__/PageSEO.test.tsx` | Meta tags y SEO |
+| `src/components/ui/__tests__/LazyImage.test.tsx` | Carga diferida de imágenes |
+| `src/components/ui/__tests__/YouTubeVideo.test.tsx` | Reproductor: lazy load, autoplay, sonido |
+| `src/constants/__tests__/navLinks.test.ts` | Ítems de navegación |
+| `src/features/home/components/__tests__/ContactForm.test.tsx` | Formulario: validación, envío, estados |
+| `src/features/home/components/__tests__/HomeComponents.test.tsx` | Hero, proceso, beneficios, plano |
+| `src/features/investment/components/__tests__/InvestmentComponents.test.tsx` | Página de inversión |
+| `src/features/projects/components/__tests__/LotCard.test.tsx` | Tarjeta de lote y precios |
+| `src/hooks/__tests__/useAuth.test.tsx` | Hook de autenticación |
+| `src/lib/__tests__/checkAdmin.test.ts` | Verificación de rol admin |
+| `src/lib/__tests__/cloudinary.test.ts` | Utilidad cldUrl |
+| `src/lib/__tests__/uploadImage.test.ts` | Widget de subida |
+| `src/features/admin/lib/__tests__/analytics.test.ts` | Agrupación por día de las métricas del dashboard |
 
-### Estructura de tests
+### Buenas prácticas
 
-```
-src/
-├── lib/
-│   └── __tests__/
-│       └── checkAdmin.test.ts     # Tests de utilidad de admin
-├── hooks/
-│   └── __tests__/
-│       └── useAuth.test.tsx       # Tests del hook de auth
-├── features/
-│   ├── home/components/
-│   │   └── __tests__/
-│   │       └── ContactForm.test.tsx  # Tests del formulario
-│   └── projects/components/
-│       └── __tests__/
-│           └── LotCard.test.tsx      # Tests de la tarjeta de lote
-└── test/
-    └── setup.ts                   # Configuración global de tests
-```
-
-### Mock de Supabase
-
-Los tests que interactúan con Supabase usan `vi.mock("@/lib/supabase")` para simular las llamadas a la base de datos:
-
-```typescript
-vi.mock("@/lib/supabase", () => ({
-  supabase: {
-    rpc: vi.fn(),
-    auth: {
-      getSession: vi.fn(),
-      onAuthStateChange: vi.fn(),
-      signInWithPassword: vi.fn(),
-      signOut: vi.fn(),
-    },
-  },
-}));
-```
-
-### Cómo agregar un nuevo test
-
-1. Crear el archivo `__tests__/MiComponente.test.tsx` junto al componente
-2. Usar `describe`, `it`/`test`, `expect` de Vitest (los globals están habilitados)
-3. Para componentes React, usar `render` de `@testing-library/react`
-4. Para interacciones de usuario, usar `userEvent` de `@testing-library/user-event`
-5. Para mocks de Supabase, seguir el patrón existente con `vi.mock`
-
-### Próximos pasos
-
-- [ ] Agregar tests para componentes restantes (`AdminGuard`, `HeroSection`, `FeaturedLots`)
-- [ ] Agregar tests de integración con React Router
-- [ ] Configurar coverage threshold mínimo (80%+)
-- [ ] Integrar `vitest` en el pipeline de CI
+- Colocar los tests en `__tests__/` junto al componente.
+- Preferir `screen.getByRole()` sobre `screen.getByText()`.
+- Inyectar dependencias cuando sea posible (por ejemplo, `ContactForm` recibe la función `submitLead` como prop en vez de depender de Supabase).
+- Mockear servicios externos con `vi.mock` cuando el componente los usa directamente.
 
 ---
 
-## 📊 Matriz de Calidad
+## Tests e2e (Playwright)
 
-| Aspecto | Herramienta | Automatizado | En CI |
-|---------|------------|:---:|:---:|
-| Type checking | TypeScript (`tsc`) | ✅ (en build) | ✅ |
-| Linting | ESLint | ❌ (manual) | ❌ |
-| Formateo | Prettier | ❌ | ❌ |
-| Análisis React | React Doctor | ❌ | ✅ |
-| Tests unitarios | Vitest + Testing Library | ✅ | ✅ |
-| Tests integración | — | ❌ | ❌ |
-| Tests E2E | — | ❌ | ❌ |
+### Proyectos
+
+| Proyecto | Viewport |
+| --- | --- |
+| `chromium-mobile` | 375x812 |
+| `chromium-tablet` | 768x1024 |
+| `chromium-desktop` | 1280x800 |
+
+### Comandos
+
+```bash
+bun run build
+bun run test:e2e              # Todos los proyectos
+bun run test:e2e:mobile       # Solo mobile
+bun run test:e2e:debug        # Modo debug
+```
+
+### Suite actual
+
+146 tests en 5 archivos: `contact-form`, `navigation`, `home`, `projects` y `responsive`. Cubren navegación, formulario, carrusel, 404, responsive (sin overflow horizontal), tap targets y páginas admin con sesión mockeada.
 
 ---
 
-## 🔗 Enlaces Relacionados
+## Mutation testing (Stryker)
 
-- [Stack Tecnológico](../stack/tech-stack.md)
+```bash
+bun run test:mutation
+```
+
+Configuración (`stryker.config.mjs`):
+
+- Test runner: Vitest.
+- Umbrales: high 85, low 70, break 60 (por debajo de 60 el comando falla).
+- Reporte HTML en `reports/stryker/index.html`.
+
+---
+
+## Pipeline de CI
+
+El workflow `.github/workflows/ci.yml` tiene tres jobs:
+
+### Job quality
+
+- `bun install --frozen-lockfile`.
+- `bun run build` (type-check + build).
+- `bun run test:run` (257 tests).
+- `npx react-doctor@latest --verbose`.
+- `npm audit --audit-level=critical`.
+
+### Job e2e
+
+- Instala Chromium de Playwright.
+- Compila el proyecto.
+- Levanta el preview en el puerto 4173.
+- Ejecuta Playwright en `chromium-mobile` y `chromium-desktop`.
+- Sube el reporte como artefacto.
+
+El CI tolera la ausencia de secrets de Supabase: si faltan, la app usa valores provisionales y los tests e2e que tocan Supabase usan mocks de red.
+
+### Job mutation
+
+- Se ejecuta solo de forma manual (`workflow_dispatch`) porque un análisis completo de Stryker puede tardar más de 20 minutos.
+- Corre `bun run test:mutation` y publica el reporte HTML.
+
+---
+
+---
+
+## Matriz de calidad
+
+| Aspecto | Herramienta | En CI |
+| --- | --- | --- |
+| Type checking | TypeScript (`tsc -b`) | Sí (en build) |
+| Linting | ESLint | No |
+| Análisis React | React Doctor | Sí |
+| Tests unitarios | Vitest | Sí |
+| Tests e2e | Playwright | Sí |
+| Auditoría de dependencias | npm audit | Sí |
+| Mutation testing | Stryker | Manual (`workflow_dispatch`) |
+| Cobertura | Vitest coverage | No (local) |
+
+---
+
+## Enlaces relacionados
+
+- [Stack tecnológico](../stack/tech-stack.md)
 - [Pipeline CI/CD](../deployment/ci-cd.md)
-- [Guía de Onboarding](../guides/onboarding.md)
+- [Procedimientos de QA](../qa/procedures.md)
+- [Guía de onboarding](../guides/onboarding.md)

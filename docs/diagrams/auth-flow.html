@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flujo de autenticación · La Holanda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #FAFAF8;
+      --color-ink:     #1B4332;
+      --color-muted:   #2D6A4F;
+      --color-accent:  #D4A373;
+      --font-sans:     'Inter', system-ui, sans-serif;
+      --font-serif:    'Playfair Display', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1000px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 900px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Autenticación · La Holanda</p>
+    <h1>Flujo de autenticación del panel admin</h1>
+
+    <svg viewBox="0 0 960 736" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="authflow-title authflow-desc">
+      <title id="authflow-title">Flujo de autenticación del panel admin</title>
+      <desc id="authflow-desc">El administrador inicia sesión con su correo y contraseña; el guard de rutas verifica el rol mediante una función de Supabase y muestra el panel o redirige al login.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2D6A4F"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#D4A373"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#FAFAF8"/>
+
+      <!-- ===== LÍNEAS DE VIDA ===== -->
+      <line x1="120" y1="128" x2="120" y2="700" stroke="rgba(27,67,50,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="300" y1="128" x2="300" y2="700" stroke="rgba(27,67,50,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="480" y1="128" x2="480" y2="700" stroke="rgba(27,67,50,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="660" y1="128" x2="660" y2="700" stroke="rgba(27,67,50,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="840" y1="128" x2="840" y2="700" stroke="rgba(27,67,50,0.20)" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- ===== BARRAS DE ACTIVACIÓN ===== -->
+      <!-- LoginPage: recibe la petición en 224 y responde en 416 -->
+      <rect x="296" y="224" width="8" height="192" fill="rgba(27,67,50,0.06)" stroke="#2D6A4F" stroke-width="0.8"/>
+      <!-- AdminGuard: llamada en 416, decide hasta el final del fragmento -->
+      <rect x="836" y="416" width="8" height="280" fill="rgba(27,67,50,0.06)" stroke="#2D6A4F" stroke-width="0.8"/>
+
+      <!-- ===== MENSAJES ===== -->
+      <!-- M1: Usuario → LoginPage -->
+      <line x1="120" y1="176" x2="300" y2="176" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M2: LoginPage → AuthProvider -->
+      <line x1="300" y1="224" x2="480" y2="224" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M3: AuthProvider → Supabase -->
+      <line x1="480" y1="272" x2="660" y2="272" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M4: Supabase → AuthProvider (return) -->
+      <line x1="660" y1="320" x2="480" y2="320" stroke="#2D6A4F" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <!-- M5: AuthProvider → LoginPage (return) -->
+      <line x1="480" y1="368" x2="300" y2="368" stroke="#2D6A4F" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <!-- M6: LoginPage → AdminGuard -->
+      <line x1="300" y1="416" x2="840" y2="416" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M7: AdminGuard → Supabase -->
+      <line x1="840" y1="464" x2="660" y2="464" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M8: Supabase → AdminGuard (return) -->
+      <line x1="660" y1="512" x2="840" y2="512" stroke="#2D6A4F" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+
+      <!-- ===== FRAGMENTO ALT ===== -->
+      <rect x="96" y="556" width="768" height="144" rx="4" fill="rgba(27,67,50,0.02)" stroke="rgba(27,67,50,0.22)" stroke-width="1"/>
+      <rect x="96" y="556" width="40" height="16" rx="2" fill="#FAFAF8" stroke="rgba(27,67,50,0.22)" stroke-width="1"/>
+      <text x="116" y="568" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">ALT</text>
+      <!-- Guard región 1 -->
+      <text x="108" y="584" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.04em">[es admin]</text>
+      <!-- Mensaje éxito (coral) -->
+      <line x1="840" y1="616" x2="120" y2="616" stroke="#D4A373" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+      <!-- Divider -->
+      <line x1="104" y1="644" x2="856" y2="644" stroke="rgba(27,67,50,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- Guard región 2 -->
+      <text x="108" y="664" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.04em">[no es admin]</text>
+      <line x1="840" y1="696" x2="120" y2="696" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- ===== ETIQUETAS DE MENSAJES ===== -->
+      <rect x="144" y="160" width="136" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="212" y="170" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">CORREO + CONTRASEÑA</text>
+
+      <rect x="332" y="208" width="116" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="390" y="218" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">LOGIN(EMAIL, PASS)</text>
+
+      <rect x="512" y="256" width="116" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="570" y="266" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SIGNINWITHPASSWORD()</text>
+
+      <rect x="528" y="304" width="96" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="576" y="314" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">USUARIO + SESIÓN</text>
+
+      <rect x="336" y="352" width="88" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="380" y="362" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">USUARIO O ERROR</text>
+
+      <rect x="500" y="400" width="136" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="568" y="410" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">NAVEGA A /ADMIN/DASHBOARD</text>
+
+      <rect x="672" y="448" width="136" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="740" y="458" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">RPC HAS_BACKSTAGE_ACCESS</text>
+
+      <rect x="688" y="496" width="72" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="724" y="506" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">TRUE / FALSE</text>
+
+      <rect x="404" y="596" width="152" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="480" y="606" fill="#D4A373" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">RENDERIZA EL DASHBOARD</text>
+
+      <rect x="396" y="676" width="168" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="480" y="686" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">REDIRIGE A /ADMIN/LOGIN</text>
+
+      <!-- ===== ACTORES ===== -->
+      <!-- Usuario (input) -->
+      <rect x="60" y="72" width="120" height="56" rx="6" fill="#FAFAF8"/>
+      <rect x="60" y="72" width="120" height="56" rx="6" fill="rgba(45,106,79,0.10)" stroke="#6E7F71" stroke-width="1"/>
+      <rect x="68" y="80" width="28" height="12" rx="2" fill="transparent" stroke="rgba(110,127,113,0.40)" stroke-width="0.8"/>
+      <text x="82" y="89" fill="#6E7F71" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">USER</text>
+      <text x="120" y="104" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">Administrador</text>
+      <text x="120" y="119" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">navegador</text>
+
+      <!-- LoginPage (backend) -->
+      <rect x="240" y="72" width="120" height="56" rx="6" fill="#FAFAF8"/>
+      <rect x="240" y="72" width="120" height="56" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <rect x="248" y="80" width="20" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="258" y="89" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">UI</text>
+      <text x="300" y="104" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">LoginPage</text>
+      <text x="300" y="119" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">formulario</text>
+
+      <!-- AuthProvider (backend) -->
+      <rect x="420" y="72" width="120" height="56" rx="6" fill="#FAFAF8"/>
+      <rect x="420" y="72" width="120" height="56" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <rect x="428" y="80" width="28" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="442" y="89" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CTX</text>
+      <text x="480" y="104" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">AuthProvider</text>
+      <text x="480" y="119" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">contexto React</text>
+
+      <!-- Supabase (store) -->
+      <rect x="600" y="72" width="120" height="56" rx="6" fill="#FAFAF8"/>
+      <rect x="600" y="72" width="120" height="56" rx="6" fill="rgba(27,67,50,0.05)" stroke="#2D6A4F" stroke-width="1"/>
+      <rect x="608" y="80" width="20" height="12" rx="2" fill="transparent" stroke="rgba(45,106,79,0.50)" stroke-width="0.8"/>
+      <text x="618" y="89" fill="#2D6A4F" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">DB</text>
+      <text x="660" y="104" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">Supabase</text>
+      <text x="660" y="119" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">auth + rpc</text>
+
+      <!-- AdminGuard (security) -->
+      <rect x="780" y="72" width="120" height="56" rx="6" fill="#FAFAF8"/>
+      <rect x="780" y="72" width="120" height="56" rx="6" fill="rgba(212,163,115,0.05)" stroke="rgba(212,163,115,0.60)" stroke-width="1" stroke-dasharray="4,4"/>
+      <rect x="788" y="80" width="36" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="806" y="89" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">GUARD</text>
+      <text x="840" y="104" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">AdminGuard</text>
+      <text x="840" y="119" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">auth + rol</text>
+
+      <!-- ===== LEYENDA ===== -->
+      <line x1="60" y1="712" x2="900" y2="712" stroke="rgba(27,67,50,0.10)" stroke-width="0.8"/>
+      <text x="60" y="728" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEYENDA</text>
+
+      <line x1="60" y1="716" x2="92" y2="716" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <text x="100" y="720" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Llamada</text>
+
+      <line x1="200" y1="716" x2="232" y2="716" stroke="#2D6A4F" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="240" y="720" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Respuesta</text>
+
+      <line x1="360" y1="716" x2="392" y2="716" stroke="#D4A373" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+      <text x="400" y="720" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Camino de éxito</text>
+    </svg>
+  </div>
+</body>
+</html>

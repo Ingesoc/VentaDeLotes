@@ -4,6 +4,7 @@ import {
   Check,
   X,
   Loader2,
+  Trash2,
   Image as ImageIcon,
 } from "lucide-react";
 import type { Lot } from "./useLots";
@@ -19,8 +20,12 @@ interface LotsTableProps {
   lots: Lot[];
   saving: boolean;
   uploading: string | null;
-  onSave: (id: string, updates: { status: Lot["status"]; price: number | null }) => Promise<boolean>;
+  onSave: (
+    id: string,
+    updates: { status: Lot["status"]; price: number | null },
+  ) => Promise<boolean>;
   onUploadImage: (lotId: string) => void;
+  onDelete: (lotId: string) => Promise<boolean>;
 }
 
 function LotRow({
@@ -29,15 +34,24 @@ function LotRow({
   uploading,
   onSave,
   onUploadImage,
+  onDelete,
 }: {
   lot: Lot;
   saving: boolean;
   uploading: string | null;
-  onSave: (id: string, updates: { status: Lot["status"]; price: number | null }) => Promise<boolean>;
+  onSave: (
+    id: string,
+    updates: { status: Lot["status"]; price: number | null },
+  ) => Promise<boolean>;
   onUploadImage: (lotId: string) => void;
+  onDelete: (lotId: string) => Promise<boolean>;
 }) {
   const [editing, setEditing] = useState(false);
-  const [editForm, setEditForm] = useState<{ status: Lot["status"]; price: number | null }>({
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [editForm, setEditForm] = useState<{
+    status: Lot["status"];
+    price: number | null;
+  }>({
     status: lot.status,
     price: lot.price,
   });
@@ -52,12 +66,19 @@ function LotRow({
     setEditForm({ status: lot.status, price: lot.price });
   };
 
+  const handleDelete = async () => {
+    if (!confirmingDelete) {
+      setConfirmingDelete(true);
+      return;
+    }
+    const ok = await onDelete(lot.id);
+    if (ok) setConfirmingDelete(false);
+  };
+
   return (
     <tr className="border-b border-outline-variant/10 hover:bg-surface-container/50 transition-colors">
       <td className="px-6 py-4">
-        <span className="font-label-bold text-primary">
-          Lote {lot.id}
-        </span>
+        <span className="font-label-bold text-primary">Lote {lot.id}</span>
       </td>
       <td className="px-6 py-4 text-body-md text-on-surface-variant">
         {lot.area_m2
@@ -133,7 +154,7 @@ function LotRow({
           )}
           <span className="text-caption truncate max-w-[120px]">
             {lot.aerial_image.includes("res.cloudinary.com")
-              ? "✅ Cloudinary"
+              ? "Cloudinary"
               : "Subir imagen"}
           </span>
         </button>
@@ -163,15 +184,52 @@ function LotRow({
               <X className="w-4 h-4" />
             </button>
           </div>
+        ) : confirmingDelete ? (
+          <div className="flex items-center justify-end gap-2">
+            <span className="text-caption text-red-600 font-medium">
+              ¿Eliminar?
+            </span>
+            <button
+              onClick={handleDelete}
+              type="button"
+              disabled={saving}
+              aria-label={`Confirmar eliminación del lote ${lot.id}`}
+              className="p-2 rounded-lg bg-red-600 text-white hover:opacity-90 transition-opacity disabled:opacity-60"
+            >
+              {saving ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Check className="w-4 h-4" />
+              )}
+            </button>
+            <button
+              onClick={() => setConfirmingDelete(false)}
+              type="button"
+              aria-label="Cancelar eliminación"
+              className="p-2 rounded-lg border border-outline-variant/50 text-on-surface-variant hover:bg-surface-container transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         ) : (
-          <button
-            onClick={() => setEditing(true)}
-            type="button"
-            aria-label="Editar lote"
-            className="p-2 rounded-lg border border-outline-variant/50 text-on-surface-variant hover:bg-surface-container transition-colors"
-          >
-            <Pencil className="w-4 h-4" />
-          </button>
+          <div className="flex items-center justify-end gap-2">
+            <button
+              onClick={() => setEditing(true)}
+              type="button"
+              aria-label="Editar lote"
+              className="p-2 rounded-lg border border-outline-variant/50 text-on-surface-variant hover:bg-surface-container transition-colors"
+            >
+              <Pencil className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleDelete}
+              type="button"
+              aria-label={`Eliminar lote ${lot.id}`}
+              className="p-2 rounded-lg border border-outline-variant/50 text-on-surface-variant hover:bg-red-50 hover:text-red-600 transition-colors"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          </div>
         )}
       </td>
     </tr>
@@ -184,6 +242,7 @@ export function LotsTable({
   uploading,
   onSave,
   onUploadImage,
+  onDelete,
 }: LotsTableProps) {
   return (
     <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/20 overflow-hidden">
@@ -207,7 +266,7 @@ export function LotsTable({
                 Imagen
               </th>
               <th className="text-right px-6 py-4 text-caption font-caption text-on-surface-variant uppercase tracking-wider">
-                Acción
+                Acciones
               </th>
             </tr>
           </thead>
@@ -220,6 +279,7 @@ export function LotsTable({
                 uploading={uploading}
                 onSave={onSave}
                 onUploadImage={onUploadImage}
+                onDelete={onDelete}
               />
             ))}
           </tbody>

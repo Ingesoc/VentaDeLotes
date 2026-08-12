@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autenticación · La Holanda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #FAFAF8;
+      --color-ink:     #1B4332;
+      --color-muted:   #2D6A4F;
+      --color-accent:  #D4A373;
+      --font-sans:     'Inter', system-ui, sans-serif;
+      --font-serif:    'Playfair Display', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1320px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 900px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Autenticación · La Holanda</p>
+    <h1>Sistema de autenticación</h1>
+
+    <svg viewBox="0 0 1280 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="auth-title auth-desc">
+      <title id="auth-title">Sistema de autenticación</title>
+      <desc id="auth-desc">Sistema de autenticación: el contexto de AuthProvider inicia sesión con Supabase, verifica el rol con la RPC has_backstage_access y AdminGuard protege las rutas del panel.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2D6A4F"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#D4A373"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#FAFAF8"/>
+
+      <!-- ===== CONECTORES (detrás) ===== -->
+      <!-- LoginPage → AuthProvider -->
+      <line x1="360" y1="104" x2="440" y2="104" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- AuthProvider → Supabase Auth -->
+      <line x1="800" y1="104" x2="880" y2="104" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- AuthProvider → checkAdmin -->
+      <line x1="620" y1="144" x2="620" y2="232" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- checkAdmin → RPC -->
+      <line x1="800" y1="280" x2="880" y2="280" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- checkAdmin → AdminGuard -->
+      <line x1="620" y1="328" x2="620" y2="416" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- LoginPage → ResetPasswordPage (recuperación) -->
+      <path d="M 220,144 V 200 Q 220,208 228,208 H 320 Q 328,208 328,200 V 416"
+            fill="none" stroke="#D4A373" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arrow-accent)"/>
+
+      <!-- Etiquetas de conectores -->
+      <rect x="368" y="88" width="56" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="396" y="98" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">login()</text>
+
+      <rect x="628" y="176" width="128" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="692" y="186" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">checkAdminStatus()</text>
+
+      <rect x="628" y="360" width="72" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="664" y="370" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">isAdmin</text>
+
+      <rect x="336" y="288" width="104" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="388" y="298" fill="#D4A373" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">correo con enlace</text>
+
+      <!-- ===== LoginPage (pública) ===== -->
+      <rect x="80" y="64" width="280" height="80" rx="6" fill="#FAFAF8"/>
+      <rect x="80" y="64" width="280" height="80" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1" stroke-dasharray="4,3"/>
+      <rect x="88" y="72" width="24" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="100" y="81" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PÚB</text>
+      <text x="220" y="92" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">LoginPage</text>
+      <line x1="88" y1="100" x2="352" y2="100" stroke="rgba(27,67,50,0.12)" stroke-width="0.8"/>
+      <text x="92" y="116" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">email y contraseña</text>
+      <text x="92" y="132" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">¿Olvidaste tu contraseña?</text>
+
+      <!-- ===== AuthProvider (focal) ===== -->
+      <rect x="440" y="64" width="360" height="80" rx="6" fill="#FAFAF8"/>
+      <rect x="440" y="64" width="360" height="80" rx="6" fill="rgba(212,163,115,0.16)" stroke="#D4A373" stroke-width="1"/>
+      <rect x="448" y="72" width="28" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="462" y="81" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CTX</text>
+      <text x="620" y="92" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">AuthProvider</text>
+      <line x1="448" y1="100" x2="792" y2="100" stroke="rgba(212,163,115,0.50)" stroke-width="0.8"/>
+      <text x="452" y="116" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">contexto React · user · loading</text>
+      <text x="452" y="132" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">login() · logout()</text>
+
+      <!-- ===== Supabase Auth ===== -->
+      <rect x="880" y="64" width="320" height="80" rx="6" fill="#FAFAF8"/>
+      <rect x="880" y="64" width="320" height="80" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <rect x="888" y="72" width="32" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="904" y="81" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">AUTH</text>
+      <text x="1040" y="92" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">Supabase Auth</text>
+      <line x1="888" y1="100" x2="1192" y2="100" stroke="rgba(27,67,50,0.12)" stroke-width="0.8"/>
+      <text x="892" y="116" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">signInWithPassword()</text>
+      <text x="892" y="132" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">signOut() · getSession()</text>
+
+      <!-- ===== checkAdmin ===== -->
+      <rect x="440" y="232" width="360" height="96" rx="6" fill="#FAFAF8"/>
+      <rect x="440" y="232" width="360" height="96" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <rect x="448" y="240" width="24" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="460" y="249" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CLI</text>
+      <text x="620" y="260" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">checkAdmin.ts</text>
+      <line x1="448" y1="268" x2="792" y2="268" stroke="rgba(27,67,50,0.12)" stroke-width="0.8"/>
+      <text x="452" y="284" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">recibe supabase y email</text>
+      <text x="452" y="300" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">retorna boolean</text>
+
+      <!-- ===== RPC has_backstage_access ===== -->
+      <rect x="880" y="232" width="320" height="96" rx="6" fill="#FAFAF8"/>
+      <rect x="880" y="232" width="320" height="96" rx="6" fill="rgba(212,163,115,0.05)" stroke="rgba(212,163,115,0.60)" stroke-width="1" stroke-dasharray="4,4"/>
+      <rect x="888" y="240" width="24" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="900" y="249" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">RPC</text>
+      <text x="1040" y="260" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">has_backstage_access</text>
+      <line x1="888" y1="268" x2="1192" y2="268" stroke="rgba(212,163,115,0.40)" stroke-width="0.8"/>
+      <text x="892" y="284" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">SECURITY DEFINER</text>
+      <text x="892" y="300" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">consulta la tabla admins</text>
+
+      <!-- ===== AdminGuard (focal) ===== -->
+      <rect x="440" y="416" width="360" height="96" rx="6" fill="#FAFAF8"/>
+      <rect x="440" y="416" width="360" height="96" rx="6" fill="rgba(212,163,115,0.16)" stroke="#D4A373" stroke-width="1"/>
+      <rect x="448" y="424" width="36" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="466" y="433" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">GUARD</text>
+      <text x="620" y="444" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">AdminGuard</text>
+      <line x1="448" y1="452" x2="792" y2="452" stroke="rgba(212,163,115,0.50)" stroke-width="0.8"/>
+      <text x="452" y="468" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">cargando → spinner</text>
+      <text x="452" y="484" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">no admin → /admin/login</text>
+      <text x="452" y="500" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">admin → outlet</text>
+
+      <!-- ===== ResetPasswordPage (recuperación) ===== -->
+      <rect x="80" y="416" width="248" height="96" rx="6" fill="#FAFAF8"/>
+      <rect x="80" y="416" width="248" height="96" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1" stroke-dasharray="4,3"/>
+      <rect x="88" y="424" width="24" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="100" y="433" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PÚB</text>
+      <text x="204" y="444" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">ResetPasswordPage</text>
+      <line x1="88" y1="452" x2="320" y2="452" stroke="rgba(27,67,50,0.12)" stroke-width="0.8"/>
+      <text x="92" y="468" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">token type=recovery</text>
+      <text x="92" y="484" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">updateUser(nueva clave)</text>
+      <text x="92" y="500" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">al guardar → login</text>
+
+      <!-- ===== Persistencia (nota) ===== -->
+      <rect x="880" y="416" width="320" height="96" rx="6" fill="#FAFAF8"/>
+      <rect x="880" y="416" width="320" height="96" rx="6" fill="rgba(212,163,115,0.05)" stroke="rgba(212,163,115,0.60)" stroke-width="1" stroke-dasharray="4,4"/>
+      <rect x="888" y="424" width="28" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="902" y="433" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SESIÓN</text>
+      <text x="1040" y="444" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">Persistencia de sesión</text>
+      <line x1="888" y1="452" x2="1192" y2="452" stroke="rgba(212,163,115,0.40)" stroke-width="0.8"/>
+      <text x="892" y="468" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">getSession() al cargar</text>
+      <text x="892" y="484" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">onAuthStateChange()</text>
+      <text x="892" y="500" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">refresh de token automático</text>
+
+      <!-- ===== LEYENDA ===== -->
+      <line x1="40" y1="760" x2="1240" y2="760" stroke="rgba(27,67,50,0.10)" stroke-width="0.8"/>
+      <text x="40" y="776" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEYENDA</text>
+
+      <line x1="40" y1="780" x2="68" y2="780" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <text x="76" y="784" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Flujo de autenticación</text>
+
+      <line x1="240" y1="780" x2="268" y2="780" stroke="#D4A373" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arrow-accent)"/>
+      <text x="276" y="784" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Recuperación de contraseña</text>
+
+      <rect x="460" y="776" width="14" height="10" rx="2" fill="rgba(212,163,115,0.16)" stroke="#D4A373" stroke-width="1"/>
+      <text x="480" y="784" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Contexto y guard</text>
+
+      <rect x="600" y="776" width="14" height="10" rx="2" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <text x="620" y="784" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Página pública</text>
+
+      <rect x="740" y="776" width="14" height="10" rx="2" fill="rgba(212,163,115,0.05)" stroke="rgba(212,163,115,0.60)" stroke-width="1" stroke-dasharray="4,4"/>
+      <text x="760" y="784" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Nota</text>
+    </svg>
+  </div>
+</body>
+</html>

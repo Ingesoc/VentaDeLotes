@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base de datos · La Holanda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #FAFAF8;
+      --color-ink:     #1B4332;
+      --color-muted:   #2D6A4F;
+      --color-accent:  #D4A373;
+      --font-sans:     'Inter', system-ui, sans-serif;
+      --font-serif:    'Playfair Display', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1000px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 900px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Base de datos · La Holanda</p>
+    <h1>Modelo de datos en Supabase</h1>
+
+    <svg viewBox="0 0 960 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="database-title database-desc">
+      <title id="database-title">Modelo de datos en Supabase</title>
+      <desc id="database-desc">Modelo de datos: la tabla de lotes se relaciona con las visitas; los contactos y las visitas se insertan por RPC; los administradores se validan con has_backstage_access.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2D6A4F"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#FAFAF8"/>
+
+      <!-- ===== RELACIÓN: lots → page_views ===== -->
+      <path d="M 480,328 V 380 Q 480,388 472,388 H 188 Q 180,388 180,380 V 440"
+            fill="none" stroke="#2D6A4F" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Cardinalidad -->
+      <text x="488" y="348" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace">1</text>
+      <text x="168" y="428" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace">N</text>
+
+      <!-- Etiqueta de relación -->
+      <rect x="248" y="384" width="96" height="12" rx="2" fill="#FAFAF8"/>
+      <text x="296" y="394" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">TIENE VISITAS</text>
+
+      <!-- ===== ENTIDAD: admins ===== -->
+      <rect x="80" y="120" width="200" height="112" rx="6" fill="#FAFAF8"/>
+      <rect x="80" y="120" width="200" height="112" rx="6" fill="rgba(27,67,50,0.05)" stroke="#2D6A4F" stroke-width="1"/>
+      <rect x="88" y="128" width="28" height="12" rx="2" fill="transparent" stroke="rgba(45,106,79,0.50)" stroke-width="0.8"/>
+      <text x="102" y="137" fill="#2D6A4F" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENT</text>
+      <text x="180" y="152" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">admins</text>
+      <line x1="88" y1="160" x2="272" y2="160" stroke="rgba(27,67,50,0.12)" stroke-width="0.8"/>
+      <text x="92" y="176" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace"># id · bigint PK</text>
+      <text x="92" y="192" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">email · text UNIQUE</text>
+      <text x="92" y="208" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">role_name · text</text>
+      <text x="92" y="224" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">created_at · timestamptz</text>
+
+      <!-- ===== ENTIDAD: lots (focal) ===== -->
+      <rect x="360" y="120" width="240" height="208" rx="6" fill="#FAFAF8"/>
+      <rect x="360" y="120" width="240" height="208" rx="6" fill="rgba(212,163,115,0.16)" stroke="#D4A373" stroke-width="1"/>
+      <rect x="368" y="128" width="28" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="382" y="137" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENT</text>
+      <text x="480" y="152" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">lots</text>
+      <line x1="368" y1="160" x2="592" y2="160" stroke="rgba(212,163,115,0.50)" stroke-width="0.8"/>
+      <text x="372" y="176" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace"># id · text PK</text>
+      <text x="372" y="192" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">area_m2 · numeric</text>
+      <text x="372" y="208" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">price · bigint</text>
+      <text x="372" y="224" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">status · text</text>
+      <text x="372" y="240" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">aerial_image · text</text>
+      <text x="372" y="256" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">perspective_image · text</text>
+      <text x="372" y="272" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">coordinates · jsonb</text>
+      <text x="372" y="288" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">created_at · updated_at</text>
+
+      <!-- ===== ENTIDAD: leads ===== -->
+      <rect x="680" y="120" width="200" height="168" rx="6" fill="#FAFAF8"/>
+      <rect x="680" y="120" width="200" height="168" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <rect x="688" y="128" width="28" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="702" y="137" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENT</text>
+      <text x="780" y="152" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">leads</text>
+      <line x1="688" y1="160" x2="872" y2="160" stroke="rgba(27,67,50,0.12)" stroke-width="0.8"/>
+      <text x="692" y="176" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace"># id · bigint PK</text>
+      <text x="692" y="192" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">name · text</text>
+      <text x="692" y="208" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">email · text</text>
+      <text x="692" y="224" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">phone · text</text>
+      <text x="692" y="240" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">message · text</text>
+      <text x="692" y="256" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">created_at · timestamptz</text>
+      <text x="692" y="272" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace">vía submit_lead()</text>
+
+      <!-- ===== ENTIDAD: page_views ===== -->
+      <rect x="80" y="440" width="200" height="112" rx="6" fill="#FAFAF8"/>
+      <rect x="80" y="440" width="200" height="112" rx="6" fill="#FFFFFF" stroke="#1B4332" stroke-width="1"/>
+      <rect x="88" y="448" width="28" height="12" rx="2" fill="transparent" stroke="rgba(27,67,50,0.40)" stroke-width="0.8"/>
+      <text x="102" y="457" fill="#1B4332" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ENT</text>
+      <text x="180" y="472" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">page_views</text>
+      <line x1="88" y1="480" x2="272" y2="480" stroke="rgba(27,67,50,0.12)" stroke-width="0.8"/>
+      <text x="92" y="496" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace"># id · bigint PK</text>
+      <text x="92" y="512" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">→ lot_id · FK lots</text>
+      <text x="92" y="528" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">page_path · text</text>
+      <text x="92" y="544" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">viewed_at · timestamptz</text>
+
+      <!-- ===== CAJA INFO: RPC y RLS ===== -->
+      <rect x="680" y="440" width="240" height="136" rx="6" fill="#FAFAF8"/>
+      <rect x="680" y="440" width="240" height="136" rx="6" fill="rgba(212,163,115,0.05)" stroke="rgba(212,163,115,0.60)" stroke-width="1" stroke-dasharray="4,4"/>
+      <rect x="688" y="448" width="24" height="12" rx="2" fill="transparent" stroke="rgba(212,163,115,0.60)" stroke-width="0.8"/>
+      <text x="700" y="457" fill="#A87C4A" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">RPC</text>
+      <text x="800" y="472" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">RPC y RLS</text>
+      <line x1="688" y1="480" x2="912" y2="480" stroke="rgba(212,163,115,0.40)" stroke-width="0.8"/>
+      <text x="692" y="496" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">is_admin(email)</text>
+      <text x="692" y="512" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">has_backstage_access()</text>
+      <text x="692" y="528" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">track_page_view()</text>
+      <text x="692" y="544" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">submit_lead()</text>
+      <text x="692" y="560" fill="#2D6A4F" font-size="9" font-family="'Geist Mono', monospace">RLS · lectura pública lots</text>
+
+      <!-- ===== CAJA INFO: Modo datos vivos ===== -->
+      <rect x="360" y="440" width="240" height="104" rx="6" fill="#FAFAF8"/>
+      <rect x="360" y="440" width="240" height="104" rx="6" fill="rgba(27,67,50,0.05)" stroke="#2D6A4F" stroke-width="1" stroke-dasharray="4,4"/>
+      <rect x="368" y="448" width="20" height="12" rx="2" fill="transparent" stroke="rgba(45,106,79,0.50)" stroke-width="0.8"/>
+      <text x="378" y="457" fill="#2D6A4F" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">LIVE</text>
+      <text x="480" y="472" fill="#1B4332" font-size="12" font-weight="600" font-family="'Inter', sans-serif" text-anchor="middle">Modo datos vivos</text>
+      <line x1="368" y1="480" x2="592" y2="480" stroke="rgba(45,106,79,0.40)" stroke-width="0.8"/>
+      <text x="372" y="496" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">VITE_LIVE_LOTS=true</text>
+      <text x="372" y="512" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">fetchPublicLots()</text>
+      <text x="372" y="528" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">fallback a constantes</text>
+
+      <!-- ===== LEYENDA ===== -->
+      <line x1="80" y1="612" x2="880" y2="612" stroke="rgba(27,67,50,0.10)" stroke-width="0.8"/>
+      <text x="80" y="628" fill="#2D6A4F" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEYENDA</text>
+
+      <text x="80" y="640" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace"># clave primaria</text>
+      <text x="240" y="640" fill="#1B4332" font-size="9" font-family="'Geist Mono', monospace">→ clave foránea</text>
+      <rect x="400" y="632" width="14" height="10" rx="2" fill="rgba(212,163,115,0.16)" stroke="#D4A373" stroke-width="1"/>
+      <text x="420" y="640" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Entidad principal</text>
+
+      <rect x="560" y="632" width="14" height="10" rx="2" fill="rgba(27,67,50,0.05)" stroke="#2D6A4F" stroke-width="1" stroke-dasharray="4,4"/>
+      <text x="580" y="640" fill="#2D6A4F" font-size="8.5" font-family="'Inter', sans-serif">Nota</text>
+    </svg>
+  </div>
+</body>
+</html>

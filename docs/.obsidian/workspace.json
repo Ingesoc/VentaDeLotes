@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Explorador de archivos"
@@ -185,18 +187,20 @@
   },
   "active": "f88bf2dde48eb12e",
   "lastOpenFiles": [
-    "stack/tech-stack.md",
+    "diagrams/architecture.md",
     "deployment/ci-cd.md",
     "decisions/README.md",
     "decisions/adr-004-import-map-supabase.md",
+    "decisions/adr-003-supabase-auth.md",
+    "decisions/adr-002-tailwind-css-v4-theme.md",
+    "decisions/adr-001-react-router-code-splitting.md",
+    "architecture/overview.md",
+    "guides/onboarding.md",
+    "stack/tech-stack.md",
     "diagrams/database-routing.drawio",
     "diagrams/auth-flow.drawio",
     "diagrams/arquitectura.drawio",
-    "guides/onboarding.md",
-    "diagrams/architecture.md",
     "guides",
-    "diagrams",
-    "decisions/adr-002-tailwind-css-v4-theme.md",
-    "architecture/overview.md"
+    "diagrams"
   ]
 }

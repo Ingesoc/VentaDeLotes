@@ -41,8 +41,13 @@ export const router = createBrowserRouter([
         lazy: () => import("../pages/ContactPage").then(m => ({ Component: m.default })),
       },
       {
+        // Llegada del enlace de recuperación de contraseña (Supabase)
+        path: "reset-password",
+        lazy: () => import("../pages/ResetPasswordPage").then(m => ({ Component: m.default })),
+      },
+      {
         path: "saved",
-        element: <Navigate to="/projects" replace />,
+        lazy: () => import("../pages/SavedPage").then(m => ({ Component: m.default })),
       },
     ],
   },

@@ -1,102 +1,103 @@
 # Procedimientos de QA — La Holanda
 
-## 1. Calidad de Código
+## 1. Calidad de código
 
-### Gate de Calidad (Automático en CI)
+### Umbrales configurados en el proyecto
 
-| Métrica | Umbral Mínimo | Severidad |
-|---------|---------------|-----------|
-| Cobertura de statements | ≥ 80% | ❌ Bloqueante |
-| Cobertura de branches | ≥ 75% | ❌ Bloqueante |
-| Cobertura de funciones | ≥ 80% | ❌ Bloqueante |
-| Cobertura de líneas | ≥ 80% | ❌ Bloqueante |
-| Tasa de mutantes sobrevivientes (Stryker) | ≤ 15% | ⚠️ Alerta |
-| Errores de TypeScript | 0 | ❌ Bloqueante |
-| Advertencias de ESLint | ≤ 5 | ⚠️ Alerta |
-| Errores de ESLint | 0 | ❌ Bloqueante |
+| Métrica | Umbral | Herramienta |
+| --- | --- | --- |
+| Cobertura de statements | 80% | Vitest (coverage v8) |
+| Cobertura de branches | 70% | Vitest (coverage v8) |
+| Cobertura de funciones | 75% | Vitest (coverage v8) |
+| Cobertura de líneas | 80% | Vitest (coverage v8) |
+| Mutation score (Stryker) | alto 85 / bajo 70 / fallo 60 | Stryker |
+| Errores de TypeScript | 0 | `tsc -b` (dentro del build) |
+| Errores de ESLint | 0 | ESLint |
+| React Doctor | sin issues | react-doctor |
+| Vulnerabilidades de dependencias | 0 (nivel critical) | `npm audit --audit-level=critical` |
 
-### Ejecución Local
+### Ejecución local
 
 ```bash
 # Suite completa de calidad
-npm run test:run         # Tests unitarios
-npm run test:coverage    # Cobertura
-npm run lint            # Linting
-npm run test:mutation   # Mutation testing
-npx tsc --noEmit        # TypeScript check
+bun run test:run         # Tests unitarios (257)
+bun run test:coverage    # Cobertura
+bun run lint             # ESLint
+bun run lint:doctor      # React Doctor
+bun run test:mutation    # Mutation testing
 
 # E2E (requiere build + preview)
-npm run build
-npm run test:e2e
+bun run build
+bun run test:e2e
 ```
 
 ---
 
-## 2. Pruebas Unitarias (Vitest)
+## 2. Pruebas unitarias (Vitest)
 
-### Estructura de Tests
+### Estructura de tests
 
-Cada módulo debe tener su archivo de test correspondiente:
+Cada módulo tiene su archivo de test en un directorio `__tests__` junto al componente:
 
 ```
 src/
   components/
-    seo/
-      PageSEO.tsx
+    ui/
+      YouTubeVideo.tsx
       __tests__/
-        PageSEO.test.tsx      ← Tests
-    layout/
-      TopNavBar.tsx
-      __tests__/
-        TopNavBar.test.tsx    ← Tests
+        YouTubeVideo.test.tsx
   constants/
     navLinks.ts
     __tests__/
-      navLinks.test.ts        ← Tests
+      navLinks.test.ts
 ```
 
 ### Convenciones
 
-- Nombrar archivos como `{Componente}.test.{ts,tsx}`
-- Colocar en directorio `__tests__/` junto al componente
-- Usar `describe` / `it` / `expect` de Vitest
-- Preferir `screen.getByRole()` sobre `screen.getByText()` para accesibilidad
-- Mockear dependencias externas (Supabase, Cloudinary, router)
+- Nombrar los archivos como `{Componente}.test.{ts,tsx}`.
+- Usar `describe` / `it` / `expect` de Vitest.
+- Preferir `screen.getByRole()` sobre `screen.getByText()`.
+- Inyectar dependencias (por ejemplo, la función `submitLead` del formulario) en lugar de mockear módulos completos cuando sea posible.
+- Mockear servicios externos cuando el componente los usa directamente (Supabase, Cloudinary, router).
 
 ### Comandos
 
 ```bash
-npx vitest                    # Watch mode
-npx vitest run                # Single run
-npx vitest run --coverage     # Con cobertura
-npx vitest run src/seo        # Filtrado por directorio
+bun run test                 # Modo watch
+bun run test:run             # Una sola ejecución
+bun run test:coverage        # Con reporte de cobertura
+bun run test:run src/lib     # Filtrar por directorio
 ```
+
+Actualmente hay 257 tests en 18 archivos. La lista completa de archivos de test está en [quality.md](../features/quality.md).
 
 ---
 
-## 3. Pruebas de Mutación (Stryker)
+## 3. Pruebas de mutación (Stryker)
 
-Stryker introduce mutaciones (cambios deliberados) en el código para verificar que los tests los detecten.
+Stryker introduce cambios deliberados en el código para verificar que los tests los detecten.
 
 ### Ejecución
 
 ```bash
-npm run test:mutation
+bun run test:mutation
 ```
 
 ### Interpretación
 
 | Indicador | Significado |
-|-----------|-------------|
-| ✅ **Killed** | El test detectó la mutación — buena cobertura |
-| ❌ **Survived** | El test NO detectó la mutación — mejorar tests |
-| 🟡 **No coverage** | Sin tests cubriendo esa línea |
-| ⚪ **Timeout** | Mutación causó loop infinito |
+| --- | --- |
+| Killed | El test detectó la mutación (buena cobertura) |
+| Survived | El test no detectó la mutación (hay que mejorar los tests) |
+| No coverage | No hay tests que cubran esa línea |
 
-### Objetivo
+### Umbrales
 
-- **Tasa de mutantes asesinados:** ≥ 85%
-- **Acción:** Si un mutante sobrevive, agregar test que cubra ese escenario
+- `high`: 85% de mutantes eliminados (objetivo).
+- `low`: 70% (alerta).
+- `break`: 60% (el comando falla por debajo de este valor).
+
+El reporte HTML se genera en `reports/stryker/index.html`.
 
 ---
 
@@ -105,84 +106,94 @@ npm run test:mutation
 ### Proyectos
 
 | Proyecto | Viewport | Propósito |
-|----------|----------|-----------|
-| `chromium-mobile` | 375×812 | Navegación móvil, bottom nav, tap targets |
-| `chromium-tablet` | 768×1024 | Diseño responsive intermedio |
-| `chromium-desktop` | 1280×800 | Navegación completa desktop |
+| --- | --- | --- |
+| `chromium-mobile` | 375x812 | Navegación móvil, bottom nav, tap targets |
+| `chromium-tablet` | 768x1024 | Diseño responsive intermedio |
+| `chromium-desktop` | 1280x800 | Navegación completa de escritorio |
 
 ### Ejecución
 
 ```bash
-npm run build
-npm run test:e2e              # Todos los proyectos
-npm run test:e2e:mobile       # Solo mobile
-npm run test:e2e:debug        # Modo debug
+bun run build
+bun run test:e2e                # Todos los proyectos
+bun run test:e2e:mobile         # Solo mobile
+bun run test:e2e:debug          # Modo debug (UI de Playwright)
 ```
 
-### Cobertura E2E Requerida
+El CI ejecuta los proyectos `chromium-mobile` y `chromium-desktop` contra el build de producción.
 
-- ✅ Navegación entre todas las rutas públicas
-- ✅ Formulario de contacto (render, validación, envío)
-- ✅ Responsive design (320px – 1280px)
-- ✅ Tap targets ≥ 48px en mobile
-- ✅ Página 404
+### Cobertura E2E
 
----
+- Navegación entre todas las rutas públicas.
+- Formulario de contacto (render, validación, envío).
+- Diseño responsive sin scroll horizontal (320px a 1280px).
+- Tap targets de al menos 48px en móvil.
+- Página 404.
+- Carrusel de la home (carga perezosa del video).
+- Páginas admin con sesión mockeada.
 
-## 5. QA Checklist — Pre-Deploy
-
-### 🔲 Código
-- [ ] `npx tsc --noEmit` sin errores
-- [ ] `npm run lint` sin errores
-- [ ] `npm run test:run` — todos los tests pasan
-- [ ] `npm run test:coverage` — umbrales cumplidos
-- [ ] `npm run test:mutation` — tasa ≥ 85%
-
-### 🔲 Build
-- [ ] `npm run build` exitoso
-- [ ] Assets comprimidos correctamente
-- [ ] Service Worker generado (PWA)
-
-### 🔲 E2E
-- [ ] `npm run test:e2e` — todos los tests pasan
-- [ ] Navegación móvil funcional
-- [ ] Formulario de contacto funcional
-- [ ] Sin scroll horizontal en ningún viewport
-
-### 🔲 SEO / Metadatos
-- [ ] Open Graph tags presentes en cada página
-- [ ] JSON-LD structured data válido
-- [ ] Sitemap.xml generado con todas las rutas
-- [ ] Robots.txt configurado
-
-### 🔲 Performance
-- [ ] Lighthouse mobile ≥ 80 en todas las categorías
-- [ ] Imágenes optimizadas (Cloudinary f_auto, q_auto)
-- [ ] Code splitting aplicado (lazy loading)
-- [ ] Sin render blocking resources críticos
+Actualmente la suite e2e tiene 146 tests en 5 archivos: `contact-form.spec.ts`, `navigation.spec.ts`, `home.spec.ts`, `projects.spec.ts` y `responsive.spec.ts`.
 
 ---
 
-## 6. Reporte de Calidad
+## 5. Checklist de pre-deploy
+
+### Código
+
+- [ ] `bun run build` sin errores.
+- [ ] `bun run lint` sin errores.
+- [ ] `bun run test:run` — todos los tests pasan.
+- [ ] `bun run test:coverage` — umbrales cumplidos.
+- [ ] `bun run lint:doctor` — react-doctor sin issues.
+- [ ] `npm audit --audit-level=critical` — sin vulnerabilidades.
+
+### Build y PWA
+
+- [ ] Build de producción exitoso.
+- [ ] Service worker generado (`dist/sw.js`).
+- [ ] Manifest de la PWA correcto.
+
+### E2E
+
+- [ ] `bun run test:e2e` — todos los tests pasan.
+- [ ] Navegación móvil funcional.
+- [ ] Formulario de contacto funcional.
+- [ ] Sin scroll horizontal en ningún viewport.
+
+### SEO y metadatos
+
+- [ ] Meta tags Open Graph en cada página.
+- [ ] Datos estructurados JSON-LD válidos.
+- [ ] `sitemap.xml` generado con todas las rutas.
+- [ ] `robots.txt` configurado.
+
+### Performance
+
+- [ ] Imágenes optimizadas con Cloudinary (`f_auto`, `q_auto`, `dpr_auto`).
+- [ ] Code splitting aplicado (lazy por ruta).
+- [ ] Auditoría de Lighthouse con resultados razonables.
+
+---
+
+## 6. Reportes de calidad
 
 ```bash
-# Generar reporte unificado
-npm run test:coverage          # coverage/  → HTML + JSON
-npm run test:mutation          # reports/stryker/ → HTML
-npm run test:e2e               # reports/e2e-report/ → HTML
+bun run test:coverage        # coverage/ → HTML + JSON
+bun run test:mutation        # reports/stryker/ → HTML
+bun run test:e2e             # reports/e2e-report/ → HTML
 ```
 
 Los reportes se generan en:
-- `coverage/` — Cobertura de tests unitarios
-- `reports/stryker/` — Resultados de mutation testing
-- `reports/e2e-report/` — Reporte E2E
+
+- `coverage/` — cobertura de tests unitarios.
+- `reports/stryker/` — resultados de mutation testing.
+- `reports/e2e-report/` — reporte E2E de Playwright.
 
 ---
 
-## 7. Actualización de Tests
+## 7. Cuándo actualizar los tests
 
-Siempre que se:
-- **Agregue una nueva ruta** → Agregar test de navegación
-- **Modifique un componente** → Verificar/actualizar sus tests
-- **Agregue una dependencia** → Verificar que los mocks existentes sigan funcionando
-- **Cambie la interfaz de datos** → Actualizar tipos en tests
+- Se agrega una ruta nueva: agrega tests de navegación y e2e.
+- Se modifica un componente: verifica y actualiza sus tests.
+- Se cambia la interfaz de datos: actualiza los tipos en los tests.
+- Se cambia un texto o selector de UI: revisa los tests e2e que lo usan.

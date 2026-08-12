@@ -2,14 +2,26 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ContactForm } from "../ContactForm";
+import type { SubmitLeadFn } from "../../hooks/useContactForm";
+import type { SubmitLeadResult } from "@/lib/leads";
 
-vi.mock("@/lib/supabase", () => ({
-  supabase: {
-    rpc: vi.fn(),
-  },
-}));
+// El componente recibe la función de envío inyectada (DIP): no depende del
+// cliente de Supabase, así que los tests no necesitan mockear ningún módulo.
+function renderForm(submitLead?: SubmitLeadFn) {
+  return render(<ContactForm submitLead={submitLead} />);
+}
 
-const { supabase } = await import("@/lib/supabase");
+async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
+  await user.type(screen.getByPlaceholderText(/nombre completo/i), "Juan Pérez");
+  await user.type(
+    screen.getByPlaceholderText(/correo electrónico/i),
+    "juan@example.com",
+  );
+  await user.type(
+    screen.getByPlaceholderText(/número de teléfono/i),
+    "3001234567",
+  );
+}
 
 describe("ContactForm", () => {
   beforeEach(() => {
@@ -17,7 +29,7 @@ describe("ContactForm", () => {
   });
 
   it("renders the form with all fields", () => {
-    render(<ContactForm />);
+    renderForm();
 
     expect(
       screen.getByRole("heading", { name: /inicia tu historia/i }),
@@ -41,7 +53,7 @@ describe("ContactForm", () => {
 
   it("shows validation errors for empty required fields", async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm();
 
     await user.click(screen.getByRole("button", { name: /enviar solicitud/i }));
 
@@ -58,9 +70,19 @@ describe("ContactForm", () => {
     });
   });
 
+  it("does not call submitLead when validation fails", async () => {
+    const submitLead = vi.fn();
+    const user = userEvent.setup();
+    renderForm(submitLead);
+
+    await user.click(screen.getByRole("button", { name: /enviar solicitud/i }));
+
+    expect(submitLead).not.toHaveBeenCalled();
+  });
+
   it("validates email format", async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm();
 
     await user.type(screen.getByPlaceholderText(/nombre completo/i), "Juan Pérez");
     await user.type(
@@ -82,25 +104,11 @@ describe("ContactForm", () => {
   });
 
   it("submits the form successfully", async () => {
-    const mockRpc = supabase.rpc as ReturnType<typeof vi.fn>;
-    mockRpc.mockResolvedValue({ data: null, error: null });
-
+    const submitLead = vi.fn().mockResolvedValue({ ok: true });
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm(submitLead);
 
-    await user.type(
-      screen.getByPlaceholderText(/nombre completo/i),
-      "Juan Pérez",
-    );
-    await user.type(
-      screen.getByPlaceholderText(/correo electrónico/i),
-      "juan@example.com",
-    );
-    await user.type(
-      screen.getByPlaceholderText(/número de teléfono/i),
-      "3001234567",
-    );
-
+    await fillValidForm(user);
     await user.click(screen.getByRole("button", { name: /enviar solicitud/i }));
 
     await waitFor(() => {
@@ -109,37 +117,22 @@ describe("ContactForm", () => {
       ).toBeInTheDocument();
     });
 
-    expect(mockRpc).toHaveBeenCalledWith("submit_lead", {
-      p_name: "Juan Pérez",
-      p_email: "juan@example.com",
-      p_phone: "3001234567",
-      p_message: null,
+    expect(submitLead).toHaveBeenCalledWith({
+      name: "Juan Pérez",
+      email: "juan@example.com",
+      phone: "3001234567",
+      message: "",
     });
   });
 
   it("shows error message when submission fails", async () => {
-    const mockRpc = supabase.rpc as ReturnType<typeof vi.fn>;
-    mockRpc.mockResolvedValue({
-      data: null,
-      error: { message: "Database error" },
-    });
-
+    const submitLead = vi
+      .fn()
+      .mockResolvedValue({ ok: false, error: new Error("Database error") });
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm(submitLead);
 
-    await user.type(
-      screen.getByPlaceholderText(/nombre completo/i),
-      "Juan Pérez",
-    );
-    await user.type(
-      screen.getByPlaceholderText(/correo electrónico/i),
-      "juan@example.com",
-    );
-    await user.type(
-      screen.getByPlaceholderText(/número de teléfono/i),
-      "3001234567",
-    );
-
+    await fillValidForm(user);
     await user.click(screen.getByRole("button", { name: /enviar solicitud/i }));
 
     await waitFor(() => {
@@ -150,30 +143,17 @@ describe("ContactForm", () => {
   });
 
   it("disables the submit button while submitting", async () => {
-    const mockRpc = supabase.rpc as ReturnType<typeof vi.fn>;
-    let resolvePromise!: (value: unknown) => void;
-    mockRpc.mockImplementation(
-      () => new Promise((resolve) => {
-        resolvePromise = resolve;
-      }),
+    let resolvePromise!: (value: SubmitLeadResult) => void;
+    const submitLead = vi.fn<SubmitLeadFn>(
+      () =>
+        new Promise<SubmitLeadResult>((resolve) => {
+          resolvePromise = resolve;
+        }),
     );
-
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm(submitLead);
 
-    await user.type(
-      screen.getByPlaceholderText(/nombre completo/i),
-      "Juan Pérez",
-    );
-    await user.type(
-      screen.getByPlaceholderText(/correo electrónico/i),
-      "juan@example.com",
-    );
-    await user.type(
-      screen.getByPlaceholderText(/número de teléfono/i),
-      "3001234567",
-    );
-
+    await fillValidForm(user);
     await user.click(screen.getByRole("button", { name: /enviar solicitud/i }));
 
     expect(
@@ -181,6 +161,6 @@ describe("ContactForm", () => {
     ).toBeDisabled();
 
     // Clean up: resolve the pending promise
-    resolvePromise({ data: null, error: null });
+    resolvePromise({ ok: true });
   });
 });

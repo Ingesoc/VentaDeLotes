@@ -2,8 +2,8 @@ import { Link, Navigate, useParams } from "react-router";
 import { Helmet } from "react-helmet-async";
 import { ChevronRight } from "lucide-react";
 import PageSEO from "@/components/seo/PageSEO";
-import { getLotById, getRelatedLots } from "@/constants/lots";
 import { project } from "@/constants/project";
+import { usePublicLot } from "./hooks/usePublicLots";
 import { LotGallery } from "./components/LotGallery";
 import { LotSpecs } from "./components/LotSpecs";
 import { LotMiniMap } from "./components/LotMiniMap";
@@ -22,7 +22,9 @@ const statusLabel = {
 
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const lot = id ? getLotById(id) : undefined;
+
+  // Datos vivos de Supabase con fallback estático (render inmediato)
+  const { lot, relatedLots, loading } = usePublicLot(id);
 
   // Registrar vista para analytics
   useTrackPageView(id);
@@ -35,11 +37,17 @@ export function ProjectDetailPage() {
     rootMargin: "0px 0px -60px 0px",
   });
 
+  if (!lot && loading) {
+    return (
+      <div className="min-h-[50dvh] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-heritage-gold border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (!lot) {
     return <Navigate to="/projects" replace />;
   }
-
-  const relatedLots = getRelatedLots(lot.id, 2);
 
   // Construir descripción enriquecida para SEO / OG
   const details = [

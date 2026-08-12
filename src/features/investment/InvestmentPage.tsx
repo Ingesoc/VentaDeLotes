@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import PageSEO from "@/components/seo/PageSEO";
 import { InvestmentHero } from "./components/InvestmentHero";
 import { MarketGrowthBento } from "./components/MarketGrowthBento";
@@ -5,6 +6,14 @@ import { RoiAnalysis } from "./components/RoiAnalysis";
 import { InvestmentCTA } from "./components/InvestmentCTA";
 import { cldUrl } from "@/lib/cloudinary";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+
+// La calculadora usa Recharts; se carga de forma diferida para no inflar el
+// bundle inicial de la página de inversión.
+const RoiCalculator = lazy(() =>
+  import("./components/RoiCalculator").then((m) => ({
+    default: m.RoiCalculator,
+  })),
+);
 
 export function InvestmentPage() {
   const scrollRevealRef = useScrollReveal({
@@ -26,6 +35,15 @@ export function InvestmentPage() {
         <InvestmentHero />
         <MarketGrowthBento />
         <RoiAnalysis />
+        <Suspense
+          fallback={
+            <div className="py-section-gap text-center text-on-surface-variant">
+              Cargando calculadora...
+            </div>
+          }
+        >
+          <RoiCalculator />
+        </Suspense>
         <InvestmentCTA />
       </div>
     </>

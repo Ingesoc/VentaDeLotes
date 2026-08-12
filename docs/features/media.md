@@ -5,65 +5,77 @@ tags:
   - images
   - lazy-loading
 created: 2026-07-21
+updated: 2026-08-12
 ---
 
-# 🖼️ Manejo de Medios
+# Manejo de medios
 
-## Estrategia de Imágenes
-Todas las imágenes del proyecto se sirven desde **Cloudinary CDN** para:
-- Carga optimizada (formatos modernos, compresión automática)
-- Transformaciones on-the-fly (redimensionamiento, recorte)
-- Caché global en CDN
-- Sin costo de ancho de banda del servidor
+## Estrategia de imágenes
 
-## Cloudinary Upload Widget
+Todas las imágenes del proyecto se sirven desde Cloudinary (CDN) para:
 
-### Widget de Subida
-Integrado en el panel de administración para que los admins puedan subir imágenes aéreas de lotes:
+- Carga optimizada (formatos modernos y compresión automática).
+- Transformaciones bajo demanda (redimensionado).
+- Caché global en el CDN.
+- Sin costo de ancho de banda del servidor.
+
+## Utilidad `cldUrl`
+
+`src/lib/cloudinary.ts` exporta la función `cldUrl(url, width?)`, que agrega transformaciones de optimización a una URL de Cloudinary:
 
 ```typescript
-// src/lib/cloudinary.ts
-const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+cldUrl(url)                    // f_auto,q_auto
+cldUrl(url, CLD_WIDTHS.HERO)   // f_auto,q_auto,dpr_auto,w_1920
+cldUrl(url, 600)               // f_auto,q_auto,dpr_auto,w_600
+```
 
+- `f_auto`: formato automático (WebP, AVIF, etc.).
+- `q_auto`: calidad automática optimizada.
+- `dpr_auto`: densidad de píxeles según el dispositivo (pantallas Retina).
+- `w_{width}`: redimensiona al ancho especificado.
+
+### Anchos predefinidos (CLD_WIDTHS)
+
+| Constante | Ancho | Uso |
+| --- | --- | --- |
+| `HERO` | 1920 | Imágenes a pantalla completa |
+| `CAROUSEL` | 1200 | Carrusel de la home |
+| `MASTERPLAN` | 1280 | Plano general |
+| `LARGE` | 1000 | Galerías y secciones grandes |
+| `CARD` | 800 | Tarjetas y features |
+| `THUMB` | 400 | Miniaturas |
+| `LOGO` | 200 | Logotipos |
+
+## Widget de subida (panel admin)
+
+`uploadImage()` abre el widget de Cloudinary para que los admins suban imágenes aéreas:
+
+```typescript
 export function uploadImage(): Promise<string | null> {
-  const widget = cloudinary.createUploadWidget({
-    cloudName: CLOUD_NAME,
-    uploadPreset: UPLOAD_PRESET,
-    sources: ["local", "url", "camera"],
-    multiple: false,
-    maxFiles: 1,
-    cropping: false,
-    resourceType: "image",
-    clientAllowedFormats: ["png", "jpg", "jpeg", "webp", "svg"],
-  }, callback);
-
-  widget.open();
+  // Abre cloudinary.createUploadWidget con:
+  // cloudName, uploadPreset, sources: ["local", "url", "camera"]
+  // multiple: false, maxFiles: 1, resourceType: "image"
 }
 ```
 
-### Configuración
-Variables de entorno requeridas:
-- `VITE_CLOUDINARY_CLOUD_NAME` — Cloud name de Cloudinary
-- `VITE_CLOUDINARY_UPLOAD_PRESET` — Upload preset (unsigned para subida desde cliente)
+Configuración requerida:
+
+- `VITE_CLOUDINARY_CLOUD_NAME` — cloud name de Cloudinary.
+- `VITE_CLOUDINARY_UPLOAD_PRESET` — upload preset (unsigned).
 
 El script del widget se carga en `index.html`:
+
 ```html
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 ```
 
-### Flujo de Subida
-```
-Admin hace clic en "Subir imagen"
-  → Widget Cloudinary se abre
-  → Admin selecciona archivo local/URL/cámara
-  → Cloudinary procesa y devuelve secure_url
-  → URL se guarda en Supabase (tabla lots, columna aerial_image)
-  → UI se actualiza con la nueva imagen
-```
+Flujo: el admin hace clic en subir imagen, el widget se abre, el usuario selecciona el archivo, Cloudinary devuelve la `secure_url` y la URL se guarda en la tabla `lots` (columna `aerial_image`).
 
-## LazyImage Component
-Componente utilitario para carga diferida de imágenes con placeholder:
+El script `scripts/upload-lots.mjs` (`bun run upload:lots`) sube en lote las imágenes de los lotes desde el proyecto.
+
+## Componente LazyImage
+
+Carga diferida de imágenes con placeholder:
 
 ```typescript
 <LazyImage
@@ -74,58 +86,46 @@ Componente utilitario para carga diferida de imágenes con placeholder:
 />
 ```
 
-### Características
-- **Placeholder de carga:** Skeleton animado (pulse) mientras la imagen carga
-- **Transición suave:** Fade-in de 500ms cuando la imagen está lista
-- **Aspect ratio fijo:** Evita Cumulative Layout Shift (CLS)
-- **Lazy loading nativo:** `loading="lazy"` con `decoding="async"`
-- **Priority:** `loading="eager"` + `fetchPriority="high"` para imágenes above-the-fold
+Características:
 
-## Cloudinary URLs
-Las imágenes se referencian directamente desde Cloudinary:
+- Skeleton animado mientras carga.
+- Transición suave (fade-in) cuando la imagen está lista.
+- Aspect ratio fijo para evitar cambios de layout (CLS).
+- `loading="lazy"` y `decoding="async"` por defecto.
+- `priority`: carga inmediata (`eager` + `fetchPriority="high"`) para imágenes visibles al inicio.
 
-```
-https://res.cloudinary.com/j5a9xyaq/image/upload/v{timestamp}/laholanda/{category}/{filename}
-```
+## Video de YouTube (YouTubeVideo)
 
-### Categorías
-| Categoría | Propósito |
-|-----------|-----------|
-| `laholanda/lots/` | Imágenes aéreas de lotes individuales |
-| `laholanda/landscapes/` | Paisajes generales del Quindío |
-| `laholanda/masterplan/` | Planos y renders del master plan |
+Componente con carga perezosa (click-to-load):
 
-## Constantes de Lotes (Mock Data)
-Los datos de los lotes (incluyendo URLs de imágenes) se definen estáticamente en `src/constants/lots.ts`:
+- Muestra la miniatura del video con un botón de play.
+- El iframe solo se monta al hacer clic (ahorra descargas).
+- Usa el dominio `youtube-nocookie.com` (privacidad).
+- Autoplay silenciado opcional (prop `autoplay`): agrega `autoplay=1&mute=1` y muestra un botón para activar el sonido.
+- El iframe lleva `sandbox` sin `allow-same-origin` (seguridad).
 
-```typescript
-export const lots: Lot[] = [
-  {
-    id: "01",
-    areaM2: 8910.37,
-    price: 189242850,
-    status: "disponible",
-    aerialImage: "https://res.cloudinary.com/.../lote-01-aerial.jpg",
-    perspectiveImage: "https://res.cloudinary.com/.../perspectiva-general.jpg",
-  },
-  // ... 16 lotes en total
-];
-```
+## Caché en la PWA
 
-## Trackeo de Page Views
-El hook `useTrackPageView` registra visitas a páginas de lotes individuales:
+El service worker (vite-plugin-pwa) cachea:
+
+- App shell: JS, CSS, HTML e iconos (precache).
+- Imágenes de Cloudinary: stale-while-revalidate (30 días, 100 entradas).
+- Google Fonts: cache-first (1 año).
+- API de Supabase: network-first (1 hora).
+
+## Trackeo de vistas de página
+
+El hook `useTrackPageView` registra las visitas a páginas de lotes:
 
 ```typescript
 // src/hooks/useTrackPageView.ts
-export function useTrackPageView(lotId?: string) {
-  useEffect(() => {
-    if (!lotId) return;
-    supabase.rpc("track_page_view", {
-      p_lot_id: lotId,
-      p_page_path: `/projects/${lotId}`,
-    });
-  }, [lotId]);
-}
+useEffect(() => {
+  if (!lotId) return;
+  supabase.rpc("track_page_view", {
+    p_lot_id: lotId,
+    p_page_path: `/projects/${lotId}`,
+  }).catch(() => {});
+}, [lotId]);
 ```
 
-El trackeo es **silencioso** — nunca debe romper la página si falla.
+El trackeo es silencioso: si falla, nunca rompe la página.

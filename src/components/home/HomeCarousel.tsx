@@ -142,6 +142,11 @@ export default function HomeCarousel() {
                   videoId={s.videoId}
                   title={s.title}
                   onPlay={handleVideoPlay}
+                  // Autoplay silenciado: el iframe sigue siendo click-to-load
+                  // (solo se monta al pulsar play) y al montarse arranca con
+                  // autoplay=1&mute=1 — el mute es obligatorio para que el
+                  // navegador permita la reproducción automática.
+                  autoplay
                   className="h-full"
                 />
               ) : (

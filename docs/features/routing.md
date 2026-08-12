@@ -4,85 +4,94 @@ tags:
   - react-router
   - navigation
 created: 2026-07-21
+updated: 2026-08-12
 ---
 
-# 🗺️ Sistema de Enrutamiento
+# Sistema de routing
 
-## Tecnología: React Router v7
+## Tecnología: React Router v8
 
-El proyecto usa `createBrowserRouter` (modo data router) para el enrutamiento SPA.
+El proyecto usa `createBrowserRouter` (modo data router) de React Router v8.
 
-## Estructura de Rutas
+## Estructura de rutas
 
 ```
 /
-├── /                       → HomePage (Landing principal)
-├── /investment             → InvestmentPage
-├── /projects               → ProjectsPage
-├── /projects/:id           → ProjectDetailPage
-├── /descubre-quindio       → DescubreQuindio
+├── /                       HomePage (página principal)
+├── /investment             InvestmentPage (lazy)
+├── /projects               ProjectsPage
+├── /projects/:id           ProjectDetailPage (lazy)
+├── /descubre-quindio       DescubreQuindio (lazy)
+├── /contact                ContactPage (lazy)
+├── /saved                  Redirige a /projects
 │
-├── /admin/login            → LoginPage (público, lazy)
-│
-└── /admin                  → AdminGuard (protegido, lazy)
-    ├── /admin              → Redirect a /admin/dashboard
-    ├── /admin/dashboard    → DashboardPage
-    └── /admin/lots         → LotsPage
+├── /admin/login            LoginPage (lazy, público)
+└── /admin                  AdminGuard (lazy, protegido)
+    ├── /admin              Redirige a /admin/dashboard
+    ├── /admin/dashboard    DashboardPage (lazy)
+    └── /admin/lots         LotsPage (lazy)
 ```
 
 ## Layouts
 
 ### RootLayout (público)
+
 ```
 <HelmetProvider>
   <ScrollToTop />
   <TopNavBar />
-  <main><Outlet /></main>     ← Página actual
+  <main><Outlet /></main>      Página actual
   <Footer />
-  <BottomNavBar />            ← Navegación móvil
-  <WhatsAppButton />          ← Botón flotante
+  <BottomNavBar />             Navegación móvil
+  <WhatsAppButton />           Botón flotante
 </HelmetProvider>
 ```
 
 ### AdminLayout (administración)
+
 ```
-<aside>Logo + Nav + Logout</aside>
+<aside>Logo + navegación + logout</aside>
 <main>
-  <header>Panel de Administración</header>
-  <Outlet />                  ← Dashboard o Lots
+  <header>Panel de administración</header>
+  <Outlet />                   Dashboard o Lotes
 </main>
 ```
 
-## Code Splitting
+## Code splitting
 
-Las rutas administrativas se cargan bajo demanda con `React.lazy()`:
+Las rutas secundarias y todo el panel admin se cargan bajo demanda con la propiedad `lazy` de ruta:
 
 ```typescript
-const AdminGuard = lazy(() => 
-  import("@/features/admin/components/AdminGuard")
-    .then(m => ({ default: m.AdminGuard }))
-);
+{
+  path: "investment",
+  lazy: () => import("@/features/investment/InvestmentPage")
+    .then((m) => ({ Component: m.InvestmentPage })),
+}
 ```
 
-Ver [ADR-001](../decisions/adr-001-react-router-code-splitting.md) para más detalles.
+Home y Projects se importan de forma directa para un primer render rápido. Ver [ADR-001](../decisions/adr-001-react-router-code-splitting.md).
 
-## Componentes de Navegación
+## Componentes de navegación
 
 ### TopNavBar
-- Navegación principal desktop
-- Links: Inicio, Invertir, Proyectos, Quindío
-- Logo/marca del proyecto
+
+- Barra fija superior con logo y menú de escritorio.
+- Enlaces: Proceso, Quindío, Lotes, Contacto y un botón "Reservar".
+- En móvil muestra un botón de menú que abre un panel a pantalla completa.
 
 ### BottomNavBar
-- Navegación inferior para móviles
-- Iconos Lucide: Explorar, Invertir, Guardados, Chat
-- Se muestra solo en viewports < 768px
+
+- Navegación inferior para móviles (visible bajo 768px).
+- Ítems: Explorar, Invertir, Guardados y Contacto.
+- Usa iconos de Lucide.
 
 ### ScrollToTop
-- Escucha cambios de ruta y hace scroll al top
-- Previene que el scroll persista entre páginas
+
+- Escucha los cambios de ruta y lleva el scroll al inicio de la página.
 
 ## Consideraciones
-- Todas las rutas públicas están debajo del layout `RootLayout` que provee header/footer
-- Las rutas admin tienen su propio layout con sidebar de navegación
-- `AdminGuard` verifica autenticación + rol admin antes de renderizar rutas hijas
+
+- Todas las rutas públicas están bajo `RootLayout`, que provee el header y el footer.
+- Las rutas admin usan su propio layout con sidebar.
+- `AdminGuard` verifica autenticación y rol admin antes de renderizar las rutas hijas.
+- Las rutas inexistentes muestran la página 404 (`ErrorPage`) con el código de estado.

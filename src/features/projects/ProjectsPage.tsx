@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import PageSEO from "@/components/seo/PageSEO";
-import { lots, type LotStatus } from "@/constants/lots";
+import { type LotStatus } from "@/constants/lots";
+import { usePublicLots } from "./hooks/usePublicLots";
 import { LotCard } from "./components/LotCard";
 import { LotFilters, type AreaRange } from "./components/LotFilters";
 import { EmptyState } from "./components/EmptyState";
@@ -21,13 +22,16 @@ export function ProjectsPage() {
   const [status, setStatus] = useState<LotStatus | "all">("all");
   const [areaRange, setAreaRange] = useState<AreaRange>("all");
 
+  // Datos vivos de Supabase con fallback a los datos estáticos
+  const { lots } = usePublicLots();
+
   const filteredLots = useMemo(() => {
     return lots.filter((lot) => {
       const matchesStatus = status === "all" || lot.status === status;
       const matchesArea = matchesAreaRange(lot.areaM2, areaRange);
       return matchesStatus && matchesArea;
     });
-  }, [status, areaRange]);
+  }, [status, areaRange, lots]);
 
   const handleClearFilters = () => {
     setStatus("all");
