@@ -79,7 +79,7 @@ export function ProjectsPage() {
           </div>
         </div>
 
-        {/* Video promocional con carga perezosa */}
+        {/* Video promocional con autoplay silenciado (carga al entrar al viewport) */}
         <section className="mb-16 md:mb-24">
           <div className="text-center mb-8">
             <h2 className="text-headline-md font-headline-md text-primary mb-3">
@@ -94,6 +94,7 @@ export function ProjectsPage() {
             videoId="hT4bLxh-8uo"
             title="Video promocional de La Holanda — Parcelación Campestre en Quimbaya, Quindío"
             className="mx-auto max-w-4xl"
+            autoplay
           />
         </section>
 

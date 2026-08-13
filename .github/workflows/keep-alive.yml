@@ -5,9 +5,6 @@ name: Keep Supabase Alive
 # de pg_cron NO sirve: hace falta una llamada externa. Este workflow corre a
 # diario y hace una consulta real a la base de datos.
 #
-# Si la consulta falla (Supabase inalcanzable), se envía un correo de alerta
-# vía SMTP usando smtplib de Python (incluido en los runners, sin dependencias).
-#
 # Nota: GitHub desactiva los cron si el repositorio pasa 60 días sin actividad
 # (push/PR). Si el repo se deja de tocar, usa un monitor externo gratuito
 # (cron-job.org / UptimeRobot) apuntando a:
@@ -16,11 +13,6 @@ name: Keep Supabase Alive
 # Secrets requeridos (Settings > Secrets and variables > Actions):
 #   VITE_SUPABASE_URL      (https://<ref>.supabase.co)
 #   VITE_SUPABASE_ANON_KEY (la misma anon key pública del frontend)
-#   SMTP_HOST              (p. ej. smtp.gmail.com)
-#   SMTP_PORT              (opcional, 587 por defecto; 465 para SSL directo)
-#   SMTP_USER              (p. ej. tu@gmail.com)
-#   SMTP_PASSWORD          (app password: Gmail exige una, no la contraseña normal)
-#   ALERT_EMAIL_TO         (opcional; si falta, se envía a SMTP_USER)
 
 on:
   schedule:
@@ -37,7 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Consulta diaria a Supabase
-        id: consulta
         env:
           SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
@@ -58,74 +49,9 @@ jobs:
             "$SUPABASE_URL/rest/v1/lots?select=id&limit=1" || echo "000")
           echo "rest/v1/lots?select=id&limit=1 -> $LOTS_CODE"
 
-          # Exponer los códigos para el paso de alerta
-          echo "health=$HEALTH_CODE" >> "$GITHUB_OUTPUT"
-          echo "lots=$LOTS_CODE" >> "$GITHUB_OUTPUT"
-
           # Se falla solo si NO hubo respuesta HTTP (URL mal configurada o sin
           # secret), no por un 4xx que igual mantiene el proyecto activo.
           if [ "$HEALTH_CODE" = "000" ] && [ "$LOTS_CODE" = "000" ]; then
             echo "::error::No se pudo contactar Supabase. Verifica el secret VITE_SUPABASE_URL."
             exit 1
           fi
-
-      - name: Enviar alerta por email (solo si fallo)
-        if: failure()
-        env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
-          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          HEALTH_CODE: ${{ steps.consulta.outputs.health }}
-          LOTS_CODE: ${{ steps.consulta.outputs.lots }}
-        run: |
-          python - <<'EOF'
-          import os
-          import smtplib
-          from email.mime.text import MIMEText
-
-          host = os.environ.get("SMTP_HOST", "").strip()
-          port = int(os.environ.get("SMTP_PORT", "587") or 587)
-          user = os.environ.get("SMTP_USER", "").strip()
-          password = os.environ.get("SMTP_PASSWORD", "")
-          to = (os.environ.get("ALERT_EMAIL_TO", "") or user).strip()
-          run_url = os.environ.get("GITHUB_RUN_URL", "")
-          health = os.environ.get("HEALTH_CODE", "?")
-          lots = os.environ.get("LOTS_CODE", "?")
-
-          if not (host and user and password and to):
-              print("SMTP no configurado (faltan secrets SMTP_* o ALERT_EMAIL_TO). Correo omitido.")
-              raise SystemExit(0)
-
-          body = (
-              "El workflow Keep Supabase Alive fallo en su consulta diaria.\n\n"
-              f"auth/v1/health            -> {health}\n"
-              f"rest/v1/lots?select=id    -> {lots}\n\n"
-              "La consulta no llego a Supabase (error de red o URL/secret mal configurado).\n"
-              "Recuerda: tras 7 dias sin actividad, el proyecto free de Supabase se pausa.\n\n"
-              f"Detalles del run: {run_url}"
-          )
-
-          msg = MIMEText(body, "plain", "utf-8")
-          msg["Subject"] = "[La Holanda] Alerta: Supabase no responde (keep-alive fallo)"
-          msg["From"] = user
-          msg["To"] = to
-
-          try:
-              if port == 465:
-                  server = smtplib.SMTP_SSL(host, port, timeout=30)
-              else:
-                  server = smtplib.SMTP(host, port, timeout=30)
-                  server.ehlo()
-                  server.starttls()
-                  server.ehlo()
-              server.login(user, password)
-              server.sendmail(user, [to], msg.as_string())
-              print(f"Correo de alerta enviado a {to}")
-              server.quit()
-          except Exception as exc:
-              print(f"Error enviando el correo: {exc}")
-              raise
-          EOF

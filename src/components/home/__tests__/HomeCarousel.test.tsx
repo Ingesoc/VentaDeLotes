@@ -1,5 +1,5 @@
 import { afterEach, describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { act, render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import HomeCarousel from "../HomeCarousel";
 
@@ -8,6 +8,7 @@ const RESUME_DELAY_MS = 15000;
 afterEach(() => {
   // Los tests del timeout usan fake timers; restaurar siempre por seguridad.
   vi.useRealTimers();
+  vi.unstubAllGlobals();
 });
 
 // Mocks de Embla: el carrusel real requiere ResizeObserver/matchMedia que no
@@ -192,5 +193,41 @@ describe("HomeCarousel", () => {
     expect(screen.getByText("Legado y Tradición Arriera")).toBeInTheDocument();
     expect(screen.getByText("Paisaje Cultural Cafetero")).toBeInTheDocument();
     expect(screen.getByText("Bienestar en el Paraíso")).toBeInTheDocument();
+  });
+
+  it("autocarga el video de la primera diapositiva al entrar al viewport (autoplay sin clic)", () => {
+    class MockIntersectionObserver {
+      static instances: MockIntersectionObserver[] = [];
+      callback: IntersectionObserverCallback;
+
+      constructor(callback: IntersectionObserverCallback) {
+        this.callback = callback;
+        MockIntersectionObserver.instances.push(this);
+      }
+
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+
+      trigger(isIntersecting: boolean) {
+        this.callback(
+          [{ isIntersecting } as IntersectionObserverEntry],
+          this as unknown as IntersectionObserver,
+        );
+      }
+    }
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+
+    renderCarousel();
+
+    // Sin clic: al entrar el slide al viewport, el reproductor se monta solo
+    expect(document.querySelector("iframe")).not.toBeInTheDocument();
+    act(() => {
+      MockIntersectionObserver.instances[0].trigger(true);
+    });
+
+    const iframe = document.querySelector("iframe");
+    expect(iframe).toBeInTheDocument();
+    expect(iframe?.getAttribute("src")).toContain("autoplay=1&mute=1");
   });
 });

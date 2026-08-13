@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { afterEach, describe, it, expect, vi } from "vitest";
+import { act, render, screen, fireEvent } from "@testing-library/react";
 import { YouTubeVideo } from "../YouTubeVideo";
 
 const VIDEO_ID = "hT4bLxh-8uo";
@@ -143,6 +143,20 @@ describe("YouTubeVideo", () => {
     ).toBeInTheDocument();
   });
 
+  it("avisa onPlay al activar el sonido (pausa el carrusel) y no al silenciar", () => {
+    const onPlay = vi.fn();
+    renderVideo({ autoplay: true, onPlay });
+    clickPlay();
+    onPlay.mockClear(); // el clic en play ya avisó; medimos solo el desmutear
+
+    fireEvent.click(screen.getByRole("button", { name: "Activar sonido" }));
+    expect(onPlay).toHaveBeenCalledTimes(1);
+
+    // Silenciar de nuevo no vuelve a avisar al contenedor
+    fireEvent.click(screen.getByRole("button", { name: "Silenciar" }));
+    expect(onPlay).toHaveBeenCalledTimes(1);
+  });
+
   it("calls onPlay when the play button is clicked", () => {
     const onPlay = vi.fn();
     renderVideo({ onPlay });
@@ -154,5 +168,97 @@ describe("YouTubeVideo", () => {
     const { container } = renderVideo();
     const wrapper = container.firstChild as HTMLElement;
     expect(wrapper.className).toContain("aspect-video");
+  });
+});
+
+// jsdom no implementa IntersectionObserver; este mock permite simular cuándo
+// el video entra (o sale) del viewport para probar el autoplay automático.
+class MockIntersectionObserver {
+  static instances: MockIntersectionObserver[] = [];
+  callback: IntersectionObserverCallback;
+
+  constructor(callback: IntersectionObserverCallback) {
+    this.callback = callback;
+    MockIntersectionObserver.instances.push(this);
+  }
+
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+
+  trigger(isIntersecting: boolean) {
+    this.callback(
+      [{ isIntersecting } as IntersectionObserverEntry],
+      this as unknown as IntersectionObserver,
+    );
+  }
+}
+
+describe("YouTubeVideo autoplay automático", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    MockIntersectionObserver.instances.length = 0;
+  });
+
+  it("monta el iframe y arranca silenciado al entrar al viewport con autoplay", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    renderVideo({ autoplay: true });
+
+    // Sin clic y antes de entrar al viewport: aún no se monta
+    expect(document.querySelector("iframe")).not.toBeInTheDocument();
+
+    act(() => {
+      MockIntersectionObserver.instances[0].trigger(true);
+    });
+
+    const iframe = document.querySelector("iframe");
+    expect(iframe).toBeInTheDocument();
+    expect(iframe?.getAttribute("src")).toContain("autoplay=1&mute=1");
+    expect(
+      screen.getByRole("button", { name: "Activar sonido" }),
+    ).toBeInTheDocument();
+  });
+
+  it("no registra el observador ni monta el iframe cuando autoplay está apagado", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    renderVideo();
+
+    // Sin autoplay el componente no debe observar el viewport en absoluto
+    expect(MockIntersectionObserver.instances).toHaveLength(0);
+    expect(document.querySelector("iframe")).not.toBeInTheDocument();
+  });
+
+  it("no monta el iframe mientras el video no esté en el viewport", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    renderVideo({ autoplay: true });
+
+    act(() => {
+      MockIntersectionObserver.instances[0].trigger(false);
+    });
+
+    expect(document.querySelector("iframe")).not.toBeInTheDocument();
+  });
+
+  it("no invoca onPlay cuando el autoplay automático monta el reproductor", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    const onPlay = vi.fn();
+    renderVideo({ autoplay: true, onPlay });
+
+    act(() => {
+      MockIntersectionObserver.instances[0].trigger(true);
+    });
+
+    expect(document.querySelector("iframe")).toBeInTheDocument();
+    expect(onPlay).not.toHaveBeenCalled();
+  });
+
+  it("mantiene click-to-load si el navegador no soporta IntersectionObserver", () => {
+    // Sin stubbing: jsdom no define IntersectionObserver → el guard del
+    // componente conserva el flujo por clic sin romper el render.
+    renderVideo({ autoplay: true });
+    expect(document.querySelector("iframe")).not.toBeInTheDocument();
+
+    clickPlay();
+    expect(document.querySelector("iframe")).toBeInTheDocument();
   });
 });

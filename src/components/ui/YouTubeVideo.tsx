@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
 interface YouTubeVideoProps {
@@ -10,11 +10,11 @@ interface YouTubeVideoProps {
   /** Se invoca cuando el usuario hace clic y el video comienza a reproducirse */
   onPlay?: () => void;
   /**
-   * Autoplay silenciado del reproductor. Cuando es `true`, la URL del embed
-   * agrega `autoplay=1&mute=1` (el mute es obligatorio para que el navegador
-   * permita el autoplay) y se muestra un botón para activar el sonido. El
-   * iframe solo se monta con click-to-load, así que la reproducción nunca
-   * inicia antes de que el usuario pida cargar el video.
+   * Autoplay silenciado. Cuando es `true`, el iframe se monta automáticamente
+   * en cuanto el video entra al viewport y arranca con `autoplay=1&mute=1`
+   * (el mute es obligatorio para que el navegador permita el autoplay),
+   * mostrando un botón para activar el sonido. Sin esta prop, el video se
+   * mantiene click-to-load (miniatura + botón de play).
    */
   autoplay?: boolean;
 }
@@ -50,18 +50,21 @@ function buildEmbedUrl(videoId: string, autoplay: boolean): string {
 }
 
 /**
- * Video de YouTube optimizado con carga perezosa (click-to-load).
+ * Video de YouTube con carga diferida: por defecto usa click-to-load
+ * (miniatura + botón de play) y, con la prop `autoplay`, monta el reproductor
+ * y arranca silenciado apenas el video entra al viewport.
  *
  * En lugar de montar el iframe del reproductor de YouTube al cargar la página
  * (que descarga cientos de KB aunque nadie lo vea), se muestra la miniatura
  * del video con un botón de play y el iframe solo se crea cuando el usuario
- * hace clic. Además:
+ * hace clic o, con `autoplay`, cuando el video entra al viewport. Además:
  *  - Usa el dominio `youtube-nocookie.com` para máxima privacidad.
  *  - `autoplay=1` para que el video arranque apenas se carga el reproductor.
  *  - `rel=0` para no mostrar videos relacionados al finalizar.
  *  - `playsinline=1` para una mejor experiencia en móviles.
- *  - La prop `autoplay` agrega `mute=1` (autoplay compatible con navegadores)
- *    y un botón de activar/silenciar sonido vía postMessage.
+ *  - La prop `autoplay` agrega `mute=1` (autoplay compatible con navegadores),
+ *    monta el reproductor sin clic al entrar al viewport y muestra un botón
+ *    de activar/silenciar sonido vía postMessage.
  */
 export function YouTubeVideo({
   videoId,
@@ -74,7 +77,42 @@ export function YouTubeVideo({
   const [thumbIndex, setThumbIndex] = useState(0);
   // El autoplay arranca silenciado; el estado se sincroniza con el botón.
   const [muted, setMuted] = useState(autoplay);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  // Ref para que el callback del IntersectionObserver lea el valor actual de
+  // isPlaying sin re-crear el observer en cada render.
+  const isPlayingRef = useRef(isPlaying);
+
+  useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
+
+  // Autoplay real: con la prop `autoplay`, el reproductor se monta y arranca
+  // (silenciado) en cuanto el video entra al viewport, sin requerir clic. Una
+  // vez montado no se desmonta al salir del viewport, para no reiniciar la
+  // reproducción en cada vuelta del carrusel.
+  useEffect(() => {
+    if (!autoplay || typeof IntersectionObserver === "undefined") return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isPlayingRef.current) {
+          observer.disconnect();
+          return;
+        }
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsPlaying(true);
+          observer.disconnect();
+        }
+      },
+      // Carga el reproductor un poco antes de que entre al viewport.
+      { rootMargin: "100px" },
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [autoplay]);
 
   // La calidad "maxresdefault" no existe para todos los videos; si falla,
   // se hace fallback a "hqdefault".
@@ -101,10 +139,15 @@ export function YouTubeVideo({
       EMBED_BASE,
     );
     setMuted(nextMuted);
+    // Al activar el sonido (gesto del usuario) se avisa al contenedor para que
+    // pause el carrusel, igual que cuando se pulsa play manualmente. Sin esto,
+    // un video autocargado desmutado seguiría sonando fuera de pantalla.
+    if (!nextMuted) onPlay?.();
   };
 
   return (
     <div
+      ref={containerRef}
       className={`relative aspect-video w-full overflow-hidden rounded-2xl bg-deep-forest shadow-xl ${className}`}
     >
       {isPlaying ? (
