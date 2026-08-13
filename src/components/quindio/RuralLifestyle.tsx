@@ -1,3 +1,4 @@
+import { Route, Trees } from "lucide-react";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export default function RuralLifestyle() {
@@ -24,11 +25,11 @@ export default function RuralLifestyle() {
             </p>
             <div className="grid grid-cols-2 gap-4 mb-8">
               <div className="flex items-center gap-3 min-w-0">
-                <span className="material-symbols-outlined text-heritage-gold shrink-0">unpaved_road</span>
+                <Route className="h-6 w-6 text-heritage-gold shrink-0" aria-hidden="true" />
                 <span className="font-label-bold text-primary min-w-0">Acceso Fluido</span>
               </div>
               <div className="flex items-center gap-3 min-w-0">
-                <span className="material-symbols-outlined text-heritage-gold shrink-0">nature_people</span>
+                <Trees className="h-6 w-6 text-heritage-gold shrink-0" aria-hidden="true" />
                 <span className="font-label-bold text-primary min-w-0">Seguridad Privada</span>
               </div>
             </div>

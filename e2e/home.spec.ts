@@ -8,36 +8,33 @@ test.describe("Carrusel de la Home", () => {
     await page.route("**/registerSW.js", (route) => route.abort());
   });
 
-  test("el video es la primera diapositiva con carga perezosa (click-to-load)", async ({
+  test("el video de la primera diapositiva arranca automáticamente (autoplay silenciado)", async ({
     page,
   }) => {
     // domcontentloaded: no esperar a que carguen todas las imágenes/recursos.
-    // El carrusel se detiene en el slide del video, así que no hay carrera con
-    // el autoplay.
     await page.goto("/", { waitUntil: "domcontentloaded" });
 
-    // Primera diapositiva: miniatura del video con botón de play
-    const playButton = page.getByRole("button", {
-      name: /Reproducir video: La Holanda en Video/i,
-    });
-    await expect(playButton).toBeVisible();
+    // El hero ocupa toda la pantalla; se baja hasta el carrusel para que el
+    // IntersectionObserver del reproductor se dispare.
+    await page.evaluate(() =>
+      window.scrollTo({ top: window.innerHeight * 0.9, behavior: "instant" }),
+    );
 
-    // Carga perezosa: el iframe de YouTube NO existe antes del clic
-    await expect(page.locator("iframe[src*='youtube']")).toHaveCount(0);
-
-    // Al hacer clic se monta el reproductor (solo entonces se descarga)
-    await playButton.click();
-
+    // Al entrar al viewport, el reproductor se monta SOLO (sin clic) y arranca
+    // silenciado: autoplay=1&mute=1.
     const player = page.locator(
       "iframe[src*='youtube-nocookie.com/embed/N7LYM3pt_hg']",
     );
     await expect(player).toHaveCount(1);
-    await expect(player).toHaveAttribute("src", /autoplay=1/);
-    // El botón de play se reemplaza por el reproductor
-    await expect(playButton).toHaveCount(0);
+    await expect(player).toHaveAttribute("src", /autoplay=1&mute=1/);
+
+    // Autoplay silenciado: el botón de activar sonido está disponible.
+    await expect(
+      page.getByRole("button", { name: "Activar sonido" }),
+    ).toBeVisible();
 
     // Regresión guard: mientras el video se reproduce, el carrusel NO debe
-    // avanzar (el clic en play no debe reiniciar el autoplay).
+    // avanzar.
     const xBefore = (await player.boundingBox())?.x;
     await page.waitForTimeout(6000);
     const xAfter = (await player.boundingBox())?.x;

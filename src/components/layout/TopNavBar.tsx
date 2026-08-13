@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { Menu, X } from "lucide-react";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export function TopNavBar() {
@@ -35,7 +36,7 @@ export function TopNavBar() {
           {/* Toggle móvil */}
           <div className="flex items-center md:hidden">
             <button onClick={toggleMenu} type="button" className="p-3 tap-target text-forest-green dark:text-warm-white" aria-label="Abrir menú">
-              <i className="fa-solid fa-bars text-2xl"></i>
+              <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -44,7 +45,7 @@ export function TopNavBar() {
       {/* Menú móvil */}
       <div className={`fixed inset-0 z-[60] bg-deep-forest transition-transform duration-300 md:hidden flex flex-col items-center justify-center gap-8 ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <button onClick={toggleMenu} type="button" className="absolute top-4 right-4 p-3 tap-target text-warm-white hover:text-soft-gold transition-colors" aria-label="Cerrar menú">
-          <i className="fa-solid fa-xmark text-3xl"></i>
+          <X className="h-7 w-7" aria-hidden="true" />
         </button>
         <a className="text-xl sm:text-2xl text-warm-white hover:text-soft-gold transition-colors tap-target py-3" href="/#proceso" onClick={toggleMenu}>Proceso</a>
         <Link className="text-xl sm:text-2xl text-warm-white hover:text-soft-gold transition-colors tap-target py-3" to="/descubre-quindio" onClick={toggleMenu}>Quindío</Link>

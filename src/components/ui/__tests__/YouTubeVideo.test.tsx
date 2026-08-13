@@ -56,6 +56,14 @@ describe("YouTubeVideo", () => {
     expect(iframe?.getAttribute("title")).toBe(TITLE);
   });
 
+  it("no sandboxea el iframe (el reproductor requiere origen real para storage/Cache API)", () => {
+    renderVideo();
+    clickPlay();
+
+    const iframe = document.querySelector("iframe");
+    expect(iframe?.getAttribute("sandbox")).toBeNull();
+  });
+
   it("does not mute the embed by default (autoplay prop off)", () => {
     renderVideo();
     clickPlay();

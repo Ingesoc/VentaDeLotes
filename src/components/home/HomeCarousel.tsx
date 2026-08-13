@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router";
+import { ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
@@ -180,7 +181,7 @@ export default function HomeCarousel() {
                     className="pointer-events-auto inline-flex items-center gap-2 bg-heritage-gold text-primary hover:bg-white px-5 sm:px-6 py-3 rounded-lg font-label-bold transition-colors duration-300 text-xs sm:text-sm whitespace-nowrap tap-target"
                   >
                     Conocer Más
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </div>
               </div>

@@ -68,7 +68,7 @@ describe("cldUrl", () => {
 
   it("works with CLD_WIDTHS.HERO constant", () => {
     const result = cldUrl(CLOUDINARY_URL, CLD_WIDTHS.HERO);
-    expect(result).toContain("w_1920");
+    expect(result).toContain("w_1600");
   });
 
   it("works with CLD_WIDTHS.CAROUSEL constant", () => {

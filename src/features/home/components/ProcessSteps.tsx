@@ -1,18 +1,20 @@
-const steps = [
+import { Building2, Home, Mountain, type LucideIcon } from "lucide-react";
+
+const steps: { icon: LucideIcon; title: string; description: string }[] = [
   {
-    icon: "fa-solid fa-mountain",
+    icon: Mountain,
     title: "1. Compra tu lote",
     description:
       "Elige el espacio perfecto dentro de nuestro entorno natural exclusivo, con precio especial por pago de contado o separación con el 60% inicial y saldo al momento de escriturar.",
   },
   {
-    icon: "fa-solid fa-building",
+    icon: Building2,
     title: "2. Diseño",
     description:
       "Recibe un diseño arquitectónico tipo, o un diseño personalizado acorde a tus necesidades (servicio adicional).",
   },
   {
-    icon: "fa-solid fa-house",
+    icon: Home,
     title: "3. Construcción",
     description:
       "Podemos cotizar, planificar y diseñar la casa de tus sueños; construye con nosotros (servicio adicional).",
@@ -39,7 +41,7 @@ export function ProcessSteps() {
             className="relative z-10 flex flex-col items-center text-center bg-surface-container-lowest p-6 rounded-xl shadow-ambient border border-outline-variant/10 hover-lift"
           >
             <div className="w-14 h-14 bg-deep-forest text-on-primary rounded-full flex items-center justify-center mb-4 shadow-md">
-              <i className={`${step.icon} text-2xl`}></i>
+              <step.icon className="h-6 w-6" aria-hidden="true" />
             </div>
             <h3 className="text-headline-md font-headline-md text-primary mb-3">
               {step.title}

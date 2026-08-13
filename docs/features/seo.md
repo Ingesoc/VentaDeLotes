@@ -105,7 +105,7 @@ Se inyectan en `index.html`:
 - Favicons generados con realfavicongenerator.
 - Open Graph y Twitter Card con imagen de Cloudinary (1200x630).
 - Tags geográficos: `geo.region` (CO-QUI), `geo.placename`, `geo.position`, `ICBM`.
-- Font Awesome y Material Symbols (para iconos).
+- Iconos locales con lucide-react (sin librerías de iconos de terceros, lo que reduce el peso y las peticiones externas).
 
 ## Consideraciones
 

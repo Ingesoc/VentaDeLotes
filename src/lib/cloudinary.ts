@@ -25,8 +25,8 @@ interface CloudinaryAPI {
  * Basado en los tamaños de visualización de cada componente.
  */
 export const CLD_WIDTHS = {
-  /** Imágenes hero a full pantalla (1920px) */
-  HERO: 1920,
+  /** Imágenes hero a full pantalla (1600px; con dpr_auto cubre retina sin inflar el payload) */
+  HERO: 1600,
   /** Imágenes de carrusel (1200px) */
   CAROUSEL: 1200,
   /** Imagen del plano general (1280px) */
@@ -54,7 +54,7 @@ export const CLD_WIDTHS = {
  *
  * Ejemplos:
  *   cldUrl(url)                          → f_auto,q_auto
- *   cldUrl(url, CLD_WIDTHS.HERO)         → f_auto,q_auto,dpr_auto,w_1920
+ *   cldUrl(url, CLD_WIDTHS.HERO)         → f_auto,q_auto,dpr_auto,w_1600
  *   cldUrl(url, 600)                     → f_auto,q_auto,dpr_auto,w_600
  */
 export function cldUrl(url: string, width?: number): string {

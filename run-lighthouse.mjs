@@ -150,6 +150,11 @@ async function main() {
   const htmlReportPath = "./reports/lighthouse-mobile.html";
   const jsonReportPath = "./reports/lighthouse-mobile.json";
 
+  // Eliminar reportes de corridas anteriores: así un JSON viejo no puede
+  // confundirse con uno fresco si una pasada falla con EPERM de limpieza.
+  rmSync(resolve(REPORTS_DIR, "lighthouse-mobile.html"), { force: true });
+  rmSync(resolve(REPORTS_DIR, "lighthouse-mobile.json"), { force: true });
+
   try {
     // Primero HTML
     execSync(
@@ -157,7 +162,9 @@ async function main() {
         `--config-path="${configPath}" ` +
         `--output=html ` +
         `--output-path="${htmlReportPath}" ` +
-        `--chrome-flags="--headless --no-sandbox --disable-gpu" ` +
+        // --headless=new (modo nuevo): el headless viejo no pinta la página
+        // y produce audits NO_FCP en Chrome moderno.
+        `--chrome-flags="--headless=new --no-sandbox --disable-gpu" ` +
         `--quiet`,
       {
         cwd: __dirname,
@@ -174,7 +181,7 @@ async function main() {
         `--config-path="${configPath}" ` +
         `--output=json ` +
         `--output-path="${jsonReportPath}" ` +
-        `--chrome-flags="--headless --no-sandbox --disable-gpu" ` +
+        `--chrome-flags="--headless=new --no-sandbox --disable-gpu" ` +
         `--quiet`,
       {
         cwd: __dirname,
@@ -185,7 +192,19 @@ async function main() {
     );
     log("LIGHTHOUSE", "Reporte JSON generado ✅");
   } catch (err) {
-    log("ERROR", `Lighthouse falló: ${err.message}`);
+    // En Windows, chrome-launcher a veces lanza EPERM al borrar su carpeta
+    // temporal DESPUÉS de escribir los reportes (bug conocido). Como los
+    // reportes viejos se eliminaron antes de correr, su existencia aquí
+    // significa que esta pasada los generó (el JSON es el que se lee luego).
+    const htmlExists = existsSync(resolve(REPORTS_DIR, "lighthouse-mobile.html"));
+    const jsonExists = existsSync(resolve(REPORTS_DIR, "lighthouse-mobile.json"));
+    if (jsonExists) {
+      log("WARN", `Lighthouse reportó un error no bloqueante (posible EPERM de limpieza): ${err.message.slice(0, 120)}`);
+      log("LIGHTHOUSE", "Reportes generados a pesar del error; se continúa ✅");
+    } else if (htmlExists) {
+      log("WARN", `Solo se generó el reporte HTML: ${err.message.slice(0, 120)}`);
+    } else {
+      log("ERROR", `Lighthouse falló: ${err.message}`);
 
     // Verificar si Chrome/Chromium está instalado
     try {
@@ -198,16 +217,17 @@ async function main() {
       log("INFO", "   Instálalo desde https://www.google.com/chrome/");
     }
 
-    // Verificar si los reportes se generaron igual
-    if (existsSync(resolve(REPORTS_DIR, "lighthouse-mobile.html"))) {
-      log("INFO", "✅ Reporte HTML encontrado (pudo generarse parcialmente)");
-    }
-    if (existsSync(resolve(REPORTS_DIR, "lighthouse-mobile.json"))) {
-      log("INFO", "✅ Reporte JSON encontrado (pudo generarse parcialmente)");
-    }
+      // Verificar si los reportes se generaron igual
+      if (existsSync(resolve(REPORTS_DIR, "lighthouse-mobile.html"))) {
+        log("INFO", "✅ Reporte HTML encontrado (pudo generarse parcialmente)");
+      }
+      if (existsSync(resolve(REPORTS_DIR, "lighthouse-mobile.json"))) {
+        log("INFO", "✅ Reporte JSON encontrado (pudo generarse parcialmente)");
+      }
 
-    cleanup();
-    process.exit(1);
+      cleanup();
+      process.exit(1);
+    }
   }
 
   // 5. Leer resultados JSON

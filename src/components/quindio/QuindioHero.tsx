@@ -1,3 +1,4 @@
+import { ArrowDown } from "lucide-react";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 
 export default function QuindioHero() {
@@ -28,7 +29,7 @@ export default function QuindioHero() {
               href="#explore"
             >
               Explorar Regiones
-              <span className="material-symbols-outlined">arrow_downward</span>
+              <ArrowDown className="h-5 w-5" aria-hidden="true" />
             </a>
           </div>
         </div>

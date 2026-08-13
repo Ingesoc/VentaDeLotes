@@ -159,10 +159,11 @@ export function YouTubeVideo({
             title={title}
             allow={IFRAME_ALLOW}
             allowFullScreen
-            // Sandbox mínimo para el reproductor: scripts (player), presentación
-            // (fullscreen) y popups (enlaces). Se omite allow-same-origin: la
-            // combinación con allow-scripts permitiría escapar el sandbox.
-            sandbox="allow-scripts allow-presentation allow-popups"
+            // Sin `sandbox`: el iframe de YouTube ya está aislado por la
+            // política de mismo origen del navegador (es cross-origin), y el
+            // reproductor necesita cookies/storage/Cache API que un contexto
+            // sandboxed sin allow-same-origin bloquea (rompía el autoplay y
+            // el arranque del player con SecurityError / writeEmbed undefined).
             referrerPolicy="strict-origin-when-cross-origin"
           />
           {/* Botón de activar/silenciar sonido (solo en autoplay silenciado) */}

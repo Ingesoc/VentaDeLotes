@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { TreePine } from "lucide-react";
 import { project } from "@/constants/project";
 
 export default function FinalCTA() {
@@ -29,7 +30,7 @@ export default function FinalCTA() {
         </div>
         {/* Elemento decorativo */}
         <div className="absolute bottom-0 left-0 opacity-10 pointer-events-none select-none">
-          <span className="material-symbols-outlined text-[300px] rotate-12">park</span>
+          <TreePine className="h-[300px] w-[300px] rotate-12" aria-hidden="true" />
         </div>
       </div>
     </section>

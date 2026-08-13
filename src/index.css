@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&display=swap");
 @import "tailwindcss";
 
 /* ─── Tailwind v4 CSS-first Theme ──────────────────────────────── */
@@ -225,12 +224,6 @@ html {
 /* ─── Text Balancing ───────────────────────────────────────────── */
 .text-balance {
   text-wrap: balance;
-}
-
-/* Material Symbols */
-
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
 /* Scroll Reveal */
