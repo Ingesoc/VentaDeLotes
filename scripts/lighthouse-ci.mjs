@@ -17,6 +17,11 @@
  * Presupuestos configurables por env (para ajustar sin editar el script):
  *   LHCI_PERF_MIN, LHCI_A11Y_MIN, LHCI_BP_MIN, LHCI_SEO_MIN,
  *   LHCI_LCP_MAX_MS, LHCI_CLS_MAX, LHCI_TBT_MAX_MS
+ *
+ * Los valores por defecto están calibrados a los runners de GitHub Actions
+ * (2 vCPU, ~6-11x más lentos que una máquina local): PERF ≥ 55, TBT ≤ 1000ms.
+ * La misma build da PERF ~93 / TBT ~110ms en local — no bajar los umbrales
+ * por debajo de estos valores pensando en local, o CI fallará por ruido.
  */
 import { spawn, execSync } from "node:child_process";
 import http from "node:http";
@@ -32,10 +37,16 @@ const REPORTS_DIR = resolve(ROOT, "reports");
 const CONFIG_PATH = resolve(ROOT, "lighthouse.config.mjs");
 
 // ── Presupuestos por defecto ──────────────────────────────────────
-// Con margen sobre los scores actuales (PERF ~80-92, A11Y/BP/SEO 100) para
-// absorber el ruido entre corridas, pero disparan en regresiones reales.
+// Calibrados a la línea base de CI (GitHub Actions ubuntu-latest, 2 vCPU):
+// PERF ~69, TBT ~630ms, LCP ~3.9s, CLS 0, A11Y/BP/SEO 100. La misma build da
+// PERF 93 / TBT ~110ms en una máquina local potente: los runners compartidos
+// son ~6-11x más lentos, así que unos presupuestos más estrictos harían
+// fallar CI por ruido. Los márgenes de aquí absorben la variación entre
+// corridas pero siguen disparando ante regresiones reales (p. ej. un TBT que
+// se duplique, o un score que caiga ~15 puntos). Ajustables por env sin tocar
+// el script (ver cabecera).
 const BUDGETS = {
-  performance: Number(process.env.LHCI_PERF_MIN ?? 70),
+  performance: Number(process.env.LHCI_PERF_MIN ?? 55),
   accessibility: Number(process.env.LHCI_A11Y_MIN ?? 95),
   "best-practices": Number(process.env.LHCI_BP_MIN ?? 90),
   seo: Number(process.env.LHCI_SEO_MIN ?? 90),
@@ -44,7 +55,7 @@ const BUDGETS = {
 const CWV_BUDGETS = [
   { id: "largest-contentful-paint", label: "LCP", max: Number(process.env.LHCI_LCP_MAX_MS ?? 6000), unit: "ms" },
   { id: "cumulative-layout-shift", label: "CLS", max: Number(process.env.LHCI_CLS_MAX ?? 0.1), unit: "" },
-  { id: "total-blocking-time", label: "TBT", max: Number(process.env.LHCI_TBT_MAX_MS ?? 600), unit: "ms" },
+  { id: "total-blocking-time", label: "TBT", max: Number(process.env.LHCI_TBT_MAX_MS ?? 1000), unit: "ms" },
 ];
 
 const URLS = process.argv.slice(2).length
@@ -95,6 +106,11 @@ process.on("SIGTERM", () => { cleanup(); process.exit(1); });
 async function main() {
   mkdirSync(REPORTS_DIR, { recursive: true });
   console.log(`\n🔦 Lighthouse CI — ${URLS.length} URL(s)\n`);
+  console.log(
+    `  Presupuestos: ${Object.entries(BUDGETS).map(([k, v]) => `${k} ≥ ${v}`).join(", ")} · ` +
+    CWV_BUDGETS.map((c) => `${c.label} ≤ ${c.max}${c.unit}`).join(", ")
+  );
+  console.log("");
 
   // 1. Preview server
   console.log("  ▶ Iniciando preview server…");
@@ -127,6 +143,14 @@ async function main() {
 
     console.log(`  ── Auditar ${new URL(url).pathname || "/"} ──`);
     try {
+      // Warm-up: una petición previa para que el server estático y la caché de
+      // página del SO estén calientes antes de medir (reduce el ruido del
+      // primer hit en runners fríos de CI).
+      await new Promise((res) => {
+        const req = http.get(url, () => { req.destroy(); res(); });
+        req.on("error", () => res());
+      });
+
       // Una sola pasada genera JSON + HTML (output-path actúa como base name).
       execSync(
         `npx lighthouse ${url} ` +
