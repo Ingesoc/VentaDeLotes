@@ -48,6 +48,45 @@ jobs:
       - name: Security Audit
         run: npm audit --audit-level=critical
 
+  # Auditoría Lighthouse (rendimiento + accesibilidad) con presupuestos.
+  # Falla el job si algún score cae por debajo del mínimo (configurable por
+  # env LHCI_*_MIN) o si un Core Web Vital excede su máximo. El reporte HTML
+  # se sube como artifact para revisión visual. Ver scripts/lighthouse-ci.mjs.
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || '' }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || '' }}
+
+      - name: Lighthouse (rendimiento + accesibilidad)
+        run: bun run lighthouse:ci
+
+      - name: Upload Lighthouse Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: reports/lighthouse-ci-*
+          retention-days: 14
+
   e2e:
     runs-on: ubuntu-latest
     steps:

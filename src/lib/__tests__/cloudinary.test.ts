@@ -98,7 +98,7 @@ describe("cldUrl", () => {
 
   it("works with CLD_WIDTHS.LOGO constant", () => {
     const result = cldUrl(CLOUDINARY_URL, CLD_WIDTHS.LOGO);
-    expect(result).toContain("w_200");
+    expect(result).toContain("w_96");
   });
 
   it("preserves the rest of the URL after the upload segment", () => {

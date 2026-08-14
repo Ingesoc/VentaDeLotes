@@ -25,6 +25,7 @@
     "audit:mobile": "npm run build && npm run predaudit && start /B npm run preview && timeout /t 5 /nobreak >nul && npm run lighthouse:mobile && npm run audit:kill",
     "audit:all": "npm run build && npm run predaudit && npm run audit:preview && timeout /t 5 /nobreak >nul && npm run lighthouse:mobile && npm run lighthouse:mobile:json && npm run lighthouse:desktop && npm run audit:kill",
     "audit:script": "node run-lighthouse.mjs",
+    "lighthouse:ci": "node scripts/lighthouse-ci.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",

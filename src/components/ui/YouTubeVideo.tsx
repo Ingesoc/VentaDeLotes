@@ -107,8 +107,12 @@ export function YouTubeVideo({
           observer.disconnect();
         }
       },
-      // Carga el reproductor un poco antes de que entre al viewport.
-      { rootMargin: "100px" },
+      // Solo cuando el video entra realmente al viewport (rootMargin 0). Un
+      // margen positivo (100px) hacía que el slide del carrusel, apenas bajo
+      // el hero, montara el reproductor al cargar la página y descargara
+      // ~2 MB de video + player en el camino crítico (FCP/LCP 8-11s en
+      // Lighthouse móvil) aunque el usuario no viera el video.
+      { rootMargin: "0px" },
     );
     observer.observe(container);
     return () => observer.disconnect();
@@ -196,6 +200,8 @@ export function YouTubeVideo({
           <img
             src={thumbnailSrc}
             alt=""
+            width={1280}
+            height={720}
             loading="lazy"
             decoding="async"
             onError={handleThumbnailError}

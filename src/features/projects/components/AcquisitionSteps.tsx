@@ -43,9 +43,9 @@ export function AcquisitionSteps() {
             >
               <step.icon className="w-8 h-8" />
             </div>
-            <h4 className="text-lot-number font-lot-number text-primary mb-3">
+            <h3 className="text-lot-number font-lot-number text-primary mb-3">
               {step.title}
-            </h4>
+            </h3>
             <p className="text-body-md font-body-md text-on-surface-variant">
               {step.description}
             </p>

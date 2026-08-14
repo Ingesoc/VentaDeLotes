@@ -3,7 +3,7 @@ import { project } from "@/constants/project";
 
 export function ProjectBenefits() {
   return (
-    <section id="lotes" className="py-section-gap bg-surface-container-low">
+    <section id="lotes" className="py-section-gap bg-surface-container-low cv-auto [contain-intrinsic-size:auto_1100px]">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <div className="text-center mb-16">
           <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">

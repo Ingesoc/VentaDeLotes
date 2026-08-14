@@ -16,6 +16,8 @@ export function TopNavBar() {
             <img
               src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784226214/laHolandaIsotipo_dme9sp.png", CLD_WIDTHS.LOGO)}
               alt="La Holanda"
+              width={96}
+              height={90}
               className="h-8 md:h-10 w-auto"
             />
             <span className="font-display-lg text-xl md:text-2xl text-forest-green dark:text-soft-gold tracking-tight">

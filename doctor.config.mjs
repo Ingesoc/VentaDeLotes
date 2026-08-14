@@ -17,4 +17,13 @@ export default {
       "doctor.config.mjs",
     ],
   },
+  rules: {
+    // Falso positivo: el SDK de Supabase incluye strings internos (nombres de
+    // tablas/columnas) que disparan esta regla en el bundle. La propia app ya
+    // expone esos nombres en sus queries (supabase.from("lots")...), así que la
+    // regla no aporta protección real. Se desactiva para poder bundlear el SDK
+    // localmente en vez de cargarlo desde esm.sh (ver ADR-004), que encadenaba
+    // ~15 requests en el camino crítico de Lighthouse.
+    "react-doctor/artifact-baas-authority-surface": "off",
+  },
 };

@@ -21,9 +21,10 @@ export function InvestmentCTA() {
           <p className="text-body-lg font-body-lg text-surface-container-highest max-w-2xl mb-10">
             Explore nuestro portafolio seleccionado de lotes premium. Cada propiedad es evaluada por sus vistas excepcionales, integración ecológica y alto potencial de ROI.
           </p>
+          {/* Contraste: texto oscuro sobre dorado (blanco sobre #D4A373 era ~2:1) */}
           <Link
             to="/projects"
-            className="bg-heritage-gold text-white font-label-bold px-10 py-4 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg text-lg"
+            className="bg-heritage-gold text-deep-forest font-label-bold px-10 py-4 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg text-lg"
           >
             Ver Proyectos Disponibles
           </Link>

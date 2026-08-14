@@ -5,7 +5,7 @@
  * Uso: node run-lighthouse.mjs
  */import { spawn, execSync } from "child_process";
 import http from "http";
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 

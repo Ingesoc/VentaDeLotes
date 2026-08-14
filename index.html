@@ -86,21 +86,30 @@
       }
     }
     </script>
-    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <!-- El widget de Cloudinary (solo lo usa el admin) se carga bajo demanda desde
+         src/lib/cloudinary.ts, no aquí, para no bloquear el render de las páginas públicas. -->
 
-    <!-- Import Map: @supabase/supabase-js se carga desde CDN en vez de incluirse en el bundle.
-         La librería contiene internamente cadenas que React Doctor detecta como "superficie de
-         autoridad". Al cargarla desde CDN, no aparece en ningun artifact del build. -->
-    <script type="importmap">
-      {
-        "imports": {
-          "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.110.0"
-        }
-      }
-    </script>
+    <!-- Fuentes self-hosted (variable fonts): se descargan en T≈0 en paralelo
+         al HTML/JS. Antes se cargaban desde Google Fonts vía CSS render-blocking
+         (1s de delay en Lighthouse) y el fetch de los woff2 solo arrancaba cuando
+         React pintaba el texto (~680ms después), retrasando el LCP del hero.
+         El @font-face correspondiente vive en src/index.css. -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-latin.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/playfair-latin.woff2">
+
+    <!-- Preload estático de la imagen del hero: se descarga en paralelo al
+         HTML sin esperar a que React la inyecte. Debe coincidir con HERO_IMAGE
+         de src/features/home/components/HeroSection.tsx (cldUrl con w_1600). -->
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      href="https://res.cloudinary.com/j5a9xyaq/image/upload/f_auto,q_auto,dpr_auto,w_1600/v1784304519/laholanda/landscapes/Loteo%20General.webp"
+    >
+
+    <!-- @supabase/supabase-js se bundlea con Vite (chunk vendor-supabase).
+         Cargarlo desde CDN (esm.sh) encadenaba ~15 requests en el camino crítico
+         (~2.2s de latencia según Lighthouse). Ver ADR-004. -->
   </head>
   <body>
     <div id="root"></div>

@@ -3,7 +3,7 @@ tags:
   - architecture
   - overview
 created: 2026-07-21
-updated: 2026-08-12
+updated: 2026-08-13
 ---
 
 # Arquitectura del proyecto
@@ -77,11 +77,21 @@ Supabase Auth administra el ciclo de vida de la sesión (login, refresh, logout)
 
 ### 6. Import Map para el SDK de Supabase
 
-`@supabase/supabase-js` se carga desde un CDN (esm.sh) mediante Import Map y se excluye del bundle. Reduce el tamaño del build y evita falsos positivos de react-doctor. Ver [ADR-004](../decisions/adr-004-import-map-supabase.md).
+`@supabase/supabase-js` se empaqueta con Vite en el chunk `vendor-supabase` (bundle local). Antes se cargaba desde esm.sh vía Import Map, pero encadenaba ~15 requests en el camino crítico de Lighthouse; se revirtió y se desactivó la regla de react-doctor que lo motivó. Ver [ADR-004](../decisions/adr-004-import-map-supabase.md).
 
 ### 7. Supabase tolerante a configuraciones incompletas
 
 El cliente de Supabase (`src/lib/supabase.ts`) no interrumpe el arranque de la app si faltan las variables de entorno: usa una URL provisional y las llamadas fallan de forma controlada. Esto permite que los tests e2e del CI funcionen sin secrets configurados.
+
+### 8. Fuentes self-hosted (rendimiento del LCP)
+
+Las fuentes (Inter y Playfair Display, ambas variable fonts) se sirven desde `/fonts/*.woff2` en lugar de Google Fonts. El CSS de Google Fonts era render-blocking (~1s en Lighthouse) y el fetch de los woff2 solo arrancaba cuando React pintaba el texto (~680ms después de la navegación), retrasando el LCP del hero. Ahora:
+
+- `index.html` precarga las dos fuentes (`rel="preload" as="font"`) → descargan en T≈0.
+- `src/index.css` define los `@font-face` con `font-display: swap`.
+- El service worker las precachea (glob `fonts/**/*.woff2`).
+
+**Nota sobre el LCP:** Chrome ignora por diseño (desde Chrome 88) las imágenes que ocupan el viewport completo como candidatas a LCP (cambio de métrica anti-"wallpaper"). Por eso el elemento LCP de la home es el texto del hero, y el preload de fuentes es lo que más lo mejora.
 
 ---
 

@@ -19,7 +19,7 @@ const statusLabel: Record<LotStatus, string> = {
 
 export function MasterPlanSection() {
   return (
-    <section className="py-section-gap px-margin-mobile md:px-margin-desktop bg-deep-forest/5 overflow-hidden">
+    <section className="py-section-gap px-margin-mobile md:px-margin-desktop bg-deep-forest/5 overflow-hidden cv-auto [contain-intrinsic-size:auto_600px]">
       <div className="max-w-container-max mx-auto mb-12 text-center">
         <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
           Plano General
@@ -33,6 +33,8 @@ export function MasterPlanSection() {
         <img
           src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.MASTERPLAN)}
           alt="Vista aérea del plano general de la parcelación La Holanda en Quimbaya, Quindío"
+          width={1280}
+          height={720}
           loading="lazy"
           decoding="async"
           className="w-full h-auto object-cover img-zoom"

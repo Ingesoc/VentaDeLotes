@@ -131,6 +131,9 @@ export default function HomeCarousel() {
 
   return (
     <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full max-w-5xl mx-auto my-12 border border-outline-variant/20">
+      {/* h2 sr-only para que los h3 de cada slide tengan jerarquía válida
+          (la home salta de h1 del hero a h3 sin h2 intermedio). */}
+      <h2 className="sr-only">Descubre Quindío</h2>
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {slides.map((s) => (
@@ -154,6 +157,8 @@ export default function HomeCarousel() {
                 <img
                   src={s.src}
                   alt={s.alt}
+                  width={1200}
+                  height={675}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover"

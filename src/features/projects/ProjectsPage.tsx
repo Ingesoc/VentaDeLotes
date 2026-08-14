@@ -73,7 +73,7 @@ export function ProjectsPage() {
               areaRange={areaRange}
               onAreaRangeChange={setAreaRange}
             />
-            <p className="mt-4 text-label-caps font-label-caps text-on-surface-variant/70">
+            <p className="mt-4 text-label-caps font-label-caps text-on-surface-variant">
               Mostrando {filteredLots.length} de {lots.length} lotes
             </p>
           </div>

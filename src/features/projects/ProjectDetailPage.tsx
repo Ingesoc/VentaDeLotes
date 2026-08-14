@@ -203,9 +203,9 @@ export function ProjectDetailPage() {
         {/* Similares */}
         {relatedLots.length > 0 && (
           <div>
-            <h3 className="text-headline-md font-headline-md text-primary mb-8 border-b border-outline-variant/20 pb-4">
+            <h2 className="text-headline-md font-headline-md text-primary mb-8 border-b border-outline-variant/20 pb-4">
               Lotes Similares
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedLots.map((relatedLot) => (
                 <LotCard key={relatedLot.id} lot={relatedLot} />

@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+/* ─── content-visibility para secciones bajo el fold ────────────
+ * Hace que el navegador salte el render/layout/paint de las secciones
+ * fuera de pantalla de la home (MasterPlan, Procesos, Beneficios, Lotes,
+ * Inversión). Reduce el trabajo del main thread (Style & Layout) y el TBT.
+ * Cada sección define su `contain-intrinsic-size` estimado (cerca de su
+ * altura real en móvil) vía clase arbitraria de Tailwind, para que el
+ * crecimiento al renderizar no produzca saltos de layout visibles.
+ * Soportado en Chrome/Edge/Safari 18+/Firefox 125+; sin soporte, las
+ * secciones se renderizan normal. */
+.cv-auto {
+  content-visibility: auto;
+}
+
+/* ─── Fuentes self-hosted ────────────────────────────────────────
+ * Variable fonts descargados de Google Fonts (latin subset) y servidos
+ * desde /fonts/. Inter cubre 400–700; Playfair Display cubre 600–700.
+ * Se pre-cargan en index.html (rel="preload" as="font") para que el
+ * fetch arranque en T≈0 y el texto del hero pinte con su tipografía
+ * final en el primer paint (sin swap tardío que retrase el LCP). */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("/fonts/playfair-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ─── Tailwind v4 CSS-first Theme ──────────────────────────────── */
 @theme {
   /* Colores */

@@ -16,9 +16,10 @@ export function InvestmentHero() {
             Descubra un potencial de crecimiento sin precedentes en el Quindío. Una rara convergencia de turismo en auge, desarrollo de infraestructura y preservación ecológica hace que la tierra aquí sea un activo de primera clase.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            {/* Contraste: texto oscuro sobre dorado (blanco sobre #D4A373 era ~2:1) */}
             <Link
               to="/investment#roi"
-              className="bg-heritage-gold text-white font-label-bold px-6 sm:px-8 py-4 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg text-center flex items-center justify-center gap-2 tap-target"
+              className="bg-heritage-gold text-deep-forest font-label-bold px-6 sm:px-8 py-4 rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg text-center flex items-center justify-center gap-2 tap-target"
             >
               <span className="whitespace-normal sm:whitespace-nowrap">Explorar ROI</span>
               <ArrowRight className="w-4 h-4 shrink-0" />

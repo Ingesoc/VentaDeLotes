@@ -64,10 +64,10 @@ describe("BottomNavBar", () => {
       mockUseLocation.mockReturnValue({ pathname: "/projects" });
     });
 
-    it("highlights the active route with heritage-gold text color", () => {
+    it("highlights the active route with forest-green text color", () => {
       renderNav();
       const activeLink = screen.getByText("Explorar").closest("a");
-      expect(activeLink?.className).toContain("text-heritage-gold");
+      expect(activeLink?.className).toContain("text-forest-green");
     });
 
     it("does not highlight inactive routes", () => {
@@ -125,7 +125,7 @@ describe("BottomNavBar", () => {
       const activeLink = screen.getByText("Invertir").closest("a");
       const inactiveLink = screen.getByText("Explorar").closest("a");
 
-      expect(activeLink?.className).toContain("text-heritage-gold");
+      expect(activeLink?.className).toContain("text-forest-green");
       expect(inactiveLink?.className).toContain("text-on-surface-variant");
     });
 
@@ -159,7 +159,7 @@ describe("BottomNavBar", () => {
       const activeSvg = activeLink?.querySelector("svg");
       const activeSpan = screen.getByText("Contacto");
 
-      expect(activeLink?.className).toContain("text-heritage-gold");
+      expect(activeLink?.className).toContain("text-forest-green");
       expect(activeSvg?.getAttribute("class")).toContain("fill-current");
       expect(activeSpan.className).toContain("font-bold");
 

@@ -55,6 +55,15 @@ vi.mock("@/lib/cloudinary", () => {
       const CLOUD_NAME = mockEnvMap.get("cloudName");
       const UPLOAD_PRESET = mockEnvMap.get("uploadPreset");
 
+      if (!CLOUD_NAME || !UPLOAD_PRESET) {
+        reject(
+          new Error(
+            "Missing Cloudinary env vars: VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET",
+          ),
+        );
+        return;
+      }
+
       const cloudinary = (
         window as unknown as {
           cloudinary?: {
@@ -64,20 +73,7 @@ vi.mock("@/lib/cloudinary", () => {
       ).cloudinary;
 
       if (!cloudinary) {
-        reject(
-          new Error(
-            "Cloudinary widget not loaded. Add the script to index.html.",
-          ),
-        );
-        return;
-      }
-
-      if (!CLOUD_NAME || !UPLOAD_PRESET) {
-        reject(
-          new Error(
-            "Missing Cloudinary env vars: VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET",
-          ),
-        );
+        reject(new Error("Cloudinary widget no disponible."));
         return;
       }
 
@@ -157,9 +153,7 @@ describe("uploadImage", () => {
   // 1. Sin widget cargado
   // -----------------------------------------------------------------------
   it("rejects with error when cloudinary widget is not loaded", async () => {
-    await expect(uploadImage()).rejects.toThrow(
-      "Cloudinary widget not loaded. Add the script to index.html.",
-    );
+    await expect(uploadImage()).rejects.toThrow("Cloudinary widget no disponible.");
   });
 
   // -----------------------------------------------------------------------

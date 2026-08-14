@@ -14,6 +14,8 @@ export function Footer() {
               <img
                 src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784226214/laHolandaIsotipo_dme9sp.png", CLD_WIDTHS.LOGO)}
                 alt="La Holanda"
+                width={96}
+                height={90}
                 className="h-10 w-auto brightness-0 invert opacity-80"
                 loading="lazy"
                 decoding="async"
@@ -25,7 +27,7 @@ export function Footer() {
             <p className="text-body-md font-body-md text-warm-white/60 mb-2">
               {project.tagline}
             </p>
-            <p className="text-caption font-caption text-warm-white/40">
+            <p className="text-caption font-caption text-warm-white/60">
               {project.type} · {project.developer}
             </p>
             <Link
@@ -39,9 +41,9 @@ export function Footer() {
 
           {/* Ubicación */}
           <div>
-            <h4 className="font-label-bold text-soft-gold mb-4 uppercase tracking-wider text-sm">
+            <h2 className="font-label-bold text-soft-gold mb-4 uppercase tracking-wider text-sm">
               Ubicación
-            </h4>
+            </h2>
             <p className="text-body-md font-body-md text-warm-white/70">
               {project.location.address}
             </p>
@@ -55,9 +57,9 @@ export function Footer() {
 
           {/* Contacto */}
           <div>
-            <h4 className="font-label-bold text-soft-gold mb-4 uppercase tracking-wider text-sm">
+            <h2 className="font-label-bold text-soft-gold mb-4 uppercase tracking-wider text-sm">
               Contacto
-            </h4>
+            </h2>
             <p className="text-body-md font-body-md text-warm-white/70 mb-2">
               {project.contact.company}
             </p>
@@ -89,7 +91,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-warm-white/5 text-center text-warm-white/40 text-sm">
+        <div className="mt-16 pt-8 border-t border-warm-white/5 text-center text-warm-white/60 text-sm">
           © {new Date().getFullYear()} {project.name}. Una propiedad de {project.developer}. Todos los derechos reservados.
         </div>
       </div>

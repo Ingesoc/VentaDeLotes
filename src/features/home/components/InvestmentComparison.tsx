@@ -2,7 +2,7 @@ import { Check, Minus, GripHorizontal } from "lucide-react";
 
 export function InvestmentComparison() {
   return (
-    <section className="py-section-gap bg-surface-container-low">
+    <section className="py-section-gap bg-surface-container-low cv-auto [contain-intrinsic-size:auto_1300px]">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         {/* Encabezado */}
         <div className="text-center mb-16">

@@ -26,9 +26,9 @@ export function LotSpecs({ lot }: LotSpecsProps) {
 
   return (
     <div className="bg-surface-container-lowest p-8 rounded-xl shadow-ambient border border-outline-variant/10">
-      <h3 className="text-headline-md font-headline-md text-primary mb-6 border-b border-outline-variant/20 pb-4">
+      <h2 className="text-headline-md font-headline-md text-primary mb-6 border-b border-outline-variant/20 pb-4">
         Especificaciones
-      </h3>
+      </h2>
       <dl className="flex flex-col gap-4">
         {specs.map((spec, i) => (
           <div

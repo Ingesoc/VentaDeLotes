@@ -19,6 +19,9 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
+      // Inline el registro del SW en el HTML: evita el request render-blocking
+      // a /registerSW.js que Lighthouse señala en el camino crítico.
+      injectRegister: "inline",
       includeAssets: ["favicon/**/*", "robots.txt"],
       manifest: {
         name: "La Holanda — Parcelación Campestre",
@@ -43,10 +46,10 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Solo precargamos JS, CSS, HTML e iconos pequeños.
+        // Solo precargamos JS, CSS, HTML, fuentes e iconos pequeños.
         // Las imágenes grandes (jpg, webp, png de contenido) se manejan
         // con runtime caching (StaleWhileRevalidate).
-        globPatterns: ["**/*.{js,css,html,ico}", "favicon/**/*.png"],
+        globPatterns: ["**/*.{js,css,html,ico}", "favicon/**/*.png", "fonts/**/*.woff2"],
         // Estrategia: precarga todo el app shell, luego actualiza en background
         runtimeCaching: [
           {
@@ -123,7 +126,6 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ["@supabase/supabase-js"],
       output: {
         manualChunks(id: string) {
           // React y router — estables, se cachean entre builds
@@ -138,31 +140,18 @@ export default defineConfig({
               id.includes("node_modules/embla-carousel")) {
             return "vendor-ui";
           }
-          // Formularios (solo carga en páginas con formularios)
-          if (id.includes("node_modules/react-hook-form") ||
-              id.includes("node_modules/@hookform")) {
-            return "vendor-forms";
-          }
-          // Zod — separado porque zod v4+ es grande y solo se necesita en forms
-          if (id.includes("node_modules/zod")) {
-            return "vendor-zod";
-          }
+          // Formularios y zod: SIN regla de chunk propio. Al estar solo en
+          // ContactForm (carga lazy), forzar un chunk nombrado hace que
+          // rolldown lo promueva al bundle inicial de la home (~28 KiB extra
+          // en el camino crítico). Se dejan en el chunk lazy del formulario.
           // Supabase — carga bajo demanda
           if (id.includes("node_modules/@supabase")) {
             return "vendor-supabase";
-          }
-          // Páginas pesadas (DescubreQuindio)
-          if (id.includes("DescubreQuindio")) {
-            return "page-quindio";
           }
         },
       },
     },
   },
-  optimizeDeps: {
-    exclude: ["@supabase/supabase-js"],
-  },
-
   /* ─── Vitest Configuration ────────────────────────── */
   test: {
     globals: true,

@@ -32,6 +32,9 @@ export default function ContactPage() {
         {/* Información de contacto */}
         <section className="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low">
           <div className="max-w-6xl mx-auto">
+            {/* h2 sr-only para que los h3 de las tarjetas tengan jerarquía
+                válida (la página salta de h1 del hero a h3 sin h2). */}
+            <h2 className="sr-only">Información de contacto</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               <div className="bg-surface-container-lowest rounded-xl p-8 text-center border border-outline-variant/10 hover-lift">
                 <div className="w-14 h-14 bg-deep-forest/10 rounded-full flex items-center justify-center mx-auto mb-5">

@@ -11,7 +11,7 @@ export function FeaturedLots() {
     .slice(0, 3);
 
   return (
-    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+    <section className="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto cv-auto [contain-intrinsic-size:auto_1900px]">
       <div className="mb-16">
         <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
           Lotes Disponibles
