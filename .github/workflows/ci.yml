@@ -81,7 +81,7 @@ jobs:
 
       - name: Upload Lighthouse Reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lighthouse-report
           path: reports/lighthouse-ci-*
@@ -143,7 +143,7 @@ jobs:
 
       - name: Upload E2E Report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: e2e-report
           path: reports/e2e-report/
