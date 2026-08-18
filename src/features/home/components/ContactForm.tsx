@@ -16,11 +16,11 @@ export function ContactForm({ submitLead }: ContactFormProps = {}) {
   const { register, handleSubmit, errors, isSubmitting, submitStatus } =
     useContactForm({ submitLead });
 
+  // El ancla #contacto vive en el wrapper de HomePage (siempre renderizado)
+  // para que la navegación a /#contacto funcione aunque este componente
+  // cargue de forma diferida. Aquí no se repite el id.
   return (
-    <section
-      id="contacto"
-      className="py-section-gap px-margin-mobile md:px-margin-desktop bg-deep-forest relative"
-    >
+    <section className="py-section-gap px-margin-mobile md:px-margin-desktop bg-deep-forest relative">
       <div className="max-w-4xl mx-auto bg-surface-container-lowest rounded-2xl p-8 md:p-12 shadow-2xl">
         <div className="text-center mb-10">
           <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">

@@ -23,6 +23,9 @@ test.describe("Formulario de contacto", () => {
   });
 
   test("Campos de input tienen font-size >= 16px (evita zoom en iOS)", async ({ page }) => {
+    // El formulario carga de forma diferida (chunk lazy): count() no espera
+    // automáticamente, así que primero se espera a que un campo exista.
+    await expect(page.getByPlaceholder("Nombre completo")).toBeVisible();
     const inputs = page.locator("input, textarea");
     const count = await inputs.count();
     expect(count).toBeGreaterThan(0);

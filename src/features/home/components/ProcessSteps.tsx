@@ -23,7 +23,7 @@ const steps: { icon: LucideIcon; title: string; description: string }[] = [
 
 export function ProcessSteps() {
   return (
-    <section className="py-14 md:py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto cv-auto [contain-intrinsic-size:auto_1100px]">
+    <section id="proceso" className="py-14 md:py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto cv-auto [contain-intrinsic-size:auto_1100px]">
       <div className="text-center mb-10">
         <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
           Cómo funciona

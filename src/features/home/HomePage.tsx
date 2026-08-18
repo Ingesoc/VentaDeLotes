@@ -27,6 +27,15 @@ function ContactFormWhenNearViewport() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    // Llegada directa vía ancla (#contacto): el formulario debe montarse de
+    // inmediato (el navegador ya scrolleó hasta el wrapper, que siempre
+    // existe). Sin esto, el ancla vive dentro del chunk lazy: al cargar la
+    // página #contacto no existe, el navegador no scrollea y el observer
+    // nunca dispara (bug detectado por los e2e de CI).
+    if (window.location.hash === "#contacto") {
+      setVisible(true);
+      return;
+    }
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -42,8 +51,11 @@ function ContactFormWhenNearViewport() {
     return () => observer.disconnect();
   }, []);
 
+  // El id="contacto" vive en el wrapper (siempre renderizado), no dentro del
+  // formulario lazy: así los enlaces a /#contacto (nav "Reservar") scrollean
+  // y el observer dispara el montaje aunque el chunk aún no haya cargado.
   return (
-    <div ref={ref}>
+    <div ref={ref} id="contacto">
       {visible && (
         <Suspense fallback={null}>
           <ContactForm />

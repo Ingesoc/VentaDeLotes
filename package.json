@@ -90,6 +90,6 @@
     "@trickfilm400/rollup-plugin-off-main-thread": "4.0.0-pre2",
     "brace-expansion": "5.0.9",
     "fast-uri": "3.1.5",
-    "nanoid": "3.3.17"
+    "nanoid": "3.3.18"
   }
 }

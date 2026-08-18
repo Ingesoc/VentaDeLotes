@@ -130,6 +130,10 @@ test.describe("Key content per page", () => {
     ).toBeVisible();
     // Precio abreviado con valor exacto COP
     await expect(page.getByText(/COP/).first()).toBeVisible();
+    // El formulario de la home carga bajo demanda al acercarse al viewport
+    // (chunk lazy fuera del camino crítico). El ancla #contacto siempre
+    // existe; scrollear hasta ella dispara el montaje del formulario.
+    await page.locator("#contacto").scrollIntoViewIfNeeded();
     await expect(page.locator("#name")).toBeVisible();
   });
 

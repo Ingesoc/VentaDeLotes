@@ -8,6 +8,19 @@ interface LotSpecsProps {
 }
 
 export function LotSpecs({ lot }: LotSpecsProps) {
+  const isAvailable = lot.status === "disponible";
+
+  // Mensaje prellenado para WhatsApp: identifica el lote para que el asesor
+  // sepa exactamente qué reservar sin que el cliente escriba nada.
+  const reservationMessage = isAvailable
+    ? `Hola, me interesa reservar el lote ${lot.id} de La Holanda en Quimbaya. ` +
+      `Área: ${lot.areaM2.toLocaleString("es-CO")} m²` +
+      (lot.price ? `, precio: ${formatExactPrice(lot.price)}` : "") +
+      ". ¿Podemos coordinar una visita?"
+    : `Hola, me interesa el lote ${lot.id} de La Holanda en Quimbaya. ` +
+      `Área: ${lot.areaM2.toLocaleString("es-CO")} m². ` +
+      "¿Me pueden confirmar disponibilidad?";
+
   const specs = [
     {
       label: "Precio",
@@ -48,13 +61,13 @@ export function LotSpecs({ lot }: LotSpecsProps) {
       </dl>
 
       <a
-        href={`https://wa.me/${project.contact.whatsapp}`}
+        href={`https://wa.me/${project.contact.whatsapp}?text=${encodeURIComponent(reservationMessage)}`}
         target="_blank"
         rel="noopener noreferrer"
         className="w-full mt-8 flex items-center justify-center gap-2 bg-heritage-gold text-primary py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity shadow-md"
       >
         <WhatsAppIcon className="w-5 h-5" />
-        Reservar este lote
+        {isAvailable ? "Reservar este lote" : "Consultar disponibilidad"}
       </a>
     </div>
   );
