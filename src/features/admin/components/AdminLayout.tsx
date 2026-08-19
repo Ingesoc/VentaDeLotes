@@ -6,10 +6,14 @@ import {
   LogOut,
   Eye,
   Warehouse,
+  BarChart3,
+  Users,
 } from "lucide-react";
 
 const navItems = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/admin/analytics", label: "Analítica", icon: BarChart3 },
+  { to: "/admin/leads", label: "Leads", icon: Users },
   { to: "/admin/lots", label: "Lotes", icon: Warehouse },
   { to: "/", label: "Ver sitio", icon: Home, exact: true },
 ];

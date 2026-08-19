@@ -156,9 +156,11 @@ describe("ContactForm", () => {
     await fillValidForm(user);
     await user.click(screen.getByRole("button", { name: /enviar solicitud/i }));
 
-    expect(
-      screen.getByRole("button", { name: /enviando/i }),
-    ).toBeDisabled();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /enviando/i }),
+      ).toBeDisabled();
+    });
 
     // Clean up: resolve the pending promise
     resolvePromise({ ok: true });

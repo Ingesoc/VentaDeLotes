@@ -2,6 +2,7 @@ import type { Lot } from "@/constants/lots";
 import { project } from "@/constants/project";
 import { formatExactPrice } from "@/lib/format";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { trackContactInitiated } from "@/lib/analytics";
 
 interface LotSpecsProps {
   lot: Lot;
@@ -64,6 +65,7 @@ export function LotSpecs({ lot }: LotSpecsProps) {
         href={`https://wa.me/${project.contact.whatsapp}?text=${encodeURIComponent(reservationMessage)}`}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackContactInitiated(lot.id, "whatsapp")}
         className="w-full mt-8 flex items-center justify-center gap-2 bg-heritage-gold text-primary py-4 rounded-lg font-label-bold hover:opacity-90 transition-opacity shadow-md"
       >
         <WhatsAppIcon className="w-5 h-5" />

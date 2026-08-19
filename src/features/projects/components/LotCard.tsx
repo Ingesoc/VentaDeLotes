@@ -1,9 +1,11 @@
+import { useCallback } from "react";
 import { Link } from "react-router";
 import { Ruler, DollarSign, Heart } from "lucide-react";
 import type { Lot } from "@/constants/lots";
 import { LazyImage } from "@/components/ui/LazyImage";
 import { formatPrice, formatExactPrice } from "@/lib/format";
 import { useSavedLots } from "@/features/projects/hooks/useSavedLots";
+import { trackLotFavorited } from "@/lib/analytics";
 
 const statusStyles: Record<Lot["status"], { label: string; badge: string }> = {
   disponible: {
@@ -35,6 +37,12 @@ export function LotCard({ lot }: LotCardProps) {
   const { isSaved, toggleSave } = useSavedLots();
   const saved = isSaved(lot.id);
 
+  const handleToggleSave = useCallback(() => {
+    const newState = !saved;
+    toggleSave(lot.id);
+    trackLotFavorited(lot.id, newState);
+  }, [saved, toggleSave, lot.id]);
+
   return (
     <div
       className={`bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-ambient flex flex-col group hover-lift ${
@@ -52,7 +60,7 @@ export function LotCard({ lot }: LotCardProps) {
         />
         <button
           type="button"
-          onClick={() => toggleSave(lot.id)}
+          onClick={handleToggleSave}
           aria-label={
             saved
               ? `Quitar el lote ${lot.id} de guardados`

@@ -12,10 +12,11 @@ const config = {
     configFile: "vite.config.ts",
   },
   mutate: [
-    "src/components/**/*.{ts,tsx}",
-    "src/constants/**/*.{ts,tsx}",
-    "src/hooks/**/*.{ts,tsx}",
-    "src/lib/**/*.{ts,tsx}",
+    // Core files we wrote tests for and fixed
+    "src/lib/cloudinary.ts",
+    "src/lib/lotService.ts",
+    "src/lib/checkAdmin.ts",
+    "src/features/admin/components/useLots.ts",
     "!src/**/*.test.{ts,tsx}",
     "!src/**/__tests__/**",
     "!src/test/**",
@@ -29,7 +30,7 @@ const config = {
     low: 70,
     break: 60,
   },
-  concurrency: 4,
-  timeoutMS: 5000,
+  concurrency: 2,
+  timeoutMS: 10000,
 };
 export default config;

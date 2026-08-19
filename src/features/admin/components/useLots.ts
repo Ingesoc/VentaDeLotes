@@ -15,6 +15,7 @@ export function useLots() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -40,6 +41,11 @@ export function useLots() {
   }, []);
 
   const saveLot = useCallback(async (id: string, updates: { status: Lot["status"]; price: number | null }) => {
+    // Validación en JS: precio no puede ser negativo
+    if (updates.price !== null && updates.price < 0) {
+      console.error("El precio no puede ser negativo.");
+      return false;
+    }
     setSaving(true);
     try {
       const { error } = await supabase
@@ -59,6 +65,7 @@ export function useLots() {
       return true;
     } catch (err) {
       console.error("Error saving lot:", err);
+      setError("No se pudo guardar el lote. Intenta de nuevo.");
       return false;
     } finally {
       setSaving(false);
@@ -88,6 +95,7 @@ export function useLots() {
       }
     } catch (err) {
       console.error("Error uploading image:", err);
+      setError("No se pudo subir la imagen. Intenta de nuevo.");
     } finally {
       setUploading(null);
     }
@@ -110,6 +118,13 @@ export function useLots() {
       price: number | null;
       status: Lot["status"];
     }): Promise<{ ok: boolean; error?: string }> => {
+      // Validación en JS: precio no negativo, área positiva
+      if (input.price !== null && input.price < 0) {
+        return { ok: false, error: "El precio no puede ser negativo." };
+      }
+      if (input.areaM2 !== null && input.areaM2 <= 0) {
+        return { ok: false, error: "El área debe ser mayor a 0." };
+      }
       setSaving(true);
       try {
         const { error } = await supabase.from("lots").insert({
@@ -150,17 +165,22 @@ export function useLots() {
       return true;
     } catch (err) {
       console.error("Error deleting lot:", err);
+      setError("No se pudo eliminar el lote. Intenta de nuevo.");
       return false;
     } finally {
       setSaving(false);
     }
   }, []);
 
+  const clearError = useCallback(() => setError(null), []);
+
   return {
     lots,
     loading,
     saving,
     uploading,
+    error,
+    clearError,
     saveLot,
     createLot,
     deleteLot,

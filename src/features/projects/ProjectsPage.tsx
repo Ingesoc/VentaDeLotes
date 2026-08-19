@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import PageSEO from "@/components/seo/PageSEO";
 import { type LotStatus } from "@/constants/lots";
 import { usePublicLots } from "./hooks/usePublicLots";
@@ -9,6 +9,7 @@ import { project } from "@/constants/project";
 import { cldUrl } from "@/lib/cloudinary";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { YouTubeVideo } from "@/components/ui/YouTubeVideo";
+import { trackFilterApplied } from "@/lib/analytics";
 
 function matchesAreaRange(areaM2: number | null, range: AreaRange): boolean {
   if (range === "all") return true;
@@ -33,10 +34,21 @@ export function ProjectsPage() {
     });
   }, [status, areaRange, lots]);
 
-  const handleClearFilters = () => {
+  const handleStatusChange = useCallback((newStatus: LotStatus | "all") => {
+    setStatus(newStatus);
+    trackFilterApplied({ status: newStatus });
+  }, []);
+
+  const handleAreaRangeChange = useCallback((newRange: AreaRange) => {
+    setAreaRange(newRange);
+    trackFilterApplied({ areaRange: newRange });
+  }, []);
+
+  const handleClearFilters = useCallback(() => {
     setStatus("all");
     setAreaRange("all");
-  };
+    trackFilterApplied({ status: "all", areaRange: "all" });
+  }, []);
 
   const scrollRevealRef = useScrollReveal({
     childSelector: ".grid > *",
@@ -69,9 +81,9 @@ export function ProjectsPage() {
           <div className="w-full lg:w-auto">
             <LotFilters
               status={status}
-              onStatusChange={setStatus}
+              onStatusChange={handleStatusChange}
               areaRange={areaRange}
-              onAreaRangeChange={setAreaRange}
+              onAreaRangeChange={handleAreaRangeChange}
             />
             <p className="mt-4 text-label-caps font-label-caps text-on-surface-variant">
               Mostrando {filteredLots.length} de {lots.length} lotes

@@ -75,6 +75,14 @@ export const router = createBrowserRouter([
             lazy: () => import("@/features/admin/DashboardPage").then(m => ({ Component: m.Component })),
           },
           {
+            path: "analytics",
+            lazy: () => import("@/features/admin/AnalyticsPage").then(m => ({ Component: m.Component })),
+          },
+          {
+            path: "leads",
+            lazy: () => import("@/features/admin/LeadsPage").then(m => ({ Component: m.Component })),
+          },
+          {
             path: "lots",
             lazy: () => import("@/features/admin/LotsPage").then(m => ({ Component: m.Component })),
           },

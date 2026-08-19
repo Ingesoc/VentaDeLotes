@@ -13,7 +13,7 @@ const LOT_PRIORITIES = Object.fromEntries(
   LOT_IDS.map((id) => [`/projects/${id}`, 0.7]),
 );
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     react(),
     tailwindcss(),
@@ -102,22 +102,28 @@ export default defineConfig({
         ],
       },
     }),
-    sitemap({
-      hostname: "https://www.laholanda.com",
-      dynamicRoutes: DYNAMIC_ROUTES,
-      priority: {
-        "/": 1.0,
-        "/investment": 0.9,
-        "/projects": 0.9,
-        "/descubre-quindio": 0.8,
-        "/contact": 0.8,
-        ...LOT_PRIORITIES,
-      },
-      changefreq: "weekly",
-      exclude: ["/admin", "/admin/*"],
-      generateRobotsTxt: false,
-      readable: true,
-    }),
+    // Solo generar sitemap en build — evita que closeBundle se dispare
+    // durante vitest (que cierra el servidor Vite interno) y rompa el exit code.
+    ...(command === "build"
+      ? [
+          sitemap({
+            hostname: "https://www.laholanda.com",
+            dynamicRoutes: DYNAMIC_ROUTES,
+            priority: {
+              "/": 1.0,
+              "/investment": 0.9,
+              "/projects": 0.9,
+              "/descubre-quindio": 0.8,
+              "/contact": 0.8,
+              ...LOT_PRIORITIES,
+            },
+            changefreq: "weekly",
+            exclude: ["/admin", "/admin/*"],
+            generateRobotsTxt: false,
+            readable: true,
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {
@@ -171,4 +177,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

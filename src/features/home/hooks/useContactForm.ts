@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { submitLead, type LeadData, type SubmitLeadResult } from "@/lib/leads";
+import { trackFormSubmitted } from "@/lib/analytics";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Ingresa tu nombre completo"),
@@ -60,6 +61,9 @@ export function useContactForm(options: UseContactFormOptions = {}) {
     try {
       const result = await submitLeadFn(data);
       if (!result.ok) throw result.error;
+
+      // Track envío exitoso del formulario de contacto
+      trackFormSubmitted(undefined, "formulario_contacto");
 
       setSubmitStatus("success");
       setSubmitCount((c) => c + 1);

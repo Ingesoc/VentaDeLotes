@@ -28,6 +28,8 @@ export function LotsPage() {
     loading,
     saving,
     uploading,
+    error,
+    clearError,
     saveLot,
     createLot,
     deleteLot,
@@ -114,6 +116,20 @@ export function LotsPage() {
         onNewLot={openCreateModal}
         creating={saving}
       />
+
+      {error && (
+        <div className="p-4 bg-red-50 text-red-700 rounded-lg text-sm font-medium flex items-center justify-between">
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={clearError}
+            className="text-red-500 hover:text-red-700 transition-colors"
+            aria-label="Cerrar error"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       <LotsTable
         lots={filteredLots}

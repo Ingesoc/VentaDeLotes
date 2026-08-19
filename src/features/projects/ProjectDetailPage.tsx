@@ -8,6 +8,7 @@ import { LotGallery } from "./components/LotGallery";
 import { LotSpecs } from "./components/LotSpecs";
 import { LotMiniMap } from "./components/LotMiniMap";
 import { AcquisitionSteps } from "./components/AcquisitionSteps";
+import { LeadCaptureForm } from "./components/LeadCaptureForm";
 import { LotCard } from "./components/LotCard";
 import { formatExactPrice } from "@/lib/format";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -194,6 +195,11 @@ export function ProjectDetailPage() {
           </div>
           <div className="lg:col-span-4 flex flex-col gap-gutter">
             <LotSpecs lot={lot} />
+            <LeadCaptureForm
+              lotId={lot.id}
+              lotArea={lot.areaM2}
+              lotPrice={lot.price}
+            />
             <LotMiniMap lotId={lot.id} />
           </div>
         </div>

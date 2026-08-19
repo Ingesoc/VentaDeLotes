@@ -24,18 +24,16 @@ const ContactForm = lazy(() =>
  */
 function ContactFormWhenNearViewport() {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
+  // Inicializar directamente si el hash ya es #contacto — evita un render
+  // en cascada causado por setVisible(true) dentro de useEffect (eslint
+  // react-hooks/set-state-in-effect).
+  const [visible, setVisible] = useState(
+    () => typeof window !== "undefined" && window.location.hash === "#contacto",
+  );
 
   useEffect(() => {
-    // Llegada directa vía ancla (#contacto): el formulario debe montarse de
-    // inmediato (el navegador ya scrolleó hasta el wrapper, que siempre
-    // existe). Sin esto, el ancla vive dentro del chunk lazy: al cargar la
-    // página #contacto no existe, el navegador no scrollea y el observer
-    // nunca dispara (bug detectado por los e2e de CI).
-    if (window.location.hash === "#contacto") {
-      setVisible(true);
-      return;
-    }
+    // Si ya es visible (llegada por ancla), no montar observer innecesario.
+    if (visible) return;
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -49,7 +47,7 @@ function ContactFormWhenNearViewport() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [visible]);
 
   // El id="contacto" vive en el wrapper (siempre renderizado), no dentro del
   // formulario lazy: así los enlaces a /#contacto (nav "Reservar") scrollean

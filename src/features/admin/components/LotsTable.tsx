@@ -102,6 +102,7 @@ function LotRow({
                   price: e.target.value ? Number(e.target.value) : null,
                 }))
               }
+              min="0"
               placeholder="COP"
               className="w-32 px-3 py-1 border border-outline-variant/50 rounded text-body-md font-body-md focus:ring-2 focus:ring-heritage-gold focus:border-transparent"
             />
