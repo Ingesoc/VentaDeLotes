@@ -45,8 +45,8 @@ export function MarketGrowthBento() {
             alt="Vista aérea de los exuberantes paisajes verdes del Quindío con plantaciones de café y casas modernas integradas en la naturaleza"
           />
           <div className="absolute inset-0 bg-linear-to-t from-primary/90 via-primary/30 to-transparent" />
-          <div className="absolute bottom-0 left-0 p-8 w-full">
-            <div className="glass-card p-6 rounded-xl">
+          <div className="absolute bottom-0 left-0 p-4 sm:p-8 w-full">
+            <div className="glass-card p-4 sm:p-6 rounded-xl overflow-hidden">
               <h3 className="text-headline-md font-headline-md text-primary mb-2">
                 Auge del Turismo e Infraestructura
               </h3>
@@ -55,18 +55,18 @@ export function MarketGrowthBento() {
                 finalización del túnel de La Línea, la accesibilidad ha
                 revolucionado los valores de los bienes raíces.
               </p>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                 <div>
-                  <span className="block text-display-lg-mobile font-display-lg-mobile text-primary">
+                  <span className="block text-headline-md sm:text-display-lg-mobile font-headline-md sm:font-display-lg-mobile text-primary">
                     {tourismGrowthStat.value}
                   </span>
                   <span className="text-caption font-caption text-on-surface-variant uppercase tracking-wider">
                     {tourismGrowthStat.label}
                   </span>
                 </div>
-                <div className="h-12 w-[1px] bg-outline-variant" />
+                <div className="hidden sm:block h-12 w-[1px] bg-outline-variant" />
                 <div>
-                  <span className="block text-display-lg-mobile font-display-lg-mobile text-primary">
+                  <span className="block text-headline-md sm:text-display-lg-mobile font-headline-md sm:font-display-lg-mobile text-primary">
                     {infraInvestmentStat.value}
                   </span>
                   <span className="text-caption font-caption text-on-surface-variant uppercase tracking-wider">

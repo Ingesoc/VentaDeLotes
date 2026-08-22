@@ -163,7 +163,7 @@ ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO lots (id, area_m2, price, status, aerial_image, perspective_image, shared_aerial_with, topography, view_text, access)
 VALUES
-  ('01', 8910.37, 189242850, 'no_disponible', 'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg',        'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg', NULL, NULL, NULL, NULL),
+  ('01', 8910.37, NULL,      'no_disponible', 'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg',        'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg', NULL, NULL, NULL, NULL),
   ('02', 2008,    189242850, 'disponible',    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg',    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg', '03', NULL, NULL, NULL),
   ('03', 2013,    185619550, 'disponible',    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg',    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg', '02', NULL, NULL, NULL),
   ('04', 2004,    165570750, 'disponible',    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg',    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg', '05', NULL, NULL, NULL),

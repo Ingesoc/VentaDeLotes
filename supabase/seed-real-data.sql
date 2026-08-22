@@ -10,7 +10,7 @@ ON CONFLICT (email) DO NOTHING;
 -- 2. Update lots with real areas, prices (launch price 2026-09-15), and status
 INSERT INTO lots (id, area_m2, price, status, aerial_image, perspective_image, shared_aerial_with, topography, view_text, access)
 VALUES
-  ('01', 8910.37, 189242850, 'disponible', '/lots/masterplan-render.jpg', '/lots/perspectiva-general.jpg', NULL, NULL, NULL, NULL),
+  ('01', 8910.37, NULL,      'disponible', '/lots/masterplan-render.jpg', '/lots/perspectiva-general.jpg', NULL, NULL, NULL, NULL),
   ('02', 2008,    189242850, 'disponible', '/lots/lote-02-03-aerial.jpg', '/lots/perspectiva-general.jpg', '03', NULL, NULL, NULL),
   ('03', 2013,    185619550, 'disponible', '/lots/lote-02-03-aerial.jpg', '/lots/perspectiva-general.jpg', '02', NULL, NULL, NULL),
   ('04', 2004,    165570750, 'disponible', '/lots/lote-04-05-aerial.jpg', '/lots/perspectiva-general.jpg', '05', NULL, NULL, NULL),

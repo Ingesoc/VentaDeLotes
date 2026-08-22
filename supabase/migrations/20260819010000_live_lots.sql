@@ -23,7 +23,7 @@ ALTER TABLE lots ADD COLUMN IF NOT EXISTS coordinates jsonb;
 -- ── 2. SEED: LOTES (coincide con src/constants/lots.ts) ──────
 INSERT INTO lots (id, area_m2, price, status, aerial_image, perspective_image, shared_aerial_with, topography, view_text, access, coordinates)
 VALUES
-  ('01', 8910.37, 189242850, 'no_disponible',
+  ('01', 8910.37, NULL,      'no_disponible',
    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg',
    'https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg',
    NULL, NULL, NULL, NULL, '{"lat": 4.61923, "lng": -75.76700}'),
