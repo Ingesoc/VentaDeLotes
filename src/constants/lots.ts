@@ -31,12 +31,7 @@ export const lots: Lot[] = [
   {
     id: "01",
     areaM2: 8910.37,
-    price: 189242850,
-    priceSchedule: {
-      "2026-09-15": 189242850,
-      "2027-09-15": 258963900,
-      "2028-10-15": 298804500,
-    },
+    price: undefined,
     status: "no_disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61923, lng: -75.76700 },

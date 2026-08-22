@@ -34,9 +34,9 @@ export function MarketGrowthBento() {
       </div>
 
       {/* Cuadrícula */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter auto-rows-[300px]">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter auto-rows-auto md:auto-rows-[300px]">
         {/* Tarjeta grande (8 col, 2 filas) */}
-        <div className="md:col-span-8 md:row-span-2 rounded-xl overflow-hidden relative group">
+        <div className="md:col-span-8 md:row-span-2 min-h-[380px] md:min-h-0 rounded-xl overflow-hidden relative group">
           <img
             loading="lazy"
             decoding="async"

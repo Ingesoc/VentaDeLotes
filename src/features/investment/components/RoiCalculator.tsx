@@ -66,8 +66,9 @@ export function RoiCalculator() {
             Calcula tu proyección
           </h2>
           <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mx-auto">
-            Ajusta la inversión, el horizonte y la tasa de valorización para ver
-            cuánto podría crecer tu capital en un lote en el Quindío.
+            Herramienta de simulación especulativa. Ajusta la inversión, el
+            horizonte y la tasa de valorización para visualizar un escenario
+            proyectado de crecimiento de capital en un lote en el Quindío.
           </p>
         </div>
 
@@ -209,9 +210,12 @@ export function RoiCalculator() {
               </ResponsiveContainer>
             </div>
             <p className="mt-6 text-caption font-caption text-on-surface-variant">
-              Proyección estimada con interés compuesto anual. No es una
-              promesa de rentabilidad: los resultados reales dependen del
-              mercado.
+              ⚠️ Proyección especulativa basada en interés compuesto anual.
+              Los valores mostrados son estimaciones de mercado y <strong>no
+              constituyen una garantía de rentabilidad</strong>. El valor real
+              de la tierra depende de factores del mercado, zonificación,
+              infraestructura y condiciones económicas que pueden variar.
+              Consulte siempre un asesor financiero antes de invertir.
             </p>
           </div>
         </div>
