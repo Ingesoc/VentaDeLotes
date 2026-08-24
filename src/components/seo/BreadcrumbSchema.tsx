@@ -17,7 +17,8 @@ interface BreadcrumbSchemaProps {
  * El primer item siempre es "Inicio" apuntando a la home.
  */
 export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
-  const DOMAIN = "https://www.laholanda.com";
+  const DOMAIN = "https://laholanda.ingesocc.com";
+  // Siempre canonicalizar al dominio preferido
 
   // Siempre preceder con "Inicio"
   const fullItems: BreadcrumbItem[] = [

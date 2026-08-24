@@ -89,7 +89,7 @@ export function ProjectDetailPage() {
       <PageSEO
         title={`Lote ${lot.id} — ${lot.areaM2.toLocaleString()} m² en Quimbaya, Quindío | La Holanda`}
         description={description}
-        ogUrl={`https://www.laholanda.com/projects/${lot.id}`}
+        ogUrl={`https://laholanda.ingesocc.com/projects/${lot.id}`}
         ogImage={ogImage}
         ogType="article"
         keywords={keywords}
@@ -97,8 +97,8 @@ export function ProjectDetailPage() {
 
       <BreadcrumbSchema
         items={[
-          { name: "Lotes Disponibles", url: "https://www.laholanda.com/projects" },
-          { name: `Lote ${lot.id}`, url: `https://www.laholanda.com/projects/${lot.id}` },
+          { name: "Lotes Disponibles", url: "https://laholanda.ingesocc.com/projects" },
+          { name: `Lote ${lot.id}`, url: `https://laholanda.ingesocc.com/projects/${lot.id}` },
         ]}
       />
 
@@ -110,7 +110,7 @@ export function ProjectDetailPage() {
             "@type": "RealEstateListing",
             name: `Lote ${lot.id} — ${lot.areaM2.toLocaleString()} m² en Quimbaya, Quindío`,
             description,
-            url: `https://www.laholanda.com/projects/${lot.id}`,
+            url: `https://laholanda.ingesocc.com/projects/${lot.id}`,
             image: [lot.aerialImage, lot.perspectiveImage].filter(Boolean),
             datePosted: "2025-01-01",
             validFrom: "2025-01-01",
@@ -124,12 +124,12 @@ export function ProjectDetailPage() {
                 : lot.status === "reservado"
                   ? "https://schema.org/PreOrder"
                   : "https://schema.org/SoldOut",
-              url: `https://www.laholanda.com/projects/${lot.id}`,
+              url: `https://laholanda.ingesocc.com/projects/${lot.id}`,
               itemCondition: "https://schema.org/NewCondition",
               seller: {
                 "@type": "Organization",
                 name: project.developer,
-                url: "https://www.laholanda.com",
+                url: "https://laholanda.ingesocc.com",
               },
             },
             additionalProperty: [
@@ -172,7 +172,7 @@ export function ProjectDetailPage() {
             isPartOf: {
               "@type": "RealEstateSubdivision",
               name: "La Holanda",
-              url: "https://www.laholanda.com/",
+              url: "https://laholanda.ingesocc.com/",
             },
           })}
         </script>
@@ -194,10 +194,10 @@ export function ProjectDetailPage() {
         <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div>
             <h1 className="text-headline-lg-mobile md:text-display-lg font-display-lg text-primary mb-2">
-              Lote {lot.id}
+              Lote {lot.id} — {lot.areaM2.toLocaleString("es-CO")} m² en Quimbaya
             </h1>
             <p className="text-body-lg font-body-lg text-on-surface-variant">
-              Santuario Natural en Quindío
+              Terreno campestre en La Holanda, Eje Cafetero
             </p>
           </div>
           <div className="flex flex-col items-start md:items-end gap-3">
@@ -238,6 +238,46 @@ export function ProjectDetailPage() {
         </div>
 
         <AcquisitionSteps />
+
+        {/* Contenido SEO descriptivo por lote — texto único para cada
+            lote que Google puede indexar. Evita contenido duplicado. */}
+        <section className="mb-16">
+          <h2 className="text-headline-md font-headline-md text-primary mb-6 border-b border-outline-variant/20 pb-4">
+            Sobre este lote en La Holanda, Quimbaya
+          </h2>
+          <div className="space-y-4 text-body-md font-body-md text-on-surface-variant leading-relaxed max-w-3xl">
+            <p>
+              El <strong>Lote {lot.id}</strong> es un terreno campestre de
+              {" "}<strong>{lot.areaM2.toLocaleString("es-CO")} m²</strong> ubicado
+              en La Holanda, parcelación campestre en la Vía Quimbaya - Alcalá,
+              Vereda Jazmín, Quimbaya, Quindío.
+            </p>
+            {lot.topography && (
+              <p>
+                Su topografía es <strong>{lot.topography.toLowerCase()}</strong>{lot.view ? `, con ${lot.view.toLowerCase()}` : ""},
+                ideal para construir una segunda residencia o vivienda permanente
+                en el corazón del Eje Cafetero.
+              </p>
+            )}
+            <p>
+              <strong>Ubicación estratégica:</strong> a 20 minutos del parque
+              principal de Quimbaya, 40 minutos de Armenia (capital del
+              Quindío), 30 minutos de Filandia y 45 minutos de Salento. El
+              Aeropuerto Internacional El Edén está a menos de una hora.
+            </p>
+            <p>
+              <strong>Incluye:</strong> escritura pública individual con libertad
+              de cargos, proceso de legalización completo, diseño arquitectónico
+              tipo incluido y acceso por vía principal.
+            </p>
+            <p>
+              Desarrollado por <strong>INGESOCC SAS</strong> con más de 20 años
+              de experiencia en construcción y desarrollo inmobiliario en el
+              Quindío. Consulta precios, opciones de financiación y agenda tu
+              visita al WhatsApp 3217151831.
+            </p>
+          </div>
+        </section>
 
         {/* Similares */}
         {relatedLots.length > 0 && (

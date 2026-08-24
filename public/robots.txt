@@ -5,4 +5,4 @@ Disallow: /reset-password
 Disallow: /saved
 
 # Sitemap
-Sitemap: https://www.laholanda.com/sitemap.xml
+Sitemap: https://laholanda.ingesocc.com/sitemap.xml

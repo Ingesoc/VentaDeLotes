@@ -7,7 +7,7 @@ import { VitePWA } from "vite-plugin-pwa";
 // IDs de los 16 lotes del plan maestro — se mantienen sincronizados con src/constants/lots.ts
 const LOT_IDS = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"];
 const LOT_ROUTES = LOT_IDS.map((id) => `/projects/${id}`);
-const DYNAMIC_ROUTES = ["/", "/investment", "/projects", "/descubre-quindio", "/contact", "/saved", ...LOT_ROUTES];
+const DYNAMIC_ROUTES = ["/", "/investment", "/projects", "/descubre-quindio", "/contact", "/saved", "/blog", "/blog/guia-compra-lote-rural-quindio", "/blog/escrituracion-lotes-colombia", "/blog/inversion-eje-cafetero-finca-raiz", "/blog/quimbaya-vs-filandia-vs-salento", "/blog/financiacion-compra-lotes-rurales", "/blog/vivir-en-quimbaya", "/blog/lotes-con-escritura-publica-verificar", ...LOT_ROUTES];
 
 const LOT_PRIORITIES = Object.fromEntries(
   LOT_IDS.map((id) => [`/projects/${id}`, 0.8]),
@@ -107,7 +107,7 @@ export default defineConfig(({ command }) => ({
     ...(command === "build"
       ? [
           sitemap({
-            hostname: "https://www.laholanda.com",
+            hostname: "https://laholanda.ingesocc.com",
             dynamicRoutes: DYNAMIC_ROUTES,
             priority: {
               "/": 1.0,
@@ -115,7 +115,15 @@ export default defineConfig(({ command }) => ({
               "/investment": 0.8,
               "/descubre-quindio": 0.7,
               "/contact": 0.6,
+              "/blog/guia-compra-lote-rural-quindio": 0.7,
+              "/blog/escrituracion-lotes-colombia": 0.7,
+              "/blog/inversion-eje-cafetero-finca-raiz": 0.7,
+              "/blog/quimbaya-vs-filandia-vs-salento": 0.7,
+              "/blog/financiacion-compra-lotes-rurales": 0.7,
+              "/blog/vivir-en-quimbaya": 0.7,
+              "/blog/lotes-con-escritura-publica-verificar": 0.7,
               "/saved": 0.3,
+              "/blog": 0.8,
               ...LOT_PRIORITIES,
             },
             changefreq: {
@@ -124,7 +132,15 @@ export default defineConfig(({ command }) => ({
               "/investment": "monthly",
               "/descubre-quindio": "monthly",
               "/contact": "monthly",
+              "/blog/guia-compra-lote-rural-quindio": "monthly",
+              "/blog/escrituracion-lotes-colombia": "monthly",
+              "/blog/inversion-eje-cafetero-finca-raiz": "monthly",
+              "/blog/quimbaya-vs-filandia-vs-salento": "monthly",
+              "/blog/financiacion-compra-lotes-rurales": "monthly",
+              "/blog/vivir-en-quimbaya": "monthly",
+              "/blog/lotes-con-escritura-publica-verificar": "monthly",
               "/saved": "never",
+              "/blog": "weekly",
               ...Object.fromEntries(
                 LOT_IDS.map((id) => [`/projects/${id}`, "weekly"] as const)
               ),

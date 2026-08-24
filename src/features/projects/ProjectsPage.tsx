@@ -61,25 +61,25 @@ export function ProjectsPage() {
   return (
     <>
       <PageSEO
-        title="Lotes Disponibles en Quimbaya | La Holanda"
-        description="Explora nuestra selección de lotes campestres en Quimbaya, Quindío. Filtra por área, estado y encuentra el lote perfecto para tu hogar o inversión."
-        ogUrl="https://www.laholanda.com/projects"
+        title="Lotes Campestres Quimbaya Quindío — La Holanda"
+        description="Lotes campestres en venta en Quimbaya, Quindío. Desde $158M COP con escritura pública, vías de acceso y diseño incluido. Filtra por área y estado. Agenda tu visita hoy."
+        ogUrl="https://laholanda.ingesocc.com/projects"
         ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303341/laholanda/lots/masterplan-render.jpg")}
-        keywords="lotes campestres quimbaya quindío, terrenos en venta quimbaya, parcelación eje cafetero, lotes disponibles quindío"
+        keywords="lotes campestres quimbaya quindío, terrenos en venta quimbaya, parcelación eje cafetero, lotes disponibles quindío, comprar lote Quimbaya"
       />
       <BreadcrumbSchema
-        items={[{ name: "Lotes Disponibles", url: "https://www.laholanda.com/projects" }]}
+        items={[{ name: "Lotes Disponibles", url: "https://laholanda.ingesocc.com/projects" }]}
       />
       <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24 page-enter">
         <div className="mb-12 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
           <div>
             <h1 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
-              Descubre tu santuario
+              Lotes Campestres en Quimbaya, Quindío
             </h1>
             <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">
               Explora nuestros exclusivos lotes inmersos en la belleza natural del
-              Quindío. Filtra según tus preferencias para encontrar el espacio
-              ideal.
+              Quindío. Filtra por área y estado para encontrar el lote perfecto
+              para tu hogar o inversión en el Eje Cafetero.
             </p>
           </div>
 
@@ -124,6 +124,51 @@ export function ProjectsPage() {
             ))}
           </div>
         )}
+
+        {/* Contenido SEO on-page — texto descriptivo de la zona para
+            keywords long-tail: "lotes campestres quimbaya quindío precio",
+            "parcelación cerca a Armenia", "lote con escritura eje cafetero" */}
+        <section className="mt-16 md:mt-24 max-w-4xl mx-auto">
+          <h2 className="text-headline-md font-headline-md text-primary mb-6">
+            Lotes Campestres en Quimbaya, Quindío — Tu Santuario en el Eje Cafetero
+          </h2>
+          <div className="space-y-4 text-body-md font-body-md text-on-surface-variant leading-relaxed">
+            <p>
+              <strong>La Holanda</strong> es una parcelación campestre ubicada en la Vía Quimbaya - Alcalá,
+              Vereda Jazmín, Quimbaya, Quindío. Nuestros lotes en venta ofrecen desde 2.000 m² hasta
+              8.900 m² de terreno natural con escritura pública individual, vías de acceso pavimentadas
+              y diseño arquitectónico tipo incluido.
+            </p>
+            <h3 className="text-headline-sm font-headline-sm text-primary pt-4">
+              Ubicación estratégica en el corazón del Eje Cafetero
+            </h3>
+            <p>
+              Quimbaya se encuentra en el centro del Paisaje Cultural Cafetero, Patrimonio de la Humanidad
+              por la UNESCO. A solo 20 minutos del parque principal de Quimbaya, 40 minutos de Armenia
+              (capital del Quindío), 30 minutos de Filandia y 45 minutos de Salento. El Aeropuerto
+              Internacional El Edén está a menos de una hora, conectándote con Bogotá, Medellín y
+             destinos internacionales.
+            </p>
+            <h3 className="text-headline-sm font-headline-sm text-primary pt-4">
+              Clima, servicios y calidad de vida
+            </h3>
+            <p>
+              Con un clima promedio de 22°C todo el año, Quimbaya ofrece las condiciones perfectas para
+              vivir o invertir. La zona cuenta con energía eléctrica, vías de acceso principales en
+              buen estado, y está en proceso de dotación de agua potable. El entorno natural de
+              La Holanda preserva árboles de aguacate y paisajes verdes que hacen única cada propiedad.
+            </p>
+            <h3 className="text-headline-sm font-headline-sm text-primary pt-4">
+              Escritura pública y proceso de compra seguro
+            </h3>
+            <p>
+              Cada lote incluye escritura pública individual con libertad de cargos, proceso de
+              legalización completo y certificado de tradición. Desarrollado por INGESOCC SAS con
+              más de 20 años de experiencia en construcción y desarrollo inmobiliario en el Quindío.
+              Consulta precios, disponibilidad y opciones de financiación directa con el desarrollador.
+            </p>
+          </div>
+        </section>
 
         {/* Ubicación de la finca */}
         <section className="mt-16 md:mt-24">

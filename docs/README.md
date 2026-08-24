@@ -3,7 +3,7 @@
 > **Proyecto:** La Holanda — Parcelación Campestre
 > **Desarrollador:** INGESOCC SAS
 > **Ubicación:** Quimbaya, Quindío, Colombia
-> **URL:** [laholanda.com](https://www.laholanda.com/)
+> **URL:** [laholanda.com](https://laholanda.ingesocc.com/)
 
 Bienvenido a la documentación técnica del proyecto. Aquí se explican la arquitectura, el stack tecnológico, las funciones implementadas, las decisiones técnicas y las guías de despliegue.
 

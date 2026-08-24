@@ -20,14 +20,14 @@ export default function DescubreQuindio() {
   return (
     <>
       <PageSEO
-        title="Descubre Quindío — Eje Cafetero, Patrimonio de la Humanidad"
-        description="Explora el Paisaje Cultural Cafetero de Quindío, Patrimonio de la Humanidad. Festivales, naturaleza, cultura arriera, clima perfecto y lotes campestres en venta en Quimbaya."
-        ogUrl="https://www.laholanda.com/descubre-quindio"
+        title="Descubre Quindío — Eje Cafetero Colombia"
+        description="Explora Quindío, corazón del Eje Cafetero y Patrimonio de la Humanidad. Clima perfecto, naturaleza, cultura cafetera y lotes campestres en venta en Quimbaya. Conoce la zona."
+        ogUrl="https://laholanda.ingesocc.com/descubre-quindio"
         ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg")}
         keywords="eje cafetero, Quindío, Quimbaya, paisaje cultural cafetero, vivir en quindío, clima eje cafetero, turismo quindío, lotes campestres quimbaya"
       />
       <BreadcrumbSchema
-        items={[{ name: "Descubre Quindío", url: "https://www.laholanda.com/descubre-quindio" }]}
+        items={[{ name: "Descubre Quindío", url: "https://laholanda.ingesocc.com/descubre-quindio" }]}
       />
       <div ref={scrollRevealRef} className="pt-16 page-enter">
         <QuindioHero />

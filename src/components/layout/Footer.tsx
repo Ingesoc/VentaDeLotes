@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Send, Compass } from "lucide-react";
+import { Phone, Mail, MapPin, Send, Compass, BookOpen } from "lucide-react";
 import { Link } from "react-router";
 import { project } from "@/constants/project";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
@@ -30,13 +30,22 @@ export function Footer() {
             <p className="text-caption font-caption text-warm-white/60">
               {project.type} · {project.developer}
             </p>
-            <Link
-              to="/descubre-quindio"
-              className="inline-flex items-center gap-2 text-body-md font-body-md text-soft-gold hover:text-warm-white transition-colors mt-6 group"
-            >
-              <Compass className="w-4 h-4 transition-transform group-hover:rotate-12" />
-              Descubre Quindío
-            </Link>
+            <div className="flex flex-col gap-3 mt-6">
+              <Link
+                to="/descubre-quindio"
+                className="inline-flex items-center gap-2 text-body-md font-body-md text-soft-gold hover:text-warm-white transition-colors group"
+              >
+                <Compass className="w-4 h-4 transition-transform group-hover:rotate-12" />
+                Descubre Quindío
+              </Link>
+              <Link
+                to="/blog"
+                className="inline-flex items-center gap-2 text-body-md font-body-md text-soft-gold hover:text-warm-white transition-colors group"
+              >
+                <BookOpen className="w-4 h-4 transition-transform group-hover:scale-110" />
+                Blog — Guías de Compra
+              </Link>
+            </div>
           </div>
 
           {/* Ubicación */}

@@ -11,7 +11,7 @@ updated: 2026-08-12
 > **Proyecto:** La Holanda — Parcelación Campestre
 > **Desarrollador:** INGESOCC SAS
 > **Ubicación:** Quimbaya, Quindío, Colombia
-> **URL:** [laholanda.com](https://www.laholanda.com/)
+> **URL:** [laholanda.com](https://laholanda.ingesocc.com/)
 
 Bienvenido a la documentación técnica del proyecto. Este repositorio contiene las decisiones de arquitectura, la configuración del stack, las funciones implementadas y las guías de despliegue.
 

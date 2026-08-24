@@ -27,7 +27,7 @@ Envuelve `react-helmet-async` e inyecta las etiquetas en el `<head>`:
   title="Invertir en Quindío"
   description="Oportunidades de inversión en lotes campestres..."
   ogImage="https://res.cloudinary.com/..."
-  ogUrl="https://www.laholanda.com/investment"
+  ogUrl="https://laholanda.ingesocc.com/investment"
 />
 ```
 
@@ -53,7 +53,7 @@ Se genera automáticamente durante el build con `vite.config.ts`:
 const LOT_ROUTES = ["/projects/01", ..., "/projects/16"];
 
 sitemap({
-  hostname: "https://www.laholanda.com",
+  hostname: "https://laholanda.ingesocc.com",
   dynamicRoutes: ["/", "/investment", "/projects", "/descubre-quindio", "/contact", ...LOT_ROUTES],
   priority: {
     "/": 1.0,
@@ -79,7 +79,7 @@ Se inyectan en `index.html`:
   "@type": "RealEstateSubdivision",
   "name": "La Holanda",
   "description": "Parcelación campestre en Quimbaya, Quindío...",
-  "url": "https://www.laholanda.com/",
+  "url": "https://laholanda.ingesocc.com/",
   "geo": { "@type": "GeoCoordinates", "latitude": "4.6225", "longitude": "-75.7597" },
   "address": {
     "@type": "PostalAddress",
@@ -110,6 +110,6 @@ Se inyectan en `index.html`:
 ## Consideraciones
 
 - Las páginas admin (`/admin/*`) se excluyen del sitemap y usan `noindex`.
-- El canonical apunta a `https://www.laholanda.com/`.
+- El canonical apunta a `https://laholanda.ingesocc.com/`.
 - Cada página define sus propios meta tags con `PageSEO`.
 - Las imágenes OG usan Cloudinary con optimización automática.

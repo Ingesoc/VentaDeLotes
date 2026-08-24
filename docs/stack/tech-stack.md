@@ -118,7 +118,7 @@ plugins: [
   tailwindcss(),
   VitePWA({ registerType: "autoUpdate", manifest: {...} }),
   sitemap({
-    hostname: "https://www.laholanda.com",
+    hostname: "https://laholanda.ingesocc.com",
     dynamicRoutes: ["/", "/investment", "/projects", "/projects/01", ..., "/contact"],
     exclude: ["/admin", "/admin/*"],
   }),

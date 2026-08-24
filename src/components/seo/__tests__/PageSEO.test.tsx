@@ -64,14 +64,14 @@ describe("PageSEO", () => {
     renderSEO({ title: "Test" });
     await waitForHelmet();
     const ogUrl = document.querySelector('meta[property="og:url"]');
-    expect(ogUrl?.getAttribute("content")).toBe("https://www.laholanda.com/");
+    expect(ogUrl?.getAttribute("content")).toBe("https://laholanda.ingesocc.com/");
   });
 
   it("uses custom og:url when provided", async () => {
-    renderSEO({ title: "Test", ogUrl: "https://www.laholanda.com/projects/01" });
+    renderSEO({ title: "Test", ogUrl: "https://laholanda.ingesocc.com/projects/01" });
     await waitForHelmet();
     const ogUrl = document.querySelector('meta[property="og:url"]');
-    expect(ogUrl?.getAttribute("content")).toBe("https://www.laholanda.com/projects/01");
+    expect(ogUrl?.getAttribute("content")).toBe("https://laholanda.ingesocc.com/projects/01");
   });
 
   it("sets og:locale to es_CO", async () => {
