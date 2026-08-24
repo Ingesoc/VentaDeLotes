@@ -1,0 +1,4 @@
+# SPA fallback — todas las rutas retornan index.html para que React Router
+# maneje el routing del lado del cliente. Sin esto, /blog, /projects/01, etc.
+# retornan 404 cuando se accede directamente (sin pasar por la home).
+/*    /index.html   200

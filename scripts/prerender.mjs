@@ -35,6 +35,15 @@ const ROUTES = [
   "/investment",
   "/descubre-quindio",
   "/contact",
+  // Blog — índice + 7 artículos pilar SEO
+  "/blog",
+  "/blog/guia-compra-lote-rural-quindio",
+  "/blog/escrituracion-lotes-colombia",
+  "/blog/inversion-eje-cafetero-finca-raiz",
+  "/blog/quimbaya-vs-filandia-vs-salento",
+  "/blog/financiacion-compra-lotes-rurales",
+  "/blog/vivir-en-quimbaya",
+  "/blog/lotes-con-escritura-publica-verificar",
   // Las 16 páginas de lotes individuales
   ...Array.from({ length: 16 }, (_, i) => `/projects/${String(i + 1).padStart(2, "0")}`),
 ];
