@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /reset-password
+Disallow: /saved
 
+# Sitemap
 Sitemap: https://www.laholanda.com/sitemap.xml

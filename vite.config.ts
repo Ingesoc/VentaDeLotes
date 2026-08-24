@@ -7,10 +7,10 @@ import { VitePWA } from "vite-plugin-pwa";
 // IDs de los 16 lotes del plan maestro — se mantienen sincronizados con src/constants/lots.ts
 const LOT_IDS = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"];
 const LOT_ROUTES = LOT_IDS.map((id) => `/projects/${id}`);
-const DYNAMIC_ROUTES = ["/", "/investment", "/projects", "/descubre-quindio", "/contact", ...LOT_ROUTES];
+const DYNAMIC_ROUTES = ["/", "/investment", "/projects", "/descubre-quindio", "/contact", "/saved", ...LOT_ROUTES];
 
 const LOT_PRIORITIES = Object.fromEntries(
-  LOT_IDS.map((id) => [`/projects/${id}`, 0.7]),
+  LOT_IDS.map((id) => [`/projects/${id}`, 0.8]),
 );
 
 export default defineConfig(({ command }) => ({
@@ -111,14 +111,25 @@ export default defineConfig(({ command }) => ({
             dynamicRoutes: DYNAMIC_ROUTES,
             priority: {
               "/": 1.0,
-              "/investment": 0.9,
               "/projects": 0.9,
-              "/descubre-quindio": 0.8,
-              "/contact": 0.8,
+              "/investment": 0.8,
+              "/descubre-quindio": 0.7,
+              "/contact": 0.6,
+              "/saved": 0.3,
               ...LOT_PRIORITIES,
             },
-            changefreq: "weekly",
-            exclude: ["/admin", "/admin/*"],
+            changefreq: {
+              "/": "weekly",
+              "/projects": "weekly",
+              "/investment": "monthly",
+              "/descubre-quindio": "monthly",
+              "/contact": "monthly",
+              "/saved": "never",
+              ...Object.fromEntries(
+                LOT_IDS.map((id) => [`/projects/${id}`, "weekly"] as const)
+              ),
+            },
+            exclude: ["/admin", "/admin/*", "/reset-password"],
             generateRobotsTxt: false,
             readable: true,
           }),

@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from "react-router";
 import { Helmet } from "react-helmet-async";
 import { ChevronRight } from "lucide-react";
 import PageSEO from "@/components/seo/PageSEO";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { project } from "@/constants/project";
 import { usePublicLot } from "./hooks/usePublicLots";
 import { LotGallery } from "./components/LotGallery";
@@ -94,6 +95,13 @@ export function ProjectDetailPage() {
         keywords={keywords}
       />
 
+      <BreadcrumbSchema
+        items={[
+          { name: "Lotes Disponibles", url: "https://www.laholanda.com/projects" },
+          { name: `Lote ${lot.id}`, url: `https://www.laholanda.com/projects/${lot.id}` },
+        ]}
+      />
+
       {/* Structured Data (JSON-LD) — RealEstateListing */}
       <Helmet>
         <script type="application/ld+json">
@@ -103,8 +111,9 @@ export function ProjectDetailPage() {
             name: `Lote ${lot.id} — ${lot.areaM2.toLocaleString()} m² en Quimbaya, Quindío`,
             description,
             url: `https://www.laholanda.com/projects/${lot.id}`,
-            image: ogImage,
-            datePosted: new Date().toISOString().split("T")[0],
+            image: [lot.aerialImage, lot.perspectiveImage].filter(Boolean),
+            datePosted: "2025-01-01",
+            validFrom: "2025-01-01",
             offers: {
               "@type": "Offer",
               price: lot.price ? lot.price / 1_000_000 : undefined,
@@ -113,20 +122,39 @@ export function ProjectDetailPage() {
               availability: lot.status === "disponible"
                 ? "https://schema.org/InStock"
                 : lot.status === "reservado"
-                  ? "https://schema.org/Reserved"
+                  ? "https://schema.org/PreOrder"
                   : "https://schema.org/SoldOut",
               url: `https://www.laholanda.com/projects/${lot.id}`,
+              itemCondition: "https://schema.org/NewCondition",
               seller: {
                 "@type": "Organization",
                 name: project.developer,
                 url: "https://www.laholanda.com",
               },
             },
-            area: {
-              "@type": "QuantitativeValue",
-              value: lot.areaM2,
-              unitText: "m²",
-            },
+            additionalProperty: [
+              {
+                "@type": "PropertyValue",
+                name: "Área",
+                value: lot.areaM2,
+                unitText: "m²",
+              },
+              ...(lot.topography ? [{
+                "@type": "PropertyValue",
+                name: "Topografía",
+                value: lot.topography,
+              }] : []),
+              ...(lot.view ? [{
+                "@type": "PropertyValue",
+                name: "Vista",
+                value: lot.view,
+              }] : []),
+              ...(lot.access ? [{
+                "@type": "PropertyValue",
+                name: "Acceso",
+                value: lot.access,
+              }] : []),
+            ],
             address: {
               "@type": "PostalAddress",
               streetAddress: project.location.address,
@@ -141,6 +169,11 @@ export function ProjectDetailPage() {
                 longitude: lot.coordinates.lng,
               },
             }),
+            isPartOf: {
+              "@type": "RealEstateSubdivision",
+              name: "La Holanda",
+              url: "https://www.laholanda.com/",
+            },
           })}
         </script>
       </Helmet>

@@ -1,4 +1,5 @@
 import PageSEO from "@/components/seo/PageSEO";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { ContactForm } from "@/features/home/components/ContactForm";
 import { project } from "@/constants/project";
 import { Phone, Mail, MapPin } from "lucide-react";
@@ -8,8 +9,12 @@ export default function ContactPage() {
     <>
       <PageSEO
         title="Contacto | La Holanda"
-        description="Contáctanos para recibir asesoría personalizada sobre los lotes campestres en La Holanda, Quimbaya, Quindío."
+        description="Contáctanos para recibir asesoría personalizada sobre los lotes campestres en La Holanda, Quimbaya, Quindío. WhatsApp, formulario o llamada directa."
         ogUrl="https://www.laholanda.com/contact"
+        keywords="contacto la holanda, asesoría lotes quimbaya, WhatsApp INGESOCC, agendar visita parcelación"
+      />
+      <BreadcrumbSchema
+        items={[{ name: "Contacto", url: "https://www.laholanda.com/contact" }]}
       />
       <div className="page-enter">
         {/* Hero pequeño */}

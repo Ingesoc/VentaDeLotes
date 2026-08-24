@@ -8,17 +8,21 @@ interface PageSEOProps {
   ogUrl?: string;
   ogType?: string;
   keywords?: string;
+  /** Canonical URL explícita. Si se omite, se deriva de ogUrl. */
+  canonical?: string;
   /** Si la página no debe aparecer en buscadores */
   noindex?: boolean;
 }
 
-const DEFAULT_TITLE = "La Holanda — Parcelación Campestre | Quimbaya, Quindío";
+const SITE_NAME = "La Holanda — Parcelación Campestre";
+const DOMAIN = "https://www.laholanda.com";
+const DEFAULT_TITLE = `${SITE_NAME} | Quimbaya, Quindío`;
 const DEFAULT_DESCRIPTION =
   "La Holanda — Parcelación Campestre en Quimbaya, Quindío. Lotes campestres desde 500 m² con escritura pública, vías de acceso y diseño arquitectónico incluido. Desarrollado por INGESOCC SAS.";
 const DEFAULT_OG_IMAGE = cldUrl(
   "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303937/laholanda/landscapes/DJI_0131.webp"
 );
-const DEFAULT_OG_URL = "https://www.laholanda.com/";
+const DEFAULT_OG_URL = `${DOMAIN}/`;
 const DEFAULT_KEYWORDS =
   "lotes campestres, parcelación quimbaya, quindío, la holanda, ingesocc, lotes baratos, finca raíz eje cafetero, vivir en quindío, inversión inmobiliaria, lote con escritura";
 
@@ -29,6 +33,7 @@ export default function PageSEO({
   ogUrl,
   ogType = "website",
   keywords,
+  canonical,
   noindex = false,
 }: PageSEOProps) {
   const finalTitle = title ? `${title} | La Holanda` : DEFAULT_TITLE;
@@ -36,17 +41,20 @@ export default function PageSEO({
   const finalImage = ogImage ?? DEFAULT_OG_IMAGE;
   const finalUrl = ogUrl ?? DEFAULT_OG_URL;
   const finalKeywords = keywords ?? DEFAULT_KEYWORDS;
+  // Canonical: preferencia explícita > ogUrl > default
+  const canonicalUrl = canonical ?? finalUrl;
 
   return (
     <Helmet>
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
       <meta name="keywords" content={finalKeywords} />
+      <link rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={finalUrl} />
-      <meta property="og:site_name" content="La Holanda — Parcelación Campestre" />
+      <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:title" content={finalTitle} />
       <meta property="og:description" content={finalDescription} />
       <meta property="og:image" content={finalImage} />
@@ -59,6 +67,11 @@ export default function PageSEO({
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDescription} />
       <meta name="twitter:image" content={finalImage} />
+
+      {/* Geo Tags (redundantes con index.html pero necesarias si
+          el crawler solo procesa el Helmet output tras hidratación) */}
+      <meta name="geo.region" content="CO-QUI" />
+      <meta name="geo.placename" content="Quimbaya" />
 
       {/* Robots */}
       {noindex && <meta name="robots" content="noindex, nofollow" />}

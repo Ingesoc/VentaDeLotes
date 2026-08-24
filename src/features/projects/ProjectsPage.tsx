@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import PageSEO from "@/components/seo/PageSEO";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { type LotStatus } from "@/constants/lots";
 import { usePublicLots } from "./hooks/usePublicLots";
 import { LotCard } from "./components/LotCard";
@@ -64,6 +65,10 @@ export function ProjectsPage() {
         description="Explora nuestra selección de lotes campestres en Quimbaya, Quindío. Filtra por área, estado y encuentra el lote perfecto para tu hogar o inversión."
         ogUrl="https://www.laholanda.com/projects"
         ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303341/laholanda/lots/masterplan-render.jpg")}
+        keywords="lotes campestres quimbaya quindío, terrenos en venta quimbaya, parcelación eje cafetero, lotes disponibles quindío"
+      />
+      <BreadcrumbSchema
+        items={[{ name: "Lotes Disponibles", url: "https://www.laholanda.com/projects" }]}
       />
       <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24 page-enter">
         <div className="mb-12 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">

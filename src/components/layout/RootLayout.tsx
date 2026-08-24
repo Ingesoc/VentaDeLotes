@@ -5,10 +5,12 @@ import { Footer } from "./Footer";
 import { BottomNavBar } from "./BottomNavBar";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { ScrollToTop } from "./ScrollToTop";
+import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
 
 export function RootLayout() {
   return (
     <HelmetProvider>
+    <LocalBusinessSchema />
     <div className="bg-background text-on-background font-body-md antialiased min-h-dvh flex flex-col">
       <ScrollToTop />
       <TopNavBar />
