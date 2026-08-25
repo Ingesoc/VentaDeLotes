@@ -8,6 +8,21 @@ export interface PriceSchedule {
   "2028-10-15": number;
 }
 
+/**
+ * Media de referencia de escala (foto/video con persona para dimensionar
+ * el lote). Contenido opcional por lote: mientras es `undefined`, la sección
+ * "Dimensiona el lote" del detalle no se renderiza.
+ *
+ * `alt` es obligatorio a nivel de tipo: no se puede agregar media sin
+ * descripción accesible.
+ */
+export interface ScaleReferenceMedia {
+  type: "image" | "video";
+  /** URL de Cloudinary (imagen o .mp4) o de YouTube (embed) */
+  url: string;
+  alt: string;
+}
+
 export interface Lot {
   id: string;
   areaM2: number;
@@ -16,6 +31,13 @@ export interface Lot {
   status: LotStatus;
   aerialImage: string;
   perspectiveImage: string;
+  /**
+   * Galería adicional del lote (fotos propias de tierra, frentes, etc.),
+   * además de las vistas aérea/perspectiva. Vacío o ausente mientras no hay
+   * fotos específicas — la galería muestra solo las vistas base.
+   */
+  images?: string[];
+  scaleReferenceMedia?: ScaleReferenceMedia;
   topography?: string;
   view?: string;
   access?: string;

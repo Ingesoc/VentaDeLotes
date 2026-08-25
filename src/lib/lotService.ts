@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
-import { lots as staticLots, type Lot, type LotStatus } from "@/constants/lots";
+import { lots as staticLots, type Lot, type LotStatus, type ScaleReferenceMedia } from "@/constants/lots";
 
 // El modo "datos vivos" se activa de forma explícita con VITE_LIVE_LOTS=true.
 // Así, el cambio a datos de Supabase se despliega con seguridad: primero se
@@ -27,6 +27,10 @@ interface LotRow {
   access: string | null;
   shared_aerial_with: string | null;
   coordinates: { lat: number; lng: number } | null;
+  /** Array de URLs de fotos adicionales (jsonb en BD) */
+  images: string[] | null;
+  /** Referencia de escala: { type, url, alt } o null */
+  scale_reference_media: ScaleReferenceMedia | null;
 }
 
 function isCloudinaryUrl(value: string | null): value is string {
@@ -62,6 +66,8 @@ function toLot(row: LotRow): Lot {
       base?.perspectiveImage,
       CLD_WIDTHS.LARGE,
     ),
+    images: row.images ?? base?.images,
+    scaleReferenceMedia: row.scale_reference_media ?? base?.scaleReferenceMedia,
     topography: row.topography ?? base?.topography,
     view: row.view_text ?? base?.view,
     access: row.access ?? base?.access,

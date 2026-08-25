@@ -34,6 +34,7 @@ export function LotsPage() {
     createLot,
     deleteLot,
     handleUploadImage,
+    handleUploadScaleReference,
   } = useLots();
   const [search, setSearch] = useState("");
 
@@ -137,6 +138,7 @@ export function LotsPage() {
         uploading={uploading}
         onSave={saveLot}
         onUploadImage={handleUploadImage}
+        onUploadScaleReference={handleUploadScaleReference}
         onDelete={deleteLot}
       />
 

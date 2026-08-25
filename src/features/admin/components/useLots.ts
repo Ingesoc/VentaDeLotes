@@ -2,12 +2,21 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { uploadImage } from "@/lib/cloudinary";
 
+/** Referencia de escala: foto/video con persona como punto de comparación. */
+export interface ScaleReferenceMedia {
+  type: "image" | "video";
+  url: string;
+  alt: string;
+}
+
 export interface Lot {
   id: string;
   area_m2: number | null;
   price: number | null;
   status: "disponible" | "reservado" | "vendido" | "no_disponible";
   aerial_image: string;
+  /** Referencia de escala (jsonb en BD). null = sin referencia. */
+  scale_reference_media: ScaleReferenceMedia | null;
 }
 
 export function useLots() {
@@ -40,7 +49,7 @@ export function useLots() {
     return () => { cancelled = true; };
   }, []);
 
-  const saveLot = useCallback(async (id: string, updates: { status: Lot["status"]; price: number | null }) => {
+  const saveLot = useCallback(async (id: string, updates: { status: Lot["status"]; price: number | null; scale_reference_media?: ScaleReferenceMedia | null }) => {
     // Validación en JS: precio no puede ser negativo
     if (updates.price !== null && updates.price < 0) {
       console.error("El precio no puede ser negativo.");
@@ -48,13 +57,20 @@ export function useLots() {
     }
     setSaving(true);
     try {
+      const payload: Record<string, unknown> = {
+        status: updates.status,
+        price: updates.price ?? null,
+        updated_at: new Date().toISOString(),
+      };
+
+      // Solo incluir scale_reference_media si se pasó explícitamente
+      if ("scale_reference_media" in updates) {
+        payload.scale_reference_media = updates.scale_reference_media ?? null;
+      }
+
       const { error } = await supabase
         .from("lots")
-        .update({
-          status: updates.status,
-          price: updates.price ?? null,
-          updated_at: new Date().toISOString(),
-        })
+        .update(payload)
         .eq("id", id);
 
       if (error) throw error;
@@ -100,6 +116,42 @@ export function useLots() {
       setUploading(null);
     }
   }, []);
+
+  const handleUploadScaleReference = useCallback(async (lotId: string) => {
+    setUploading(lotId);
+    try {
+      const url = await uploadImage();
+      if (url) {
+        const existing = lots.find((l) => l.id === lotId);
+        const media: ScaleReferenceMedia = {
+          type: "image",
+          url,
+          alt: existing?.scale_reference_media?.alt ?? `Referencia de escala del lote ${lotId}`,
+        };
+
+        const { error } = await supabase
+          .from("lots")
+          .update({
+            scale_reference_media: media,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", lotId);
+
+        if (error) throw error;
+
+        setLots((prev) =>
+          prev.map((l) =>
+            l.id === lotId ? { ...l, scale_reference_media: media } : l
+          )
+        );
+      }
+    } catch (err) {
+      console.error("Error uploading scale reference:", err);
+      setError("No se pudo subir la referencia de escala. Intenta de nuevo.");
+    } finally {
+      setUploading(null);
+    }
+  }, [lots]);
 
   const reloadLots = useCallback(async () => {
     const { data, error } = await supabase
@@ -185,5 +237,6 @@ export function useLots() {
     createLot,
     deleteLot,
     handleUploadImage,
+    handleUploadScaleReference,
   };
 }

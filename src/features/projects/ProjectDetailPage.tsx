@@ -11,6 +11,7 @@ import { LotMiniMap } from "./components/LotMiniMap";
 import { AcquisitionSteps } from "./components/AcquisitionSteps";
 import { LeadCaptureForm } from "./components/LeadCaptureForm";
 import { LotCard } from "./components/LotCard";
+import { ScaleReferenceMedia } from "./components/ScaleReferenceMedia";
 import { formatExactPrice } from "@/lib/format";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useTrackPageView } from "@/hooks/useTrackPageView";
@@ -238,6 +239,13 @@ export function ProjectDetailPage() {
         </div>
 
         <AcquisitionSteps />
+
+        {/* "Dimensiona el lote": media opcional con persona como referencia
+            de escala. Si el lote no tiene este material, la sección no se
+            renderiza (sin caja vacía). */}
+        {lot.scaleReferenceMedia && (
+          <ScaleReferenceMedia media={lot.scaleReferenceMedia} />
+        )}
 
         {/* Contenido SEO descriptivo por lote — texto único para cada
             lote que Google puede indexar. Evita contenido duplicado. */}

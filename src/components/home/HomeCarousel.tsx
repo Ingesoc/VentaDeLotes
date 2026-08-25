@@ -1,27 +1,20 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
-import { YouTubeVideo } from "@/components/ui/YouTubeVideo";
 
 interface CarouselSlide {
-  /** Si está presente, el slide muestra un video de YouTube (carga perezosa) */
-  videoId?: string;
-  src?: string;
-  alt?: string;
+  src: string;
+  alt: string;
   title: string;
   description: string;
 }
 
+// El video aéreo ya no vive en el carrusel: tiene su propia sección
+// independiente (`AerialVideoSection`) para garantizar visibilidad.
 const slides: CarouselSlide[] = [
-  {
-    videoId: "N7LYM3pt_hg",
-    title: "La Holanda en Video",
-    description:
-      "Recorre la finca y descubre el paisaje cafetero, los lotes y el estilo de vida campestre que te espera.",
-  },
   {
     src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304267/laholanda/events/festival%20de%20Faroles%20Quimbaya%201.jpg", CLD_WIDTHS.CAROUSEL),
     alt: "Festival de Velas y Faroles",
@@ -48,86 +41,22 @@ const slides: CarouselSlide[] = [
   },
 ];
 
-/** Milisegundos sin interacción en el slide del video antes de reanudar el autoplay. */
-const VIDEO_SLIDE_RESUME_MS = 15000;
-
+/**
+ * Carrusel de la home con slides turísticos de Quindío.
+ * Solo imágenes (lazy): los videos aéreos viven en `AerialVideoSection`.
+ */
 export default function HomeCarousel() {
   const autoplay = useMemo(
     () =>
       Autoplay({
         delay: 5000,
-        // IMPORTANTE: con `stopOnInteraction: false` el plugin reinicia el
-        // autoplay tras CUALQUIER clic en el carrusel (incluido el botón de
-        // play del video), lo que avanzaba el carrusel mientras sonaba el
-        // video. Con `true`, el único que controla stop/play es syncAutoplay.
-        stopOnInteraction: true,
+        // Con `true`, una interacción detiene el carrusel permanentemente
+        // hasta recargar; `false` reanuda el autoplay tras el arrastre.
+        stopOnInteraction: false,
       }),
     [],
   );
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [autoplay]);
-
-  // Ref (en lugar de estado) para leer desde el timeout sin re-suscribir el efecto.
-  const videoPlayingRef = useRef(false);
-  const resumeTimerRef = useRef<number | null>(null);
-
-  const clearResumeTimer = useCallback(() => {
-    if (resumeTimerRef.current !== null) {
-      window.clearTimeout(resumeTimerRef.current);
-      resumeTimerRef.current = null;
-    }
-  }, []);
-
-  // Programa la reanudación del autoplay si tras 15s no hubo interacción.
-  const scheduleResume = useCallback(() => {
-    clearResumeTimer();
-    resumeTimerRef.current = window.setTimeout(() => {
-      resumeTimerRef.current = null;
-      // Si el visitante está reproduciendo el video, no lo interrumpimos.
-      if (videoPlayingRef.current) return;
-      if (emblaApi && emblaApi.selectedScrollSnap() === 0) {
-        autoplay.play();
-      }
-    }, VIDEO_SLIDE_RESUME_MS);
-  }, [clearResumeTimer, emblaApi, autoplay]);
-
-  const handleVideoPlay = useCallback(() => {
-    // El video comenzó: no reanudar el autoplay mientras se reproduzca.
-    videoPlayingRef.current = true;
-    clearResumeTimer();
-    autoplay.stop();
-  }, [autoplay, clearResumeTimer]);
-
-  // El carrusel se DETIENE mientras el slide del video (índice 0) esté visible,
-  // para que el visitante pueda verlo o reproducirlo con calma. Si pasan 15s
-  // sin interacción, se reanuda el autoplay (y vuelve a pausarse cuando el
-  // carrusel regrese al video).
-  useEffect(() => {
-    if (!emblaApi) return;
-    const syncAutoplay = () => {
-      if (emblaApi.selectedScrollSnap() === 0) {
-        autoplay.stop();
-        // No programar la reanudación si el visitante está viendo el video.
-        if (!videoPlayingRef.current) scheduleResume();
-      } else {
-        // Al salir del slide, el video se desmonta y se permite reanudar.
-        videoPlayingRef.current = false;
-        clearResumeTimer();
-        autoplay.play();
-      }
-    };
-    emblaApi.on("select", syncAutoplay);
-    // Tras cualquier interacción (clic/arrastre) el plugin ya no reinicia el
-    // autoplay (stopOnInteraction: true), así que lo re-sincronizamos aquí:
-    // en slides de imagen se reanuda y en el slide del video se mantiene la
-    // pausa. También reinicia el contador de 15s de inactividad.
-    emblaApi.on("pointerUp", syncAutoplay);
-    syncAutoplay(); // estado inicial: la Home abre en el slide del video
-    return () => {
-      emblaApi.off("select", syncAutoplay);
-      emblaApi.off("pointerUp", syncAutoplay);
-      clearResumeTimer();
-    };
-  }, [emblaApi, autoplay, scheduleResume, clearResumeTimer]);
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [autoplay]);
 
   return (
     <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full max-w-5xl mx-auto my-12 border border-outline-variant/20">
@@ -138,36 +67,21 @@ export default function HomeCarousel() {
         <div className="flex">
           {slides.map((s) => (
             <div
-              key={s.videoId ?? s.alt}
+              key={s.alt}
               className="flex-[0_0_100%] min-w-0 relative h-[300px] sm:h-[400px] md:h-[450px]"
             >
-              {s.videoId ? (
-                <YouTubeVideo
-                  videoId={s.videoId}
-                  title={s.title}
-                  onPlay={handleVideoPlay}
-                  // Autoplay silenciado: el reproductor se monta y arranca
-                  // solo (autoplay=1&mute=1) cuando el slide del video entra
-                  // al viewport, sin requerir clic; el mute es obligatorio
-                  // para que el navegador permita la reproducción automática.
-                  autoplay
-                  className="h-full"
-                />
-              ) : (
-                <img
-                  src={s.src}
-                  alt={s.alt}
-                  width={1200}
-                  height={675}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover"
-                />
-              )}
-              {/* Overlay degradado — pointer-events-none para no bloquear el botón de play del video */}
+              <img
+                src={s.src}
+                alt={s.alt}
+                width={1200}
+                height={675}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+              {/* Overlay degradado */}
               <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent"></div>
-              {/* Contenido del slide */}
-              {/* Contenido del slide — pointer-events-none para no bloquear el botón de play; solo el CTA recibe clics */}
+              {/* Contenido del slide — pointer-events-none para no bloquear el arrastre; solo el CTA recibe clics */}
               <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-5 sm:p-8 md:p-12 text-white flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 z-10">
                 <div className="max-w-2xl">
                   <span className="text-heritage-gold font-label-bold tracking-widest uppercase mb-2 block text-sm">

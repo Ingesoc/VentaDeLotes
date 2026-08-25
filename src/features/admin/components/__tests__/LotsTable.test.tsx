@@ -15,6 +15,11 @@ const MOCK_LOTS: Lot[] = [
     price: 189242850,
     status: "disponible",
     aerial_image: "https://res.cloudinary.com/test/image1.jpg",
+    scale_reference_media: {
+      type: "image",
+      url: "https://res.cloudinary.com/test/scale.jpg",
+      alt: "Persona en lote 01",
+    },
   },
   {
     id: "02",
@@ -22,6 +27,7 @@ const MOCK_LOTS: Lot[] = [
     price: 189242850,
     status: "reservado",
     aerial_image: "",
+    scale_reference_media: null,
   },
   {
     id: "03",
@@ -29,6 +35,7 @@ const MOCK_LOTS: Lot[] = [
     price: null,
     status: "vendido",
     aerial_image: "https://res.cloudinary.com/test/image3.jpg",
+    scale_reference_media: null,
   },
 ];
 
@@ -38,6 +45,7 @@ const defaultProps = {
   uploading: null as string | null,
   onSave: vi.fn().mockResolvedValue(true),
   onUploadImage: vi.fn(),
+  onUploadScaleReference: vi.fn(),
   onDelete: vi.fn().mockResolvedValue(true),
 };
 
@@ -106,10 +114,10 @@ describe("LotsTable", () => {
     render(<LotsTable {...defaultProps} />);
 
     const rows = getRowLots();
-    const row3 = rows[2]; // lot 03 has null price
+    const row3 = rows[2]; // lot 03 has null price AND null scale_reference_media
     const dashes = within(row3).getAllByText("—");
-    // Lot 03 has both null area AND null price, so two dashes
-    expect(dashes.length).toBe(2);
+    // Lot 03 has null area, null price, AND null scale reference — three dashes
+    expect(dashes.length).toBe(3);
   });
 
   it("displays lot status badges", () => {
@@ -184,6 +192,53 @@ describe("LotsTable", () => {
   });
 
   // -----------------------------------------------------------------------
+  // Scale reference column
+  // -----------------------------------------------------------------------
+  describe("Scale reference column", () => {
+    it("shows 'Foto' when lot has scale reference image", () => {
+      render(<LotsTable {...defaultProps} />);
+      const rows = getRowLots();
+      expect(within(rows[0]).getByText("Foto")).toBeInTheDocument();
+    });
+
+    it("shows 'Video' when lot has scale reference video", () => {
+      const lotsWithVideo: Lot[] = [
+        {
+          ...MOCK_LOTS[0],
+          scale_reference_media: { type: "video", url: "https://example.com/v.mp4", alt: "Video" },
+        },
+        MOCK_LOTS[1],
+        MOCK_LOTS[2],
+      ];
+      render(<LotsTable {...defaultProps} lots={lotsWithVideo} />);
+      const rows = getRowLots();
+      expect(within(rows[0]).getByText("Video")).toBeInTheDocument();
+    });
+
+    it("shows dash when lot has no scale reference", () => {
+      render(<LotsTable {...defaultProps} />);
+      const rows = getRowLots();
+      // Row 1 (lot 02) has no scale reference
+      const dashes = within(rows[1]).getAllByText("—");
+      expect(dashes.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it("calls onUploadScaleReference with lot id when upload button is clicked in edit mode", async () => {
+      const user = userEvent.setup();
+      render(<LotsTable {...defaultProps} />);
+
+      const rows = getRowLots();
+      await user.click(within(rows[1]).getByRole("button", { name: "Editar lote" }));
+
+      // In edit mode, the scale reference section shows an upload button
+      const uploadBtn = within(rows[1]).getByText("Subir foto").closest("button")!;
+      await user.click(uploadBtn);
+
+      expect(defaultProps.onUploadScaleReference).toHaveBeenCalledWith("02");
+    });
+  });
+
+  // -----------------------------------------------------------------------
   // Edit mode
   // -----------------------------------------------------------------------
   describe("Edit mode", () => {
@@ -235,6 +290,11 @@ describe("LotsTable", () => {
       expect(defaultProps.onSave).toHaveBeenCalledWith("01", {
         status: "vendido",
         price: 189242850,
+        scale_reference_media: {
+          type: "image",
+          url: "https://res.cloudinary.com/test/scale.jpg",
+          alt: "Persona en lote 01",
+        },
       });
     });
 
@@ -329,6 +389,7 @@ describe("LotsTable", () => {
     expect(screen.getByText("Precio")).toBeInTheDocument();
     expect(screen.getByText("Estado")).toBeInTheDocument();
     expect(screen.getByText("Imagen")).toBeInTheDocument();
+    expect(screen.getByText("Ref. Escala")).toBeInTheDocument();
     expect(screen.getByText("Acciones")).toBeInTheDocument();
   });
 });

@@ -6,8 +6,9 @@ import {
   Loader2,
   Trash2,
   Image as ImageIcon,
+  Ruler,
 } from "lucide-react";
-import type { Lot } from "./useLots";
+import type { Lot, ScaleReferenceMedia } from "./useLots";
 
 const statusColors: Record<string, string> = {
   disponible: "bg-deep-forest text-on-primary",
@@ -22,9 +23,10 @@ interface LotsTableProps {
   uploading: string | null;
   onSave: (
     id: string,
-    updates: { status: Lot["status"]; price: number | null },
+    updates: { status: Lot["status"]; price: number | null; scale_reference_media?: ScaleReferenceMedia | null },
   ) => Promise<boolean>;
   onUploadImage: (lotId: string) => void;
+  onUploadScaleReference: (lotId: string) => void;
   onDelete: (lotId: string) => Promise<boolean>;
 }
 
@@ -34,6 +36,7 @@ function LotRow({
   uploading,
   onSave,
   onUploadImage,
+  onUploadScaleReference,
   onDelete,
 }: {
   lot: Lot;
@@ -41,9 +44,10 @@ function LotRow({
   uploading: string | null;
   onSave: (
     id: string,
-    updates: { status: Lot["status"]; price: number | null },
+    updates: { status: Lot["status"]; price: number | null; scale_reference_media?: ScaleReferenceMedia | null },
   ) => Promise<boolean>;
   onUploadImage: (lotId: string) => void;
+  onUploadScaleReference: (lotId: string) => void;
   onDelete: (lotId: string) => Promise<boolean>;
 }) {
   const [editing, setEditing] = useState(false);
@@ -51,19 +55,29 @@ function LotRow({
   const [editForm, setEditForm] = useState<{
     status: Lot["status"];
     price: number | null;
+    scaleReferenceMedia: ScaleReferenceMedia | null;
   }>({
     status: lot.status,
     price: lot.price,
+    scaleReferenceMedia: lot.scale_reference_media ?? null,
   });
 
   const handleSave = async () => {
-    const ok = await onSave(lot.id, editForm);
+    const ok = await onSave(lot.id, {
+      status: editForm.status,
+      price: editForm.price,
+      scale_reference_media: editForm.scaleReferenceMedia,
+    });
     if (ok) setEditing(false);
   };
 
   const handleCancel = () => {
     setEditing(false);
-    setEditForm({ status: lot.status, price: lot.price });
+    setEditForm({
+      status: lot.status,
+      price: lot.price,
+      scaleReferenceMedia: lot.scale_reference_media ?? null,
+    });
   };
 
   const handleDelete = async () => {
@@ -160,6 +174,112 @@ function LotRow({
           </span>
         </button>
       </td>
+      <td className="px-6 py-4">
+        {editing ? (
+          <div className="space-y-2">
+            <button
+              onClick={() => onUploadScaleReference(lot.id)}
+              type="button"
+              disabled={uploading === lot.id}
+              className="flex items-center gap-2 text-caption text-on-surface-variant hover:text-heritage-gold transition-colors disabled:opacity-50"
+            >
+              {uploading === lot.id ? (
+                <Loader2 className="w-3 h-3 animate-spin" />
+              ) : (
+                <ImageIcon className="w-3 h-3" />
+              )}
+              {editForm.scaleReferenceMedia ? "Cambiar foto" : "Subir foto"}
+            </button>
+            <div>
+              <label htmlFor={`scale-type-${lot.id}`} className="sr-only">
+                Tipo de referencia
+              </label>
+              <select
+                id={`scale-type-${lot.id}`}
+                value={editForm.scaleReferenceMedia?.type ?? "image"}
+                onChange={(e) =>
+                  setEditForm((prev) => ({
+                    ...prev,
+                    scaleReferenceMedia: {
+                      type: e.target.value as "image" | "video",
+                      url: prev.scaleReferenceMedia?.url ?? "",
+                      alt: prev.scaleReferenceMedia?.alt ?? "",
+                    },
+                  }))
+                }
+                className="w-full px-2 py-1 border border-outline-variant/50 rounded text-caption focus:ring-2 focus:ring-heritage-gold focus:border-transparent"
+              >
+                <option value="image">Imagen</option>
+                <option value="video">Video</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor={`scale-url-${lot.id}`} className="sr-only">
+                URL del medio
+              </label>
+              <input
+                id={`scale-url-${lot.id}`}
+                type="url"
+                value={editForm.scaleReferenceMedia?.url ?? ""}
+                onChange={(e) =>
+                  setEditForm((prev) => ({
+                    ...prev,
+                    scaleReferenceMedia: prev.scaleReferenceMedia
+                      ? { ...prev.scaleReferenceMedia, url: e.target.value }
+                      : { type: "image", url: e.target.value, alt: "" },
+                  }))
+                }
+                placeholder="URL (Cloudinary o YouTube)"
+                className="w-full px-2 py-1 border border-outline-variant/50 rounded text-caption focus:ring-2 focus:ring-heritage-gold focus:border-transparent placeholder:text-on-surface-variant/50"
+              />
+            </div>
+            <div>
+              <label htmlFor={`scale-alt-${lot.id}`} className="sr-only">
+                Texto alternativo
+              </label>
+              <input
+                id={`scale-alt-${lot.id}`}
+                type="text"
+                value={editForm.scaleReferenceMedia?.alt ?? ""}
+                onChange={(e) =>
+                  setEditForm((prev) => ({
+                    ...prev,
+                    scaleReferenceMedia: prev.scaleReferenceMedia
+                      ? { ...prev.scaleReferenceMedia, alt: e.target.value }
+                      : { type: "image", url: "", alt: e.target.value },
+                  }))
+                }
+                placeholder="Alt text (requerido)"
+                className="w-full px-2 py-1 border border-outline-variant/50 rounded text-caption focus:ring-2 focus:ring-heritage-gold focus:border-transparent placeholder:text-on-surface-variant/50"
+              />
+            </div>
+            {editForm.scaleReferenceMedia && (
+              <button
+                onClick={() =>
+                  setEditForm((prev) => ({ ...prev, scaleReferenceMedia: null }))
+                }
+                type="button"
+                className="text-caption text-red-600 hover:text-red-800 transition-colors"
+              >
+                Eliminar referencia
+              </button>
+            )}
+          </div>
+        ) : (
+          <span className="flex items-center gap-2 text-on-surface-variant">
+            {lot.scale_reference_media ? (
+              <>
+                <Ruler className="w-4 h-4 text-heritage-gold" aria-hidden="true" />
+                <span className="text-caption truncate max-w-[120px]">
+                  {lot.scale_reference_media.type === "video" ? "Video" : "Foto"}
+                </span>
+              </>
+            ) : (
+              <span className="text-caption text-on-surface-variant/50">—</span>
+            )}
+          </span>
+        )}
+      </td>
       <td className="px-6 py-4 text-right">
         {editing ? (
           <div className="flex items-center justify-end gap-2">
@@ -243,6 +363,7 @@ export function LotsTable({
   uploading,
   onSave,
   onUploadImage,
+  onUploadScaleReference,
   onDelete,
 }: LotsTableProps) {
   return (
@@ -266,6 +387,9 @@ export function LotsTable({
               <th className="text-left px-6 py-4 text-caption font-caption text-on-surface-variant uppercase tracking-wider">
                 Imagen
               </th>
+              <th className="text-left px-6 py-4 text-caption font-caption text-on-surface-variant uppercase tracking-wider">
+                Ref. Escala
+              </th>
               <th className="text-right px-6 py-4 text-caption font-caption text-on-surface-variant uppercase tracking-wider">
                 Acciones
               </th>
@@ -280,6 +404,7 @@ export function LotsTable({
                 uploading={uploading}
                 onSave={onSave}
                 onUploadImage={onUploadImage}
+                onUploadScaleReference={onUploadScaleReference}
                 onDelete={onDelete}
               />
             ))}

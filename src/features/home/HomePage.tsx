@@ -4,6 +4,8 @@ import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import FAQSchema from "@/components/seo/FAQSchema";
 import { HeroSection } from "./components/HeroSection";
 import HomeCarousel from "@/components/home/HomeCarousel";
+import { AerialVideoSection } from "./components/AerialVideoSection";
+import { FeatureShowcase } from "./components/FeatureShowcase";
 import { ProcessSteps } from "./components/ProcessSteps";
 import { MasterPlanSection } from "./components/MasterPlanSection";
 import { FeaturedLots } from "./components/FeaturedLots";
@@ -135,8 +137,10 @@ export function HomePage() {
         <section className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
           <HomeCarousel />
         </section>
+        <AerialVideoSection />
         <MasterPlanSection />
         <ProcessSteps />
+        <FeatureShowcase />
         <ProjectBenefits />
         <FeaturedLots />
         <InvestmentComparison />
