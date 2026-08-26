@@ -37,8 +37,8 @@ export function AerialVideoSection() {
             La Holanda desde el aire
           </h2>
           <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mx-auto">
-            Recorre la finca con tomas de dron: los lotes, las vías y el paisaje
-            cafetero del Eje Cafetero.
+            Recorre la finca con tomas de dron: los lotes, la naturaleza y el
+            paisaje cafetero del Eje Cafetero.
           </p>
         </div>
 
@@ -50,6 +50,7 @@ export function AerialVideoSection() {
             videoId={active.videoId}
             title={`Video aéreo: ${active.title}`}
             className="aspect-video"
+            autoplay
           />
           <p className="text-center text-body-md font-body-md text-on-surface-variant mt-4">
             <span className="font-semibold text-primary">{active.title}.</span>{" "}

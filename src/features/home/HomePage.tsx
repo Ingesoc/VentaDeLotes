@@ -71,7 +71,7 @@ const HOME_FAQS = [
   {
     question: "¿Cuánto cuesta un lote campestre en Quimbaya, Quindío?",
     answer:
-      "En La Holanda los lotes campestres en Quimbaya, Quindío, tienen precios desde $158.822.900 COP (aprox. $38.000 USD) para lotes de 2.005 m². El precio incluye escritura pública individual, vías de acceso y diseño arquitectónico tipo. Consulta disponibilidad actualizada en nuestra página de lotes.",
+      "En La Holanda los lotes campestres en Quimbaya, Quindío, tienen precios desde $158.822.900 COP (aprox. $38.000 USD) para lotes de 2.005 m². El precio incluye escritura pública individual, entorno natural privilegiado y diseño arquitectónico tipo. Consulta disponibilidad actualizada en nuestra página de lotes.",
   },
   {
     question: "¿Cómo comprar un lote rural en Colombia con escritura pública?",
@@ -81,7 +81,7 @@ const HOME_FAQS = [
   {
     question: "¿Qué incluye la compra de un lote en La Holanda?",
     answer:
-      "Cada lote en La Holanda incluye: escritura pública individual con libertad de cargos, proceso de legalización completo, lote delimitado según plano catastral, vía principal de acceso pavimentada, diseño arquitectónico tipo incluido, y conservación opcional de árboles de aguacate. También ofrecemos servicios de construcción con más de 20 años de experiencia.",
+      "Cada lote en La Holanda incluye: escritura pública individual con libertad de cargos, proceso de legalización completo, lote delimitado según plano catastral, entorno natural cafetero, diseño arquitectónico tipo incluido, y conservación de árboles de aguacate. También ofrecemos servicios de construcción con más de 20 años de experiencia.",
   },
   {
     question: "¿Qué tan lejos está La Holanda de Armenia, Quindío?",
@@ -124,7 +124,7 @@ export function HomePage() {
     <>
       <PageSEO
         title="La Holanda — Parcelación Campestre | Quimbaya, Quindío"
-        description="La Holanda — Parcelación Campestre en Quimbaya, Quindío. Lotes campestres desde 500 m² con escritura pública, vías de acceso y diseño arquitectónico incluido. Desarrollado por INGESOCC SAS."
+        description="La Holanda — Parcelación Campestre en Quimbaya, Quindío. Lotes campestres desde 500 m² con escritura pública, entorno natural cafetero y diseño arquitectónico incluido. Desarrollado por INGESOCC SAS."
         ogUrl="https://laholanda.ingesocc.com/"
         ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303937/laholanda/landscapes/DJI_0131.webp")}
         keywords="lotes campestres quimbaya quindío, parcelación la holanda, finca raíz eje cafetero, terrenos venta quimbaya, invertir quindío"

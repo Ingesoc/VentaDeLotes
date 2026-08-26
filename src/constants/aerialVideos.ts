@@ -33,8 +33,8 @@ export const aerialVideoClips: AerialVideoClip[] = [
   },
   {
     videoId: "7FAwZoHTWvc",
-    title: "Vías y accesos",
-    description: "Así se llega a la parcelación desde Quimbaya.",
+    title: "Vistazo a la naturaleza",
+    description: "Guaduales, café y montañas de La Holanda.",
   },
   {
     videoId: "N7LYM3pt_hg",
