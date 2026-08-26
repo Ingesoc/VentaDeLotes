@@ -55,9 +55,12 @@ export const lots: Lot[] = [
     areaM2: 8910.37,
     price: undefined,
     status: "no_disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765357/cx39u5os3xc82pkitrth.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61923, lng: -75.76700 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "02",
     areaM2: 2008,
@@ -69,10 +72,13 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765362/yj4u45el6hmp47rsu1fo.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "03",
     coordinates: { lat: 4.61866, lng: -75.76802 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "03",
     areaM2: 2013,
@@ -84,10 +90,13 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946305/laholanda/lots/lote-02-03-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765362/yj4u45el6hmp47rsu1fo.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "02",
     coordinates: { lat: 4.61832, lng: -75.76834 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "04",
     areaM2: 2004,
@@ -99,10 +108,13 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765362/yj4u45el6hmp47rsu1fo.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "05",
     coordinates: { lat: 4.61799, lng: -75.76865 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "05",
     areaM2: 2005,
@@ -114,10 +126,13 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946309/laholanda/lots/lote-04-05-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765362/yj4u45el6hmp47rsu1fo.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "04",
     coordinates: { lat: 4.61752, lng: -75.76901 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "06",
     areaM2: 2005,
@@ -129,9 +144,12 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946328/laholanda/lots/lote-06-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765369/qdnpj9vkvrgnshetcpbr.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61891, lng: -75.77010 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "07",
     areaM2: 2010,
@@ -143,10 +161,13 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765369/qdnpj9vkvrgnshetcpbr.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "08",
     coordinates: { lat: 4.61934, lng: -75.76963 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "08",
     areaM2: 2005,
@@ -158,13 +179,16 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765369/qdnpj9vkvrgnshetcpbr.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "07",
     topography: "Ondulada suave",
     view: "Panorámica al valle",
     access: "Directo principal",
     coordinates: { lat: 4.61973, lng: -75.76933 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "09",
     areaM2: 2011,
@@ -176,17 +200,23 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946336/laholanda/lots/lote-09-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765369/qdnpj9vkvrgnshetcpbr.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.62017, lng: -75.76905 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "10",
     areaM2: 2966,
     price: undefined,
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765357/cx39u5os3xc82pkitrth.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.62028, lng: -75.76756 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "11",
     areaM2: 2502,
@@ -197,9 +227,12 @@ export const lots: Lot[] = [
       "2028-10-15": 375300000,
     },
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765357/cx39u5os3xc82pkitrth.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.62062, lng: -75.76813 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "12",
     areaM2: 2456,
@@ -210,9 +243,12 @@ export const lots: Lot[] = [
       "2028-10-15": 368400000,
     },
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946353/laholanda/lots/perspectiva-lotes-1-10-11-12-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765357/cx39u5os3xc82pkitrth.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.62085, lng: -75.76879 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "13",
     areaM2: 3216,
@@ -224,9 +260,12 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765374/lrv7zrgthhsaddnpxebs.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.62074, lng: -75.77030 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "14",
     areaM2: 2518,
@@ -238,33 +277,32 @@ export const lots: Lot[] = [
     },
     status: "disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946340/laholanda/lots/lote-13-14-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946357/laholanda/lots/perspectiva-lotes-13-14-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765374/lrv7zrgthhsaddnpxebs.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.62012, lng: -75.77081 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "15",
     areaM2: 2908,
     price: undefined,
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765351/kxbtsb7x8xef1wvlyq6q.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61937, lng: -75.77152 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
   {
     id: "16",
     areaM2: 6689,
     price: undefined,
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
-    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946349/laholanda/lots/perspectiva-general-drone.jpg", CLD_WIDTHS.LARGE),
+    perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765351/kxbtsb7x8xef1wvlyq6q.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61846, lng: -75.77122 },
-  },
+
+    images: [
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765379/kqupiccbcfkelu737ndf.jpg",
+    ],  },
 ];
-
-export function getLotById(id: string): Lot | undefined {
-  return lots.find((lot) => lot.id === id);
-}
-
-export function getRelatedLots(id: string, count = 2): Lot[] {
-  const index = lots.findIndex((lot) => lot.id === id);
-  if (index === -1) return lots.slice(0, count);
-  return lots.filter((lot) => lot.id !== id).slice(0, count);
-}

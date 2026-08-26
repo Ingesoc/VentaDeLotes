@@ -73,3 +73,6 @@ coverage/
 
 # Imágenes locales de lotes para subir a Cloudinary (Canva)
 canva-lotes/
+
+# Imágenes sin editar de lotes (pendientes de subir a Cloudinary)
+public/lotes imagenes sin editar/
