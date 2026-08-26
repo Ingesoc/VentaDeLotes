@@ -1,4 +1,5 @@
-import { Facebook, ImagePlus, Linkedin } from "lucide-react";
+import { ImagePlus } from "lucide-react";
+import { FacebookIcon, LinkedinIcon } from "@/components/icons/SocialIcons";
 import { showcaseItems } from "@/constants/showcase";
 import type { ShowcaseItem } from "@/constants/showcase";
 import { ImageCollage } from "./ImageCollage";
@@ -20,8 +21,8 @@ function MediaPlaceholder({ label }: { label: string }) {
 }
 
 const platformIcons = {
-  facebook: Facebook,
-  linkedin: Linkedin,
+  facebook: FacebookIcon,
+  linkedin: LinkedinIcon,
 } as const;
 
 function ShowcaseCard({ item }: { item: ShowcaseItem }) {

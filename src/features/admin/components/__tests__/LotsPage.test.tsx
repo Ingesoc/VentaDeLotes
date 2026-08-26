@@ -14,6 +14,7 @@ const MOCK_LOTS: Lot[] = [
     price: 189242850,
     status: "disponible",
     aerial_image: "https://res.cloudinary.com/test/image1.jpg",
+    scale_reference_media: null,
   },
   {
     id: "02",
@@ -21,6 +22,7 @@ const MOCK_LOTS: Lot[] = [
     price: 189242850,
     status: "reservado",
     aerial_image: "",
+    scale_reference_media: null,
   },
   {
     id: "03",
@@ -28,6 +30,7 @@ const MOCK_LOTS: Lot[] = [
     price: 185619550,
     status: "vendido",
     aerial_image: "https://res.cloudinary.com/test/image3.jpg",
+    scale_reference_media: null,
   },
 ];
 
