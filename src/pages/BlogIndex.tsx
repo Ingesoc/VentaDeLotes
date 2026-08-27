@@ -33,7 +33,7 @@ const ARTICLES: BlogArticle[] = [
     category: "Guía Legal",
     date: "Agosto 2026",
     readTime: "10 min",
-    image: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg"),
+    image: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/cafetales_fftekm.webp"),
   },
   {
     slug: "inversion-eje-cafetero-finca-raiz",
@@ -53,7 +53,7 @@ const ARTICLES: BlogArticle[] = [
     category: "Comparativa",
     date: "Agosto 2026",
     readTime: "9 min",
-    image: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg"),
+    image: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/cafetales_fftekm.webp"),
   },
   {
     slug: "financiacion-compra-lotes-rurales",
@@ -83,7 +83,7 @@ const ARTICLES: BlogArticle[] = [
     category: "Guía Legal",
     date: "Agosto 2026",
     readTime: "9 min",
-    image: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg"),
+    image: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/cafetales_fftekm.webp"),
   },
 ];
 

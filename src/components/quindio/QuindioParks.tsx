@@ -18,7 +18,7 @@ const parks: Park[] = [
     description:
       "Cafetales, arquitectura tradicional y teleféricos que cuentan la historia del grano más famoso de Colombia.",
     image: cldUrl(
-      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1785554666/images_lcdc1k.jpg",
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787839436/parqueDelCafe_q0zfmt.webp",
       CLD_WIDTHS.LARGE,
     ),
   },
@@ -28,7 +28,7 @@ const parks: Park[] = [
     description:
       "Las palmas de cera más altas del mundo custodian un valle de niebla, senderos y ríos cristalinos.",
     image: cldUrl(
-      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1785554996/VALLEDELCOCORA_fh4a1m.jpg",
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787839437/valleDelCocora_snbuzv.webp",
       CLD_WIDTHS.LARGE,
     ),
   },
@@ -38,7 +38,7 @@ const parks: Park[] = [
     description:
       "Un parque temático agropecuario donde se vive la cultura del campo con más de 4.000 animales.",
     image: cldUrl(
-      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1785554668/panaca_anqpkd.webp",
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787839437/panaca_k7rysk.webp",
       CLD_WIDTHS.LARGE,
     ),
   },
@@ -48,7 +48,7 @@ const parks: Park[] = [
     description:
       "El Parque Nacional de la Cultura Agropecuaria: tradición, historia y naturaleza para toda la familia.",
     image: cldUrl(
-      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1785554996/recuca_l9cioz.jpg",
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787839436/recuca_kdkkww.webp",
       CLD_WIDTHS.LARGE,
     ),
   },
@@ -58,7 +58,7 @@ const parks: Park[] = [
     description:
       "Un homenaje a los arrieros y la colonización paisa: senderos ecológicos, arquitectura colonial, trapiche y shows en vivo.",
     image: cldUrl(
-      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1785554666/los_arrieros_ko7u8g.jpg",
+      "https://res.cloudinary.com/j5a9xyaq/image/upload/v1787839436/losarrieros_kjwykd.webp",
       CLD_WIDTHS.LARGE,
     ),
   },

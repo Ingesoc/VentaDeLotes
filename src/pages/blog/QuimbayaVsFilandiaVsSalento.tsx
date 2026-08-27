@@ -48,7 +48,7 @@ export default function QuimbayaVsFilandiaVsSalento() {
         title="Quimbaya vs Filandia vs Salento: Dónde Comprar Lote"
         description="Comparativa completa de Quimbaya, Filandia y Salento para comprar lote en Quindío. Precios reales 2026, servicios, potencial de plusvalía y recomendación según tu perfil de inversor."
         ogUrl="https://laholanda.ingesocc.com/blog/quimbaya-vs-filandia-vs-salento"
-        ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg")}
+        ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/cafetales_fftekm.webp")}
         ogType="article"
         keywords="Quimbaya vs Filandia vs Salento, mejor zona Quindío comprar lote, lotes Quimbaya precio, lotes Filandia, lotes Salento, dónde comprar lote Quindío 2026"
       />

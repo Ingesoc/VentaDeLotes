@@ -20,7 +20,7 @@ export default function NaturalWonders() {
               className="w-full h-full object-cover img-zoom-lg"
               loading="lazy"
               decoding="async"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304306/laholanda/events/miradorQuindio.png", CLD_WIDTHS.LARGE)}
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838726/miradorQuindio_oja2v3.webp", CLD_WIDTHS.LARGE)}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">
@@ -37,7 +37,7 @@ export default function NaturalWonders() {
               className="w-full h-full object-cover img-zoom-lg"
               loading="lazy"
               decoding="async"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304292/laholanda/events/lovequimbaya.jpg", CLD_WIDTHS.CARD)}
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/loveQuimbaya_lk6z1f.webp", CLD_WIDTHS.CARD)}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 p-8">

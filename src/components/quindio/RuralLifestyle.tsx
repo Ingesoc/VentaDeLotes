@@ -13,7 +13,7 @@ export default function RuralLifestyle() {
                 className="rounded-2xl shadow-2xl relative z-10 w-full object-cover h-[250px] sm:h-[350px]"
                 loading="lazy"
                 decoding="async"
-                src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304281/laholanda/events/haciendaCafetera.jpg", CLD_WIDTHS.CARD)}
+                src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/haciendaCafetera_xeprri.webp", CLD_WIDTHS.CARD)}
               />
               <div className="absolute -top-6 -left-6 w-32 h-32 bg-heritage-gold/20 rounded-full z-0"></div>
             </div>
@@ -38,7 +38,7 @@ export default function RuralLifestyle() {
               className="rounded-xl h-48 w-full object-cover shadow-md"
               loading="lazy"
               decoding="async"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304335/laholanda/events/viasRurales.jpg", CLD_WIDTHS.CARD)}
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838726/ViasRurales_sy6dql.webp", CLD_WIDTHS.CARD)}
             />
           </div>
         </div>

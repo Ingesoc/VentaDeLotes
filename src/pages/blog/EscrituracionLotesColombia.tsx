@@ -48,7 +48,7 @@ export default function EscrituracionLotesColombia() {
         title="Escrituración de Lotes en Colombia: Guía Paso a Paso"
         description="Aprende cómo escriturar un lote en Colombia: requisitos, costos, tiempos y errores comunes. Guía actualizada 2026 con todo lo que necesitas saber sobre escritura pública de terrenos."
         ogUrl="https://laholanda.ingesocc.com/blog/escrituracion-lotes-colombia"
-        ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg")}
+        ogImage={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/cafetales_fftekm.webp")}
         ogType="article"
         keywords="escrituración lote Colombia, escritura pública terreno, cómo escriturar lote rural, proceso escrituración Colombia, costos escrituración lote, libertad de cargos"
       />

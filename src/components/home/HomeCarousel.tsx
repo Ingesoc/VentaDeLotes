@@ -16,25 +16,25 @@ interface CarouselSlide {
 // independiente (`AerialVideoSection`) para garantizar visibilidad.
 const slides: CarouselSlide[] = [
   {
-    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304267/laholanda/events/festival%20de%20Faroles%20Quimbaya%201.jpg", CLD_WIDTHS.CAROUSEL),
+    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/festival_de_faroles_quimbaya_1_tf6kay.webp", CLD_WIDTHS.CAROUSEL),
     alt: "Festival de Velas y Faroles",
     title: "Festival de Velas y Faroles",
     description: "La festividad más mágica de Quimbaya, donde las calles se visten de luces y hermosos faroles artesanales.",
   },
   {
-    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304215/laholanda/events/arrieros.jpg", CLD_WIDTHS.CAROUSEL),
+    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838726/arrieros_utpgk8.webp", CLD_WIDTHS.CAROUSEL),
     alt: "Legado Arriero",
     title: "Legado y Tradición Arriera",
     description: "Siente las profundas raíces de la cultura cafetera y la hospitalidad de nuestra gente.",
   },
   {
-    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304240/laholanda/events/cafetales.jpg", CLD_WIDTHS.CAROUSEL),
+    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/cafetales_fftekm.webp", CLD_WIDTHS.CAROUSEL),
     alt: "Paisaje Cultural Cafetero",
     title: "Paisaje Cultural Cafetero",
     description: "Explora cafetales infinitos declarados Patrimonio de la Humanidad por la UNESCO.",
   },
   {
-    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304319/laholanda/events/piscinas.jpg", CLD_WIDTHS.CAROUSEL),
+    src: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838726/piscinas_l8ntf1.webp", CLD_WIDTHS.CAROUSEL),
     alt: "Bienestar y Recreación",
     title: "Bienestar en el Paraíso",
     description: "Comodidades exclusivas y senderos ecológicos integrados en la exuberante flora nativa.",

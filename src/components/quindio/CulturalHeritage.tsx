@@ -23,7 +23,7 @@ export default function CulturalHeritage() {
               className="w-full h-[250px] sm:h-[400px] object-cover img-zoom"
               loading="lazy"
               decoding="async"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304267/laholanda/events/festival%20de%20Faroles%20Quimbaya%201.jpg", CLD_WIDTHS.CARD)}
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/festival_de_faroles_quimbaya_1_tf6kay.webp", CLD_WIDTHS.CARD)}
             />
             <div className="p-4 bg-white">
               <p className="font-label-bold text-primary">Festival de Velas y Faroles</p>
@@ -36,7 +36,7 @@ export default function CulturalHeritage() {
               className="w-full h-[250px] sm:h-[400px] object-cover img-zoom"
               loading="lazy"
               decoding="async"
-              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784304215/laholanda/events/arrieros.jpg", CLD_WIDTHS.CARD)}
+              src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838726/arrieros_utpgk8.webp", CLD_WIDTHS.CARD)}
             />
             <div className="p-4 bg-white">
               <p className="font-label-bold text-primary">Legado Arriero</p>
