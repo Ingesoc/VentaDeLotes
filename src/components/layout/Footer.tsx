@@ -6,7 +6,7 @@ import { cldUrl, CLD_WIDTHS } from "@/lib/cloudinary";
 export function Footer() {
   return (
     <footer className="w-full bg-deep-forest dark:bg-black border-t border-warm-white/5">
-      <div className="px-margin-mobile md:px-margin-desktop py-16 max-w-container-max mx-auto">
+      <div className="px-margin-mobile md:px-margin-desktop pt-16 pb-[calc(7rem+env(safe-area-inset-bottom))] md:py-16 max-w-container-max mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Marca */}
           <div>

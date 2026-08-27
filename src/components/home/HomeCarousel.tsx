@@ -90,7 +90,7 @@ export default function HomeCarousel() {
                   <h3 className="font-headline-lg text-lg sm:text-2xl md:text-3xl text-white mb-2 leading-tight">
                     {s.title}
                   </h3>
-                  <p className="text-xs sm:text-sm md:text-base text-surface-variant/90 leading-relaxed max-w-lg line-clamp-2 sm:line-clamp-none">
+                  <p className="text-xs sm:text-sm md:text-base text-surface-variant/90 leading-relaxed max-w-lg">
                     {s.description}
                   </p>
                 </div>

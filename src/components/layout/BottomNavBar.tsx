@@ -21,13 +21,13 @@ function BottomNavLink({ item }: { item: BottomNavItem }) {
     // mantiene la distinción del ítem activo con contraste suficiente.
     <Link
       to={item.to}
-      className={`flex flex-col items-center justify-center active:scale-95 transition-transform min-w-[64px] min-h-[48px] px-2 tap-target-sm ${
+      className={`flex min-w-0 flex-1 flex-col items-center justify-center px-1 sm:px-2 active:scale-95 transition-transform tap-target ${
         isActive ? "text-forest-green" : "text-on-surface-variant"
       }`}
     >
       <Icon className={`w-5 h-5 sm:w-6 sm:h-6 mb-1 ${isActive ? "fill-current" : ""}`} />
       <span
-        className={`text-caption font-caption ${isActive ? "font-bold" : ""}`}
+        className={`max-w-full text-center text-[10px] leading-tight font-caption ${isActive ? "font-bold" : ""}`}
       >
         {item.label}
       </span>
@@ -37,7 +37,7 @@ function BottomNavLink({ item }: { item: BottomNavItem }) {
 
 export function BottomNavBar() {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-lg shadow-[0_-4px_20px_rgba(27,67,50,0.08)] rounded-t-xl flex justify-around items-center px-4 py-3">
+    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-lg shadow-[0_-4px_20px_rgba(27,67,50,0.08)] rounded-t-xl flex items-center px-1 sm:px-4 py-3">
       {bottomNavItems.map((item) => (
         <BottomNavLink key={item.to} item={item} />
       ))}

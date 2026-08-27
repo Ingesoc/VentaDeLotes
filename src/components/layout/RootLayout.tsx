@@ -11,10 +11,10 @@ export function RootLayout() {
   return (
     <HelmetProvider>
     <LocalBusinessSchema />
-    <div className="bg-background text-on-background font-body-md antialiased min-h-dvh flex flex-col">
+    <div className="bg-background text-on-background font-body-md antialiased min-h-dvh min-w-0 flex flex-col overflow-x-clip">
       <ScrollToTop />
       <TopNavBar />
-      <main className="flex-1">
+      <main className="min-w-0 flex-1">
         {/* Página actual según la ruta */}
         <Outlet />
       </main>

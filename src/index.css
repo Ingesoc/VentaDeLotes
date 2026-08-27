@@ -1,5 +1,34 @@
 @import "tailwindcss";
 
+/* ─── Resiliencia en pantallas estrechas ───────────────────────────
+ * Evita que contenido de terceros (iframes), imágenes o palabras largas
+ * amplíen el documento y mantiene los textos legibles sin recortarlos. */
+html,
+body,
+#root {
+  min-width: 0;
+}
+
+img,
+video,
+iframe,
+canvas {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+td,
+th,
+label,
+a {
+  overflow-wrap: anywhere;
+}
+
 /* ─── content-visibility para secciones bajo el fold ────────────
  * Hace que el navegador salte el render/layout/paint de las secciones
  * fuera de pantalla de la home (MasterPlan, Procesos, Beneficios, Lotes,
@@ -402,4 +431,4 @@ html {
 .count-up {
   animation: countUp 0.5s ease-out forwards;
   opacity: 0;
-}
+}

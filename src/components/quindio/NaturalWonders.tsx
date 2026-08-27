@@ -23,7 +23,7 @@ export default function NaturalWonders() {
               src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838726/miradorQuindio_oja2v3.webp", CLD_WIDTHS.LARGE)}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 p-8">
+            <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
               <h3 className="text-white font-headline-md mb-2">Vistas Icónicas</h3>
               <p className="text-white/80 font-body-md">
                 Vistas panorámicas de la Cordillera Central y las plantaciones de café.
@@ -40,7 +40,7 @@ export default function NaturalWonders() {
               src={cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787838725/loveQuimbaya_lk6z1f.webp", CLD_WIDTHS.CARD)}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 p-8">
+            <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
               <h3 className="text-white font-headline-md mb-2">Vida Local</h3>
               <p className="text-white/80 font-body-md">
                 El corazón vibrante de la plaza principal de Quimbaya.
