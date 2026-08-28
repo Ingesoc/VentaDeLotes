@@ -26,7 +26,7 @@ export default function NaturalWonders() {
             <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
               <h3 className="text-white font-headline-md mb-2">Vistas Icónicas</h3>
               <p className="text-white/80 font-body-md">
-                Vistas panorámicas de la Cordillera Central y las plantaciones de café.
+                Vistas panorámicas hacia las cordilleras Central y Occidental, y las plantaciones de café.
               </p>
             </div>
           </div>

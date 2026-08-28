@@ -415,9 +415,9 @@ export default function EscrituracionLotesColombia() {
                 Instrumentos Públicos.
               </p>
               <p className="mb-6">
-                Cada lote incluye: escritura pública con libertad de cargos,
-                plano catastral aprobado, proceso de legalización completo, y
-                asesoría legal durante todo el proceso. Con más de 20 años de
+                Cada lote incluye: escritura pública individual, lotes
+                delimitados con cerca viva, vía interna de acceso y diseño
+                arquitectónico tipo incluido. Con más de 30 años de
                 experiencia, {project.developer} te garantiza una compra segura y
                 sin sorpresas.
               </p>

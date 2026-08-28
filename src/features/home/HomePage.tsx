@@ -81,7 +81,7 @@ const HOME_FAQS = [
   {
     question: "¿Qué incluye la compra de un lote en La Holanda?",
     answer:
-      "Cada lote en La Holanda incluye: escritura pública individual con libertad de cargos, proceso de legalización completo, lote delimitado según plano catastral, entorno natural cafetero, diseño arquitectónico tipo incluido, y conservación de árboles de aguacate. También ofrecemos servicios de construcción con más de 20 años de experiencia.",
+      "Cada lote en La Holanda incluye: escritura pública individual, lotes delimitados con cerca viva, vía interna de acceso, diseño arquitectónico tipo incluido, y entorno natural con árboles de aguacate. También ofrecemos servicios adicionales de construcción y diseño personalizado.",
   },
   {
     question: "¿Qué tan lejos está La Holanda de Armenia, Quindío?",
@@ -96,7 +96,7 @@ const HOME_FAQS = [
   {
     question: "¿Qué servicios públicos hay en los lotes de La Holanda?",
     answer:
-      "La Holanda cuenta con vía principal de acceso, energía eléctrica disponible, y está en proceso dedotación de agua potable. La ubicación en zona rural de Quimbaya ofrece internet por satélite/4G, paisaje natural privilegiado y clima perfecto todo el año. Cada lote tiene acceso directo por vía principal.",
+      "La Holanda cuenta con disponibilidad de agua del Comité de Cafeteros, red de baja tensión frente al lote sobre la vía interna, y permiso individual de vertimiento de aguas residuales por la CRQ. Cada lote tiene acceso directo por vía interna.",
   },
   {
     question: "¿Dónde encontrar lotes baratos en el Quindío con escritura?",

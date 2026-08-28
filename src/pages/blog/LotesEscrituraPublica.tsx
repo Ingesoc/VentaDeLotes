@@ -408,7 +408,7 @@ export default function LotesEscrituraPublica() {
                 <li>Proceso de legalización completo</li>
               </ul>
               <p className="mb-6">
-                Con más de 20 años de experiencia, {project.developer} te
+                Con más de 30 años de experiencia, {project.developer} te
                 garantiza una compra 100% legal y segura. No arriesgues tu
                 inversión: elige un proyecto donde la documentación ya está
                 verificada.

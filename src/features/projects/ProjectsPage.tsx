@@ -136,8 +136,8 @@ export function ProjectsPage() {
             <p>
               <strong>La Holanda</strong> es una parcelación campestre ubicada en la Vía Quimbaya - Alcalá,
               Vereda Jazmín, Quimbaya, Quindío. Nuestros lotes en venta ofrecen desde 2.000 m² hasta
-              8.900 m² de terreno natural con escritura pública individual, vías de acceso pavimentadas
-              y diseño arquitectónico tipo incluido.
+              8.900 m² de terreno natural con escritura pública individual, lotes delimitados con cerca
+              viva, vía interna de acceso y diseño arquitectónico tipo incluido.
             </p>
             <h3 className="text-headline-sm font-headline-sm text-primary pt-4">
               Ubicación estratégica en el corazón del Eje Cafetero
@@ -154,9 +154,10 @@ export function ProjectsPage() {
             </h3>
             <p>
               Con un clima promedio de 22°C todo el año, Quimbaya ofrece las condiciones perfectas para
-              vivir o invertir. La zona cuenta con energía eléctrica, vías de acceso principales en
-              buen estado, y está en proceso de dotación de agua potable. El entorno natural de
-              La Holanda preserva árboles de aguacate y paisajes verdes que hacen única cada propiedad.
+              vivir o invertir. La zona cuenta con disponibilidad de agua del Comité de Cafeteros, red de
+              baja tensión frente al lote, y permiso individual de vertimiento de aguas residuales por la
+              CRQ. El entorno natural de La Holanda preserva árboles de aguacate en producción y paisajes
+              verdes que hacen única cada propiedad.
             </p>
             <h3 className="text-headline-sm font-headline-sm text-primary pt-4">
               Escritura pública y proceso de compra seguro
@@ -164,7 +165,7 @@ export function ProjectsPage() {
             <p>
               Cada lote incluye escritura pública individual con libertad de cargos, proceso de
               legalización completo y certificado de tradición. Desarrollado por INGESOCC SAS con
-              más de 20 años de experiencia en construcción y desarrollo inmobiliario en el Quindío.
+              más de 30 años de experiencia en construcción y desarrollo inmobiliario en el Quindío.
               Consulta precios, disponibilidad y opciones de financiación directa con el desarrollador.
             </p>
           </div>

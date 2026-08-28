@@ -196,8 +196,8 @@ export default function VivirEnQuimbaya() {
                 </li>
                 <li>
                   <strong>Agua potable:</strong> Acueducto municipal con cobertura
-                  en zona urbana. En zonas rurales como La Holanda, algunos
-                  proyectos están en proceso de dotación de agua.
+                  en zona urbana. En La Holanda, el agua está disponible del
+                  Comité de Cafeteros.
                 </li>
                 <li>
                   <strong>Alcantarillado:</strong> Disponible en zona urbana.

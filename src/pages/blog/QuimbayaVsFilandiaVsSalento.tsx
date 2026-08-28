@@ -30,7 +30,7 @@ const ARTICLE_FAQS = [
   {
     question: "¿Qué servicios hay en los lotes de Quimbaya?",
     answer:
-      "Depende de la parcelación. En La Holanda, los lotes cuentan con vía principal de acceso pavimentada, energía eléctrica disponible, y están en proceso de dotación de agua potable. Otros proyectos pueden tener diferentes niveles de servicios. Siempre verifica: energía, agua, vía de acceso, y alcantarillado antes de comprar.",
+      "En La Holanda, los lotes cuentan con disponibilidad de agua del Comité de Cafeteros, red de baja tensión frente al lote, y permiso individual de vertimiento de aguas residuales por la CRQ. Vía interna de acceso al proyecto. Otros proyectos pueden tener diferentes niveles de servicios. Siempre verifica: energía, agua, vía de acceso, y alcantarillado antes de comprar.",
   },
 ];
 

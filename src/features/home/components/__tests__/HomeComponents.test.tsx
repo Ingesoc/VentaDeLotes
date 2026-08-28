@@ -181,12 +181,10 @@ describe("ProjectBenefits", () => {
   it("renders construction services items", () => {
     renderInRouter(<ProjectBenefits />);
     expect(screen.getByText("Diseño arquitectónico personalizado")).toBeInTheDocument();
-    expect(screen.getByText("Estudios, trámites y licencias")).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Construcción respaldada por más de 20 años de experiencia",
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Estudios, trámites y licencias de construcción")).toBeInTheDocument();
+    expect(screen.getByText("Presupuesto y programación")).toBeInTheDocument();
+    expect(screen.getByText("Construcción")).toBeInTheDocument();
+    expect(screen.getByText("Entrega de la vivienda")).toBeInTheDocument();
   });
 });
 

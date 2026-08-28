@@ -76,7 +76,7 @@ export const showcaseItems: ShowcaseItem[] = [
     order: 3,
     title: "Obras respaldadas por INGESOCC",
     description:
-      "Más de 20 años de experiencia construyendo en el Quindío. Conoce nuestros proyectos realizados.",
+      "Más de 30 años de experiencia construyendo en el Quindío. Conoce nuestros proyectos realizados.",
     imageUrl: null,
     imageAlt: "Obra realizada por INGESOCC SAS",
     extraImages: [],

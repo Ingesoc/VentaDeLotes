@@ -274,12 +274,12 @@ export function ProjectDetailPage() {
               Aeropuerto Internacional El Edén está a menos de una hora.
             </p>
             <p>
-              <strong>Incluye:</strong> escritura pública individual con libertad
-              de cargos, proceso de legalización completo, diseño arquitectónico
-              tipo incluido y acceso por vía principal.
+              <strong>Incluye:</strong> escritura pública individual, lotes
+              delimitados con cerca viva, vía interna de acceso y diseño
+              arquitectónico tipo incluido.
             </p>
             <p>
-              Desarrollado por <strong>INGESOCC SAS</strong> con más de 20 años
+              Desarrollado por <strong>INGESOCC SAS</strong> con más de 30 años
               de experiencia en construcción y desarrollo inmobiliario en el
               Quindío. Consulta precios, opciones de financiación y agenda tu
               visita al WhatsApp 3217151831.
