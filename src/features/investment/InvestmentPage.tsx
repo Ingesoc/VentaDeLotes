@@ -36,7 +36,7 @@ const INVESTMENT_FAQS = [
   {
     question: "¿Puedo financiar la compra de un lote?",
     answer:
-      "Sí, La Holanda ofrece opciones de pago directo con el desarrollador. Puedes reservar con un anticipo y financiar el saldo en cuotas según el plan de pago. Consulta las opciones vigentes contactándonos por WhatsApp al 3217151831.",
+      "Sí, La Holanda ofrece opciones de pago directo con el desarrollador. Puedes reservar con un anticipo y financiar el saldo en cuotas según el plan de pago. Consulta las opciones vigentes contactándonos por WhatsApp al 312 737 0811.",
   },
 ];
 

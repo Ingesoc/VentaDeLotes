@@ -52,9 +52,9 @@ describe("Footer", () => {
 
   it("renders a phone link", () => {
     renderFooter();
-    const phoneLink = screen.getByText("3217151831");
+    const phoneLink = screen.getByText("3127370811");
     expect(phoneLink).toBeInTheDocument();
-    expect(phoneLink.closest("a")?.getAttribute("href")).toBe("tel:3217151831");
+    expect(phoneLink.closest("a")?.getAttribute("href")).toBe("tel:3127370811");
   });
 
   it("renders an email link", () => {

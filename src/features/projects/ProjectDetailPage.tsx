@@ -282,7 +282,7 @@ export function ProjectDetailPage() {
               Desarrollado por <strong>INGESOCC SAS</strong> con más de 30 años
               de experiencia en construcción y desarrollo inmobiliario en el
               Quindío. Consulta precios, opciones de financiación y agenda tu
-              visita al WhatsApp 3217151831.
+              visita al WhatsApp 312 737 0811.
             </p>
           </div>
         </section>

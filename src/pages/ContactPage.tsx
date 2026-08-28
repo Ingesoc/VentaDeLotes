@@ -9,7 +9,7 @@ export default function ContactPage() {
     <>
       <PageSEO
         title="Contacto — Asesoría Lotes Quimbaya | La Holanda"
-        description="Contáctanos para asesoría personalizada sobre lotes campestres en Quimbaya, Quindío. WhatsApp 3217151831, formulario o llamada. Agenda tu visita a La Holanda hoy."
+        description="Contáctanos para asesoría personalizada sobre lotes campestres en Quimbaya, Quindío. WhatsApp 312 737 0811, formulario o llamada. Agenda tu visita a La Holanda hoy."
         ogUrl="https://laholanda.ingesocc.com/contact"
         keywords="contacto la holanda, asesoría lotes quimbaya, WhatsApp INGESOCC, agendar visita parcelación, phone lotes quindío"
       />

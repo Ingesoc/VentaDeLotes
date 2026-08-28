@@ -18,7 +18,7 @@ export default function LocalBusinessSchema() {
     url: "https://laholanda.ingesocc.com",
     image:
       "https://res.cloudinary.com/j5a9xyaq/image/upload/v1784303937/laholanda/landscapes/DJI_0131.webp",
-    telephone: "+57-3217151831",
+    telephone: "+57-3127370811",
     email: "gerencia.ingesocc@gmail.com",
     address: {
       "@type": "PostalAddress",
@@ -77,7 +77,7 @@ export default function LocalBusinessSchema() {
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+57-3217151831",
+      telephone: "+57-3127370811",
       contactType: "sales",
       email: "gerencia.ingesocc@gmail.com",
       availableLanguage: ["Spanish"],
