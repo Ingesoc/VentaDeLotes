@@ -178,7 +178,7 @@ export function ProjectDetailPage() {
           })}
         </script>
       </Helmet>
-      <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24 page-enter">
+      <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-24 pb-12 md:py-24 page-enter">
         {/* Migas de pan */}
         <nav className="flex items-center gap-2 text-on-surface-variant text-label-caps font-label-caps mb-4 uppercase tracking-widest">
           <Link

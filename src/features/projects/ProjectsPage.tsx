@@ -70,7 +70,7 @@ export function ProjectsPage() {
       <BreadcrumbSchema
         items={[{ name: "Lotes Disponibles", url: "https://laholanda.ingesocc.com/projects" }]}
       />
-      <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24 page-enter">
+      <div ref={scrollRevealRef} className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-24 pb-16 md:py-24 page-enter">
         <div className="mb-12 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
           <div>
             <h1 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-4">
