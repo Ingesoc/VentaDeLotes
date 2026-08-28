@@ -14,16 +14,19 @@ test.describe("Carrusel de la Home", () => {
     // domcontentloaded: no esperar a que carguen todas las imágenes/recursos.
     await page.goto("/", { waitUntil: "domcontentloaded" });
 
-    // El hero ocupa toda la pantalla; se baja hasta el carrusel para que el
-    // IntersectionObserver del reproductor se dispare.
+    // El hero ocupa toda la pantalla; se baja hasta la sección de videos
+    // aéreos (después del carrusel) para que el IntersectionObserver del
+    // reproductor se dispare.
     await page.evaluate(() =>
-      window.scrollTo({ top: window.innerHeight * 0.9, behavior: "instant" }),
+      document.getElementById("videos-aereos")?.scrollIntoView({ behavior: "instant" }),
     );
+    // Dar tiempo al IntersectionObserver para que detecte el elemento
+    await page.waitForTimeout(500);
 
     // Al entrar al viewport, el reproductor se monta SOLO (sin clic) y arranca
-    // silenciado: autoplay=1&mute=1.
+    // silenciado: autoplay=1&mute=1. El primer clip es hT4bLxh-8uo.
     const player = page.locator(
-      "iframe[src*='youtube-nocookie.com/embed/N7LYM3pt_hg']",
+      "iframe[src*='youtube-nocookie.com/embed/hT4bLxh-8uo']",
     );
     await expect(player).toHaveCount(1);
     await expect(player).toHaveAttribute("src", /autoplay=1&mute=1/);

@@ -5,7 +5,7 @@ test.describe("Página de proyectos", () => {
     await page.goto("/projects");
 
     // Título de la página
-    await expect(page.locator("h1")).toContainText("Descubre tu santuario");
+    await expect(page.locator("h1")).toContainText("Lotes Campestres");
 
     // Debe haber al menos un lote visible
     await expect(page.getByText(/mostrando/i)).toBeVisible();

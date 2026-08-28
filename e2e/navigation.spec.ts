@@ -26,7 +26,7 @@ test.describe("Navegación principal", () => {
     }
     await expect(page).toHaveURL(/\/projects/);
     // Título de la página de lotes
-    await expect(page.locator("h1")).toContainText("Descubre");
+    await expect(page.locator("h1")).toContainText("Lotes Campestres");
   });
 
   test("Navegación a /investment", async ({ page }) => {
