@@ -153,13 +153,8 @@ export const lots: Lot[] = [
   {
     id: "07",
     areaM2: 2010,
-    price: 159082250,
-    priceSchedule: {
-      "2026-09-15": 159082250,
-      "2027-09-15": 217691500,
-      "2028-10-15": 251182500,
-    },
-    status: "disponible",
+    price: undefined,
+    status: "no_disponible",
     aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946331/laholanda/lots/lote-07-08-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765369/qdnpj9vkvrgnshetcpbr.jpg", CLD_WIDTHS.LARGE),
     sharedAerialWith: "08",
@@ -209,7 +204,12 @@ export const lots: Lot[] = [
   {
     id: "10",
     areaM2: 2966,
-    price: undefined,
+    price: 281770000,
+    priceSchedule: {
+      "2026-09-15": 281770000,
+      "2027-09-15": 385580000,
+      "2028-10-15": 444900000,
+    },
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765357/cx39u5os3xc82pkitrth.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.62028, lng: -75.76756 },
@@ -286,7 +286,12 @@ export const lots: Lot[] = [
   {
     id: "15",
     areaM2: 2908,
-    price: undefined,
+    price: 312930000,
+    priceSchedule: {
+      "2026-09-15": 312930000,
+      "2027-09-15": 428220000,
+      "2028-10-15": 494100000,
+    },
     status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765351/kxbtsb7x8xef1wvlyq6q.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61937, lng: -75.77152 },
@@ -298,7 +303,7 @@ export const lots: Lot[] = [
     id: "16",
     areaM2: 6689,
     price: undefined,
-    status: "disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
+    status: "no_disponible",    aerialImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1784946345/laholanda/lots/loteo-general-drone.jpg", CLD_WIDTHS.LARGE),
     perspectiveImage: cldUrl("https://res.cloudinary.com/j5a9xyaq/image/upload/v1787765351/kxbtsb7x8xef1wvlyq6q.jpg", CLD_WIDTHS.LARGE),
     coordinates: { lat: 4.61846, lng: -75.77122 },
 

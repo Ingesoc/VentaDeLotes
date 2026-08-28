@@ -152,12 +152,12 @@ test.describe("Key content per page", () => {
     await expect(page.getByText("No disponible").first()).toBeVisible();
   });
 
-  test("Lote 10 muestra Consultar precio (sin precio definido)", async ({
+  test("Lote 10 muestra precio en COP", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/projects/10");
-    await expect(page.getByText("Consultar precio").first()).toBeVisible();
+    await expect(page.getByText(/COP/).first()).toBeVisible();
   });
 
   test("DescubreQuindío: carrusel de parques navegable", async ({ page }) => {
