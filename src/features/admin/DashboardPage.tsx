@@ -1,7 +1,6 @@
-import { lazy, Suspense, useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { lazy, Suspense } from "react";
 import { Eye, MessageSquare, TrendingUp, Warehouse } from "lucide-react";
-import { bucketByDay, type ChartPoint } from "./lib/analytics";
+import { useAdminStats } from "./data/queries/admin-stats";
 
 // Los gráficos (Recharts) se cargan de forma diferida: solo entran en el
 // bundle del dashboard, que ya es lazy por ruta.
@@ -9,110 +8,21 @@ const DashboardCharts = lazy(() =>
   import("./DashboardCharts").then((m) => ({ default: m.DashboardCharts })),
 );
 
-interface DashboardStats {
-  totalLots: number;
-  totalLeads: number;
-  totalPageViews: number;
-  mostViewedLots: { lot_id: string; views: number }[];
-  recentLeads: { name: string; email: string; created_at: string }[];
-}
-
-type StatusRow = { status: string };
-
 const DAYS = 14;
-
-const STATUS_LABEL: Record<string, string> = {
-  disponible: "Disponible",
-  reservado: "Reservado",
-  vendido: "Vendido",
-  no_disponible: "No disponible",
-};
 
 export function Component() {
   return <DashboardPage />;
 }
 
 export function DashboardPage() {
-  const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [viewsByDay, setViewsByDay] = useState<ChartPoint[]>([]);
-  const [leadsByDay, setLeadsByDay] = useState<ChartPoint[]>([]);
-  const [lotsByStatus, setLotsByStatus] = useState<ChartPoint[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: stats,
+    isLoading,
+    error,
+  } = useAdminStats(DAYS);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        // Ejecutar consultas independientes en paralelo
-        const [
-          { count: totalLots },
-          { count: totalLeads },
-          { count: totalPageViews },
-          { data: viewsData },
-          { data: recentLeadsData },
-          { data: statusRows },
-        ] = await Promise.all([
-          supabase.from("lots").select("*", { count: "exact", head: true }),
-          supabase.from("leads").select("*", { count: "exact", head: true }),
-          supabase
-            .from("page_views")
-            .select("*", { count: "exact", head: true }),
-          supabase
-            .from("page_views")
-            .select("lot_id, viewed_at")
-            .not("lot_id", "is", null),
-          supabase
-            .from("leads")
-            .select("name, email, created_at")
-            .order("created_at", { ascending: false })
-            .limit(5),
-          supabase.from("lots").select("status"),
-        ]);
-
-        const viewCounts: Record<string, number> = {};
-        viewsData?.forEach((v) => {
-          if (v.lot_id) viewCounts[v.lot_id] = (viewCounts[v.lot_id] || 0) + 1;
-        });
-
-        const mostViewedLots = Object.entries(viewCounts)
-          .sort(([, a], [, b]) => b - a)
-          .slice(0, 5)
-          .map(([lot_id, views]) => ({ lot_id, views }));
-
-        setStats({
-          totalLots: totalLots ?? 0,
-          totalLeads: totalLeads ?? 0,
-          totalPageViews: totalPageViews ?? 0,
-          mostViewedLots,
-          recentLeads: recentLeadsData ?? [],
-        });
-
-        setViewsByDay(bucketByDay(viewsData ?? [], DAYS));
-        setLeadsByDay(bucketByDay(recentLeadsData ?? [], DAYS));
-
-        const statusCounts = (statusRows as StatusRow[] | null)?.reduce<
-          Record<string, number>
-        >((acc, row) => {
-          acc[row.status] = (acc[row.status] || 0) + 1;
-          return acc;
-        }, {});
-
-        setLotsByStatus(
-          Object.entries(statusCounts ?? {}).map(([status, count]) => ({
-            label: STATUS_LABEL[status] ?? status,
-            count,
-          })),
-        );
-      } catch (err) {
-        console.error("Error fetching dashboard stats:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
-
-  if (loading) {
+  // ── Estado de carga global ────────────────────────────────────
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-pulse flex flex-col items-center gap-4">
@@ -123,39 +33,51 @@ export function DashboardPage() {
     );
   }
 
-  if (!stats) {
+  // ── Estado de error global ────────────────────────────────────
+  if (error || !stats) {
     return (
-      <div className="text-center py-16">
-        <p className="text-on-surface-variant">
-          No se pudieron cargar las estadísticas. Verifica la conexión con
-          Supabase.
-        </p>
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-headline-lg font-headline-lg text-primary">
+            Dashboard
+          </h1>
+          <p className="text-body-md text-on-surface-variant mt-1">
+            Resumen general del sitio
+          </p>
+        </div>
+        <div className="bg-red-50 text-red-700 rounded-xl p-6 text-body-md">
+          <p className="font-semibold mb-1">Error cargando estadísticas</p>
+          <p className="text-sm">
+            {error?.message ?? "No se pudieron cargar los datos. Verifica la conexión con Supabase."}
+          </p>
+        </div>
       </div>
     );
   }
 
+  // ── Datos listos ──────────────────────────────────────────────
   const cards = [
     {
       label: "Total Lotes",
-      value: stats.totalLots,
+      value: stats.total_lots,
       icon: Warehouse,
       color: "bg-primary/10 text-primary",
     },
     {
       label: "Leads Recibidos",
-      value: stats.totalLeads,
+      value: stats.total_leads,
       icon: MessageSquare,
       color: "bg-heritage-gold/10 text-heritage-gold",
     },
     {
       label: "Visitas a Páginas",
-      value: stats.totalPageViews,
+      value: stats.total_views,
       icon: Eye,
       color: "bg-coffee-green/10 text-coffee-green",
     },
     {
       label: "Lotes con Visitas",
-      value: stats.mostViewedLots.length,
+      value: stats.lots_with_views,
       icon: TrendingUp,
       color: "bg-primary/10 text-primary",
     },
@@ -201,9 +123,9 @@ export function DashboardPage() {
         }
       >
         <DashboardCharts
-          viewsByDay={viewsByDay}
-          leadsByDay={leadsByDay}
-          lotsByStatus={lotsByStatus}
+          viewsByDay={stats.views_by_day}
+          leadsByDay={stats.leads_by_day}
+          lotsByStatus={stats.lots_by_status}
           days={DAYS}
         />
       </Suspense>
@@ -214,13 +136,13 @@ export function DashboardPage() {
           <h3 className="text-headline-md font-headline-md text-primary mb-6">
             Lotes más visitados
           </h3>
-          {stats.mostViewedLots.length === 0 ? (
+          {stats.top_lots.length === 0 ? (
             <p className="text-on-surface-variant text-body-md">
               No hay visitas registradas aún.
             </p>
           ) : (
             <div className="space-y-4">
-              {stats.mostViewedLots.map((lot, i) => (
+              {stats.top_lots.map((lot, i) => (
                 <div
                   key={lot.lot_id}
                   className="flex items-center justify-between"
@@ -248,13 +170,13 @@ export function DashboardPage() {
           <h3 className="text-headline-md font-headline-md text-primary mb-6">
             Últimos leads
           </h3>
-          {stats.recentLeads.length === 0 ? (
+          {stats.recent_leads.length === 0 ? (
             <p className="text-on-surface-variant text-body-md">
               No hay leads registrados aún.
             </p>
           ) : (
             <div className="space-y-4">
-              {stats.recentLeads.map((lead) => (
+              {stats.recent_leads.map((lead) => (
                 <div
                   key={lead.email}
                   className="flex items-center justify-between"
