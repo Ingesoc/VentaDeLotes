@@ -6,6 +6,7 @@ import { ProcessSteps } from "../ProcessSteps";
 import { ProjectBenefits } from "../ProjectBenefits";
 import { MasterPlanSection } from "../MasterPlanSection";
 import { InvestmentComparison } from "../InvestmentComparison";
+import { FeaturedLots } from "../FeaturedLots";
 
 // ─── Mocks ────────────────────────────────────────
 vi.mock("@/lib/cloudinary", () => ({
@@ -35,6 +36,22 @@ vi.mock("@/constants/lots", () => ({
       id: "02",
       areaM2: 2008,
       price: 189242850,
+      status: "disponible",
+      aerialImage: "https://res.cloudinary.com/test/aerial.jpg",
+      perspectiveImage: "https://res.cloudinary.com/test/perspective.jpg",
+    },
+    {
+      id: "03",
+      areaM2: 2013,
+      price: 185619550,
+      status: "disponible",
+      aerialImage: "https://res.cloudinary.com/test/aerial.jpg",
+      perspectiveImage: "https://res.cloudinary.com/test/perspective.jpg",
+    },
+    {
+      id: "04",
+      areaM2: 2004,
+      price: 165570750,
       status: "disponible",
       aerialImage: "https://res.cloudinary.com/test/aerial.jpg",
       perspectiveImage: "https://res.cloudinary.com/test/perspective.jpg",
@@ -149,9 +166,9 @@ describe("ProcessSteps", () => {
 
 /* ─── ProjectBenefits ────────────────────────────── */
 describe("ProjectBenefits", () => {
-  it("renders the section with id='lotes'", () => {
+  it("renders the section", () => {
     const { container } = renderInRouter(<ProjectBenefits />);
-    const section = container.querySelector("#lotes");
+    const section = container.querySelector("section");
     expect(section).toBeTruthy();
   });
 
@@ -185,6 +202,21 @@ describe("ProjectBenefits", () => {
     expect(screen.getByText("Presupuesto y programación")).toBeInTheDocument();
     expect(screen.getByText("Construcción")).toBeInTheDocument();
     expect(screen.getByText("Entrega de la vivienda")).toBeInTheDocument();
+  });
+});
+
+/* ─── FeaturedLots ───────────────────────────────── */
+describe("FeaturedLots", () => {
+  it("renders the section with id='lotes', the hero CTA scroll target", () => {
+    const { container } = renderInRouter(<FeaturedLots />);
+    const section = container.querySelector("#lotes");
+    expect(section).toBeTruthy();
+  });
+
+  it("renders the CTA linking to the full inventory when more lots exist", async () => {
+    renderInRouter(<FeaturedLots />);
+    const link = await screen.findByRole("link", { name: /Ver todos los lotes/ });
+    expect(link).toHaveAttribute("href", "/projects");
   });
 });
 
