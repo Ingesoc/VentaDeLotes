@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "guides/onboarding.md",
+                "file": "diagrams/architecture.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "onboarding"
+              "title": "architecture"
             }
           }
         ]
@@ -187,7 +187,13 @@
   },
   "active": "f88bf2dde48eb12e",
   "lastOpenFiles": [
-    "diagrams/architecture.md",
+    "README.md",
+    "keyword-research.md",
+    "google-indexing-setup.md",
+    "google-business-profile-setup.md",
+    "qa/procedures.md",
+    "guides/onboarding.md",
+    "guides/media-content.md",
     "deployment/ci-cd.md",
     "decisions/README.md",
     "decisions/adr-004-import-map-supabase.md",
@@ -195,7 +201,8 @@
     "decisions/adr-002-tailwind-css-v4-theme.md",
     "decisions/adr-001-react-router-code-splitting.md",
     "architecture/overview.md",
-    "guides/onboarding.md",
+    "analytics/README.md",
+    "diagrams/architecture.md",
     "stack/tech-stack.md",
     "diagrams/database-routing.drawio",
     "diagrams/auth-flow.drawio",

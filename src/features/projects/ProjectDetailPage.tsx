@@ -298,6 +298,20 @@ export function ProjectDetailPage() {
                 <LotCard key={relatedLot.id} lot={relatedLot} />
               ))}
             </div>
+            <div className="mt-10 text-center">
+              <Link
+                to="/projects"
+                className="group inline-flex items-center justify-center gap-2 border border-primary text-primary px-6 py-3 rounded-lg font-label-bold hover:bg-primary hover:text-on-primary transition-all duration-300"
+              >
+                Ver todos los lotes disponibles
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </Link>
+            </div>
           </div>
         )}
       </div>
